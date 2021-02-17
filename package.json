@@ -5,9 +5,9 @@
   "author": "djlogan2",
   "license": "MIT",
   "repository": "icc-chessboard",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
-  "source": "src/index.js",
+  "main": "dist/index.jsx",
+  "module": "dist/index.modern.jsx",
+  "source": "src/index.jxs",
   "engines": {
     "node": ">=10"
   },
