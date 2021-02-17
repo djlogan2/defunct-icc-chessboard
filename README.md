@@ -15,12 +15,12 @@ npm install --save chessboard
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'chessboard'
+import ChessBoard from 'chessboard'
 import 'chessboard/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <ChessBoard />
   }
 }
 ```
