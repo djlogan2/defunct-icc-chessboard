@@ -3,8 +3,8 @@ import React from 'react'
 export default function withWindowSize(WrappedComponent) {
   return class extends React.Component {
     constructor(props) {
-      super(props)
-      this.state = this.getInitialState()
+      super(props);
+      this.state = this.getInitialState();
     }
 
     getInitialState = () => {
@@ -12,7 +12,7 @@ export default function withWindowSize(WrappedComponent) {
         windowWidth: window.innerWidth,
         windowHeight: window.innerHeight
       }
-    }
+    };
 
     componentDidMount() {
       window.addEventListener('resize', this.updateWindowSize)
@@ -27,10 +27,10 @@ export default function withWindowSize(WrappedComponent) {
         windowWidth: window.innerWidth,
         height: window.innerHeight
       })
-    }
+    };
 
     render() {
-      const { windowWidth, windowHeight } = this.state
+      const { windowWidth, windowHeight } = this.state;
 
       return (
         <WrappedComponent

@@ -30,6 +30,6 @@ const Files = ({ width, side, perspective }) => {
       ))}
     </div>
   )
-}
+};
 
 export default Files

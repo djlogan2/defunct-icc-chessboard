@@ -8,7 +8,7 @@ import { FIRST_COLOR, SECOND_COLOR } from '../../constants/systemConstants'
 import styles from './board.module.css'
 
 const Board = ({ size }) => {
-  const squares = []
+  const squares = [];
 
   for (let row = 0; row < ROWS_LENGTH; row++) {
     for (let col = 0; col < COLUMNS_LENGTH; col++) {
@@ -19,7 +19,7 @@ const Board = ({ size }) => {
             : FIRST_COLOR
           : col % 2
           ? FIRST_COLOR
-          : SECOND_COLOR
+          : SECOND_COLOR;
 
       squares.push(
         <Square size={size / 8} key={`${row}${col}`} color={color} />
@@ -32,10 +32,10 @@ const Board = ({ size }) => {
       {squares}
     </div>
   )
-}
+};
 
 Board.propTypes = {
   size: PropTypes.number
-}
+};
 
 export default Board

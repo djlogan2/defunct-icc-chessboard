@@ -6,6 +6,6 @@ const BoardWrapper = ({ size, children }) => (
   <div style={{ width: size, height: size }} className={styles.boardWrapper}>
     {children}
   </div>
-)
+);
 
 export default BoardWrapper

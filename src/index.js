@@ -28,17 +28,17 @@ const ChessBoard = ({
   filesSide,
   perspective
 }) => {
-  const currentElement = useRef(null)
-  const [boardSize, updateBoardSize] = useState({ width: null, height: null })
+  const currentElement = useRef(null);
+  const [boardSize, updateBoardSize] = useState({ width: null, height: null });
 
   useEffect(() => {
-    const height = currentElement?.current?.clientHeight
-    const width = currentElement?.current?.clientWidth
+    const height = currentElement?.current?.clientHeight;
+    const width = currentElement?.current?.clientWidth;
 
     updateBoardSize({ width, height })
-  }, [currentElement, windowWidth, windowHeight])
+  }, [currentElement, windowWidth, windowHeight]);
 
-  const size = Math.min(boardSize.width, boardSize.height)
+  const size = Math.min(boardSize.width, boardSize.height);
   return (
     <div ref={currentElement} className={styles.wrapper}>
       {!!boardSize.width && !!boardSize.height && (
@@ -58,7 +58,7 @@ const ChessBoard = ({
       )}
     </div>
   )
-}
+};
 
 ChessBoard.propTypes = {
   ranksSide: PropTypes.oneOf([
@@ -75,6 +75,6 @@ ChessBoard.propTypes = {
     WHITE_PLAYER_PERSPECTIVE,
     BLACK_PLAYER_PERSPECTIVE
   ]).isRequired
-}
+};
 
 export default withWindowSize(ChessBoard)

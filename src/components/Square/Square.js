@@ -10,6 +10,6 @@ const Square = ({ color, size }) => {
       style={{ width: size, height: size }}
     />
   )
-}
+};
 
 export default Square
