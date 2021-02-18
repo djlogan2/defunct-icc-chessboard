@@ -1,14 +1,11 @@
-import React from "react";
+import React from 'react'
 
-import styles from "./boardWrapper.module.css";
+import styles from './boardWrapper.module.css'
 
-const BoardWrapper = ({size, children}) => (
-  <div
-    style={{width: size, height: size}}
-    className={styles.boardWrapper}
-  >
+const BoardWrapper = ({ size, children }) => (
+  <div style={{ width: size, height: size }} className={styles.boardWrapper}>
     {children}
   </div>
-);
+)
 
-export default BoardWrapper;
+export default BoardWrapper

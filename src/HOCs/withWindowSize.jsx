@@ -1,35 +1,44 @@
-import React from 'react';
+import React from 'react'
 
 export default function withWindowSize(WrappedComponent) {
   return class extends React.Component {
     constructor(props) {
-      super(props);
-      this.state = this.getInitialState();
+      super(props)
+      this.state = this.getInitialState()
     }
 
     getInitialState = () => {
       return {
         windowWidth: window.innerWidth,
         windowHeight: window.innerHeight
-      };
-    };
+      }
+    }
 
     componentDidMount() {
-      window.addEventListener('resize', this.updateWindowSize);
+      window.addEventListener('resize', this.updateWindowSize)
     }
 
     componentWillUnmount() {
-      window.removeEventListener('resize', this.updateWindowSize);
+      window.removeEventListener('resize', this.updateWindowSize)
     }
 
     updateWindowSize = () => {
-      this.setState({windowWidth: window.innerWidth, height: window.innerHeight});
-    };
+      this.setState({
+        windowWidth: window.innerWidth,
+        height: window.innerHeight
+      })
+    }
 
     render() {
-      const {windowWidth, windowHeight} = this.state;
+      const { windowWidth, windowHeight } = this.state
 
-      return <WrappedComponent windowWidth={windowWidth} windowHeight={windowHeight} {...this.props}/>
+      return (
+        <WrappedComponent
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
+          {...this.props}
+        />
+      )
     }
   }
 }
