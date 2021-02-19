@@ -7,6 +7,8 @@ import Board from "./components/Board/Board";
 import Files from "./components/Lines/Files";
 import Ranks from "./components/Lines/Ranks";
 import Square from "./components/Square/Square";
+import Piece from "./components/Piece/Piece";
+import Circle from "./components/Circle/Circle";
 
 Enzyme.configure({adapter: new Adapter()});
 describe('Chessboard with props', () => {
@@ -48,6 +50,20 @@ describe('Files with props', () => {
 
 describe('Square with props', () => {
   const container = shallow(<Square color="color1" size={100} />);
+  it('should render correctly', () => {
+    expect(container.html()).toMatchSnapshot();
+  });
+});
+
+describe('Piece with props', () => {
+  const container = shallow(<Piece pieceImage="src" description="piece" size={100} />);
+  it('should render correctly', () => {
+    expect(container.html()).toMatchSnapshot();
+  });
+});
+
+describe('Circle with props', () => {
+  const container = shallow(<Circle size={100} />);
   it('should render correctly', () => {
     expect(container.html()).toMatchSnapshot();
   });

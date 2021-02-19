@@ -1,9 +1,11 @@
 .odd {
+  position: relative;
   background-color: #FFFFFF;
   border: none;
 }
 
 .even {
-  background-color: #000000;
+  position: relative;
+  background-color: #1565c0;
   border: none;
 }
