@@ -20,13 +20,15 @@ import {
   BLACK_PLAYER_PERSPECTIVE,
   WHITE_PLAYER_PERSPECTIVE
 } from './constants/systemConstants'
+import { getPiecesFromFen } from './utils/utils'
 
 const ChessBoard = ({
   windowWidth,
   windowHeight,
   ranksSide,
   filesSide,
-  perspective
+  perspective,
+  fen
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
@@ -39,6 +41,10 @@ const ChessBoard = ({
   }, [currentElement, windowWidth, windowHeight])
 
   const size = Math.min(boardSize.width, boardSize.height)
+  const pieces = getPiecesFromFen(fen)
+
+  console.log(pieces)
+
   return (
     <div ref={currentElement} className={styles.wrapper}>
       {!!boardSize.width && !!boardSize.height && (
@@ -74,7 +80,8 @@ ChessBoard.propTypes = {
   perspective: PropTypes.oneOf([
     WHITE_PLAYER_PERSPECTIVE,
     BLACK_PLAYER_PERSPECTIVE
-  ]).isRequired
+  ]).isRequired,
+  fen: PropTypes.string.isRequired
 }
 
 export default withWindowSize(ChessBoard)
