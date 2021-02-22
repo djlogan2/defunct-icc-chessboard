@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Board from './components/Board/Board'
 import withWindowSize from './HOCs/withWindowSize'
 
-import styles from './styles.module.css'
+import classes from './styles.module.css'
 import Files from './components/Lines/Files'
 import Ranks from './components/Lines/Ranks'
 import BoardWrapper from './components/BoardWrapper/BoardWrapper'
@@ -23,12 +23,14 @@ import {
 import { getPiecesFromFen } from './utils/utils'
 
 const ChessBoard = ({
-  windowWidth,
-  windowHeight,
+  fen,
+  styles,
   ranksSide,
   filesSide,
+  pieceImages,
   perspective,
-  fen
+  windowWidth,
+  windowHeight
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
@@ -41,24 +43,33 @@ const ChessBoard = ({
   }, [currentElement, windowWidth, windowHeight])
 
   const size = Math.min(boardSize.width, boardSize.height)
-  const pieces = getPiecesFromFen(fen)
-
-  console.log(pieces)
+  const pieces = getPiecesFromFen(fen, pieceImages, perspective)
 
   return (
-    <div ref={currentElement} className={styles.wrapper}>
+    <div
+      ref={currentElement}
+      className={classes.wrapper}
+      style={styles?.wrapper}
+    >
       {!!boardSize.width && !!boardSize.height && (
-        <BoardWrapper size={size}>
-          <Board size={size * 0.9} />
+        <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
+          <Board
+            size={size * 0.9}
+            styles={styles}
+            pieces={pieces}
+            perspective={perspective}
+          />
           <Files
             width={size * 0.9}
             side={filesSide}
             perspective={perspective}
+            filesStyle={styles?.files}
           />
           <Ranks
             height={size * 0.9}
             side={ranksSide}
             perspective={perspective}
+            ranksStyle={styles?.ranks}
           />
         </BoardWrapper>
       )}
@@ -81,7 +92,9 @@ ChessBoard.propTypes = {
     WHITE_PLAYER_PERSPECTIVE,
     BLACK_PLAYER_PERSPECTIVE
   ]).isRequired,
-  fen: PropTypes.string.isRequired
+  fen: PropTypes.string.isRequired,
+  styles: PropTypes.object,
+  pieceImages: PropTypes.object.isRequired
 }
 
 export default withWindowSize(ChessBoard)

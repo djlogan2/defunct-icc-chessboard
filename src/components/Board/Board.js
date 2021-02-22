@@ -5,9 +5,9 @@ import Square from '../Square/Square'
 import { COLUMNS_LENGTH, ROWS_LENGTH } from '../../constants/boardConstants'
 import { FIRST_COLOR, SECOND_COLOR } from '../../constants/systemConstants'
 
-import styles from './board.module.css'
+import classes from './board.module.css'
 
-const Board = ({ size }) => {
+const Board = ({ size, boardStyle, pieces }) => {
   const squares = []
 
   for (let row = 0; row < ROWS_LENGTH; row++) {
@@ -23,6 +23,7 @@ const Board = ({ size }) => {
 
       squares.push(
         <Square
+          piece={pieces[row][col]}
           size={size / 8}
           key={`${row}${col}`}
           color={color}
@@ -34,14 +35,19 @@ const Board = ({ size }) => {
   }
 
   return (
-    <div style={{ width: size, height: size }} className={styles.board}>
+    <div
+      style={{ width: size, height: size, ...boardStyle }}
+      className={classes.board}
+    >
       {squares}
     </div>
   )
 }
 
 Board.propTypes = {
-  size: PropTypes.number
+  size: PropTypes.number,
+  pieces: PropTypes.array.isRequired,
+  perspective: PropTypes.string.isRequired
 }
 
 export default Board

@@ -24,10 +24,10 @@ const Square = ({ color, size, circle, isLegal, piece }) => {
       className={color === SECOND_COLOR ? styles.odd : styles.even}
       style={{ width: size, height: size, position: 'relative' }}
     >
-      {!!piece && (
+      {!!Object.keys(piece).length && (
         <Piece
           pieceImage={piece.image}
-          description={piece.description}
+          description={piece.description || 'not now'}
           size={size * 0.8}
         />
       )}

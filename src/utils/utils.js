@@ -1,23 +1,34 @@
+import { PIECES_MAP } from '../constants/boardConstants'
+import { BLACK_PLAYER_PERSPECTIVE } from '../constants/systemConstants'
+
 export const checkIsOdd = (value) => {
   return value % 2 === 1
 }
 
-export const getPiecesFromFen = (fen) => {
+export const getPiecesFromFen = (fen, pieceImages, perspective) => {
   const pieces = []
 
   const fenArray = fen.split(' ')
   const ranks = fenArray[0].split('/')
 
   ranks.forEach((rank) => {
-    pieces.unshift([])
+    perspective === BLACK_PLAYER_PERSPECTIVE
+      ? pieces.unshift([])
+      : pieces.push([])
 
     rank.split('').forEach((element) => {
+      const addNumber =
+        perspective === BLACK_PLAYER_PERSPECTIVE ? 0 : pieces.length - 1
+
       if (!isNaN(element)) {
         for (let i = 0; i < Number(element); i++) {
-          pieces[0].push('')
+          pieces[addNumber].push({})
         }
       } else {
-        pieces[0].push(element)
+        pieces[addNumber].push({
+          image: pieceImages[PIECES_MAP[element]],
+          description: PIECES_MAP[element]
+        })
       }
     })
   })
