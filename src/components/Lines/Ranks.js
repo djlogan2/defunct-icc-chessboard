@@ -32,6 +32,6 @@ const Ranks = ({ height, side, perspective }) => {
       })}
     </div>
   )
-};
+}
 
 export default Ranks
