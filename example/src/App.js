@@ -8,8 +8,9 @@ const App = () => {
     <ChessBoard
       ranksSide="right"
       filesSide="bottom"
-      perspective="black"
+      perspective="white"
       fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+      boardSquares={{light: "#FFFFFF", dark: "#1565c0"}}
       pieceImages={{
         bB: 'static/images/defaultPieces/bB.png',
         bK: 'static/images/defaultPieces/bK.png',

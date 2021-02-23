@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 
 import Square from '../Square/Square'
 import { COLUMNS_LENGTH, ROWS_LENGTH } from '../../constants/boardConstants'
-import { FIRST_COLOR, SECOND_COLOR } from '../../constants/systemConstants'
 
 import classes from './board.module.css'
 
-const Board = ({ size, boardStyle, pieces }) => {
+const Board = ({ size, boardStyle, pieces, boardSquares }) => {
   const squares = []
 
   for (let row = 0; row < ROWS_LENGTH; row++) {
@@ -15,11 +14,11 @@ const Board = ({ size, boardStyle, pieces }) => {
       const color =
         row % 2
           ? col % 2
-            ? SECOND_COLOR
-            : FIRST_COLOR
+            ? boardSquares.light
+            : boardSquares.dark
           : col % 2
-          ? FIRST_COLOR
-          : SECOND_COLOR
+          ? boardSquares.dark
+          : boardSquares.light
 
       squares.push(
         <Square

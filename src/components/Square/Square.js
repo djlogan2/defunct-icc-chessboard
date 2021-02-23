@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { SECOND_COLOR } from '../../constants/systemConstants'
 import Piece from '../Piece/Piece'
 import Circle from '../Circle/Circle'
 
@@ -21,8 +20,13 @@ const Square = ({ color, size, circle, isLegal, piece }) => {
     <button
       onMouseUp={handleMouseUp}
       onContextMenu={(e) => e.preventDefault()}
-      className={color === SECOND_COLOR ? styles.odd : styles.even}
-      style={{ width: size, height: size, position: 'relative' }}
+      className={styles.square}
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: color,
+        position: 'relative'
+      }}
     >
       {!!Object.keys(piece).length && (
         <Piece

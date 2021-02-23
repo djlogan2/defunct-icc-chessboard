@@ -1,11 +1,4 @@
-.odd {
+.square {
   position: relative;
-  background-color: #FFFFFF;
-  border: none;
-}
-
-.even {
-  position: relative;
-  background-color: #1565c0;
   border: none;
 }

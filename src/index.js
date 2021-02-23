@@ -30,7 +30,8 @@ const ChessBoard = ({
   pieceImages,
   perspective,
   windowWidth,
-  windowHeight
+  windowHeight,
+  boardSquares
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
@@ -54,6 +55,7 @@ const ChessBoard = ({
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
           <Board
+            boardSquares={boardSquares}
             size={size * 0.9}
             styles={styles}
             pieces={pieces}
@@ -94,7 +96,8 @@ ChessBoard.propTypes = {
   ]).isRequired,
   fen: PropTypes.string.isRequired,
   styles: PropTypes.object,
-  pieceImages: PropTypes.object.isRequired
+  pieceImages: PropTypes.object.isRequired,
+  boardSquares: PropTypes.object.isRequired
 }
 
 export default withWindowSize(ChessBoard)
