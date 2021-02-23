@@ -1,13 +1,12 @@
 import React from 'react'
 import {
-  FILES_ARRAY,
   FILES_BOTTOM_SIDE,
   FILES_DISABLED,
   FILES_TOP_SIDE
 } from '../../constants/boardConstants'
 import { WHITE_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
 
-const Files = ({ width, side, perspective }) => {
+const Files = ({ width, side, perspective, files }) => {
   if (side === FILES_DISABLED) {
     return null
   }
@@ -25,7 +24,7 @@ const Files = ({ width, side, perspective }) => {
         justifyContent: 'space-around'
       }}
     >
-      {FILES_ARRAY.map((file, index) => (
+      {files.map((file, index) => (
         <p key={index}>{file}</p>
       ))}
     </div>

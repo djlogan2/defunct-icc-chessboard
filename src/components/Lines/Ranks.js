@@ -1,13 +1,12 @@
 import React from 'react'
 import {
-  RANKS_ARRAY,
   RANKS_DISABLED,
   RANKS_LEFT_SIDE,
   RANKS_RIGHT_SIDE
 } from '../../constants/boardConstants'
 import { WHITE_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
 
-const Ranks = ({ height, side, perspective }) => {
+const Ranks = ({ height, side, perspective, ranks }) => {
   if (side === RANKS_DISABLED) {
     return null
   }
@@ -27,7 +26,7 @@ const Ranks = ({ height, side, perspective }) => {
         justifyContent: 'space-around'
       }}
     >
-      {RANKS_ARRAY.map((rank, index) => {
+      {ranks.map((rank, index) => {
         return <p key={index}>{rank}</p>
       })}
     </div>

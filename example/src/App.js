@@ -25,6 +25,8 @@ const App = () => {
         wQ: 'static/images/defaultPieces/wQ.png',
         wR: 'static/images/defaultPieces/wR.png'
       }}
+      ranks={[1, 2, 3, 4, 5, 6, 7, 8]}
+      files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
     />
   );
 };

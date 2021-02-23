@@ -2,15 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Square from '../Square/Square'
-import { COLUMNS_LENGTH, ROWS_LENGTH } from '../../constants/boardConstants'
 
 import classes from './board.module.css'
 
-const Board = ({ size, boardStyle, pieces, boardSquares }) => {
+const Board = ({
+  size,
+  boardStyle,
+  pieces,
+  boardSquares,
+  ranksLength,
+  filesLength
+}) => {
   const squares = []
 
-  for (let row = 0; row < ROWS_LENGTH; row++) {
-    for (let col = 0; col < COLUMNS_LENGTH; col++) {
+  for (let row = 0; row < filesLength; row++) {
+    for (let col = 0; col < ranksLength; col++) {
       const color =
         row % 2
           ? col % 2

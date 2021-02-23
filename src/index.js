@@ -24,6 +24,8 @@ import { getPiecesFromFen } from './utils/utils'
 
 const ChessBoard = ({
   fen,
+  ranks,
+  files,
   styles,
   ranksSide,
   filesSide,
@@ -55,6 +57,8 @@ const ChessBoard = ({
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
           <Board
+            ranksLength={ranks.length}
+            filesLength={files.length}
             boardSquares={boardSquares}
             size={size * 0.9}
             styles={styles}
@@ -62,12 +66,14 @@ const ChessBoard = ({
             perspective={perspective}
           />
           <Files
+            files={files}
             width={size * 0.9}
             side={filesSide}
             perspective={perspective}
             filesStyle={styles?.files}
           />
           <Ranks
+            ranks={ranks}
             height={size * 0.9}
             side={ranksSide}
             perspective={perspective}
@@ -80,6 +86,8 @@ const ChessBoard = ({
 }
 
 ChessBoard.propTypes = {
+  ranks: PropTypes.array.isRequired,
+  files: PropTypes.array.isRequired,
   ranksSide: PropTypes.oneOf([
     RANKS_RIGHT_SIDE,
     RANKS_LEFT_SIDE,
