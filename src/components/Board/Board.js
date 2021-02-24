@@ -11,7 +11,8 @@ const Board = ({
   pieces,
   boardSquares,
   ranksLength,
-  filesLength
+  filesLength,
+  circleColor
 }) => {
   const squares = []
 
@@ -28,6 +29,7 @@ const Board = ({
 
       squares.push(
         <Square
+          circleColor={circleColor}
           piece={pieces[row][col]}
           size={size / 8}
           key={`${row}${col}`}

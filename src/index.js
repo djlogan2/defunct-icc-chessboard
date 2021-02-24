@@ -33,7 +33,8 @@ const ChessBoard = ({
   perspective,
   windowWidth,
   windowHeight,
-  boardSquares
+  boardSquares,
+  circleColor
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
@@ -64,6 +65,7 @@ const ChessBoard = ({
             styles={styles}
             pieces={pieces}
             perspective={perspective}
+            circleColor={circleColor}
           />
           <Files
             files={files}
@@ -105,7 +107,8 @@ ChessBoard.propTypes = {
   fen: PropTypes.string.isRequired,
   styles: PropTypes.object,
   pieceImages: PropTypes.object.isRequired,
-  boardSquares: PropTypes.object.isRequired
+  boardSquares: PropTypes.object.isRequired,
+  circleColor: PropTypes.string.isRequired
 }
 
 export default withWindowSize(ChessBoard)
