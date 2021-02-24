@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 
 import style from './piece.module.css'
 
-const Piece = ({ pieceImage, description, size }) => {
+const Piece = ({ pieceImage, description, size, handlePieceClick }) => {
   return (
     <img
+      onClick={handlePieceClick}
       alt={description}
       src={pieceImage}
       className={style.piece}

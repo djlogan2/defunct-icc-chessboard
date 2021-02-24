@@ -8,7 +8,7 @@ const App = () => {
     <ChessBoard
       ranksSide="right"
       filesSide="bottom"
-      perspective="white"
+      perspective="black"
       fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
       boardSquares={{light: "#FFFFFF", dark: "#1565c0"}}
       pieceImages={{
@@ -28,6 +28,7 @@ const App = () => {
       ranks={[1, 2, 3, 4, 5, 6, 7, 8]}
       files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
       circleColor="#000000"
+      movable={{e2: ["e3", "e4"]}}
     />
   );
 };

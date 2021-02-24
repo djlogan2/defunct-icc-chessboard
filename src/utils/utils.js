@@ -22,13 +22,20 @@ export const getPiecesFromFen = (fen, pieceImages, perspective) => {
 
       if (!isNaN(element)) {
         for (let i = 0; i < Number(element); i++) {
-          pieces[addNumber].push({})
+          perspective === BLACK_PLAYER_PERSPECTIVE
+            ? pieces[addNumber].unshift({})
+            : pieces[addNumber].push({})
         }
       } else {
-        pieces[addNumber].push({
-          image: pieceImages[PIECES_MAP[element]],
-          description: PIECES_MAP[element]
-        })
+        perspective === BLACK_PLAYER_PERSPECTIVE
+          ? pieces[addNumber].unshift({
+            image: pieceImages[PIECES_MAP[element]],
+            description: PIECES_MAP[element]
+          })
+          : pieces[addNumber].push({
+            image: pieceImages[PIECES_MAP[element]],
+            description: PIECES_MAP[element]
+          })
       }
     })
   })

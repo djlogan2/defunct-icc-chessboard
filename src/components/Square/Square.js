@@ -7,7 +7,7 @@ import Circle from '../Circle/Circle'
 import styles from './square.module.css'
 import LegalMove from '../LegalMove/LegalMove'
 
-const Square = ({ color, size, circle, isLegal, piece, circleColor }) => {
+const Square = ({ color, size, circle, isLegal, piece, circleColor, handlePieceClick, pieceKey }) => {
   const [isCircle, updateCircle] = useState(circle)
 
   const handleMouseUp = (event) => {
@@ -30,6 +30,7 @@ const Square = ({ color, size, circle, isLegal, piece, circleColor }) => {
     >
       {!!Object.keys(piece).length && (
         <Piece
+          handlePieceClick={handlePieceClick}
           pieceImage={piece.image}
           description={piece.description || 'not now'}
           size={size * 0.8}
