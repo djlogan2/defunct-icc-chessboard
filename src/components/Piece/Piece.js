@@ -10,7 +10,15 @@ const Piece = ({ pieceImage, description, size, handlePieceClick }) => {
       alt={description}
       src={pieceImage}
       className={style.piece}
-      style={{ width: size, height: 'auto' }}
+      style={{
+        width: size,
+        height: 'auto',
+        position: 'absolute',
+        margin: 0,
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
+      }}
     />
   )
 }

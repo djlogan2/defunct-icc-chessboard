@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import style from './circle.module.css'
-
 const Circle = ({ size, strokeStyle }) => {
   const canvasRef = React.useRef(null)
 
@@ -17,7 +15,16 @@ const Circle = ({ size, strokeStyle }) => {
   }, [])
 
   return (
-    <div style={{ position: "relative", width: size, height: size }}>
+    <div
+      style={{
+        position: 'absolute',
+        margin: 0,
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: size,
+        height: size
+    }}>
       <canvas ref={canvasRef} />
     </div>
   )

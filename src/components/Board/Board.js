@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Square from '../Square/Square'
 
 import classes from './board.module.css'
+import {BLACK_PLAYER_PERSPECTIVE} from "../../constants/systemConstants";
 
 const Board = ({
   size,
@@ -12,14 +13,20 @@ const Board = ({
   pieces,
   movable,
   boardStyle,
+  perspective,
   boardSquares,
   circleColor
 }) => {
   const squares = []
-  const [activePiece, updateActivePiece] = useState(null)
+  const [legalMoves, updateLegalMoves] = useState(null)
 
   const handlePieceClick = (piece) => {
-    updateActivePiece(piece)
+    if (legalMoves === piece) {
+      updateLegalMoves(null)
+      return
+    }
+
+    updateLegalMoves(piece)
   }
 
   for (let row = 0; row < files.length; row++) {
@@ -33,6 +40,10 @@ const Board = ({
           ? boardSquares.dark
           : boardSquares.light
 
+      const pieceCoordinates = perspective === BLACK_PLAYER_PERSPECTIVE ?
+        `${files[(files.length - 1) - col]}${ranks[row]}` :
+        `${files[col]}${ranks[(ranks.length - 1) - row]}`
+
       squares.push(
         <Square
           handlePieceClick={handlePieceClick}
@@ -40,11 +51,11 @@ const Board = ({
           piece={pieces[row][col]}
           size={size / 8}
           key={`${row}${col}`}
-          pieceKey={movable[`${files[row]}${ranks[col]}`]}
+          pieceName={pieceCoordinates}
+          pieceDepends={movable[pieceCoordinates]}
           color={color}
-          isLegal={false}
           circle={false}
-          activePiece={activePiece}
+          legalMoves={legalMoves}
         />
       )
     }

@@ -7,7 +7,7 @@ import Circle from '../Circle/Circle'
 import styles from './square.module.css'
 import LegalMove from '../LegalMove/LegalMove'
 
-const Square = ({ color, size, circle, isLegal, piece, circleColor, handlePieceClick, pieceKey }) => {
+const Square = ({ color, size, circle, piece, circleColor, handlePieceClick, pieceName, pieceDepends, legalMoves }) => {
   const [isCircle, updateCircle] = useState(circle)
 
   const handleMouseUp = (event) => {
@@ -21,11 +21,15 @@ const Square = ({ color, size, circle, isLegal, piece, circleColor, handlePieceC
       onMouseUp={handleMouseUp}
       onContextMenu={(e) => e.preventDefault()}
       className={styles.square}
+      onClick={(event) => {
+        handlePieceClick(pieceDepends)
+      }}
       style={{
         width: size,
         height: size,
         backgroundColor: color,
-        position: 'relative'
+        position: 'relative',
+        outline: 'none'
       }}
     >
       {!!Object.keys(piece).length && (
@@ -37,7 +41,7 @@ const Square = ({ color, size, circle, isLegal, piece, circleColor, handlePieceC
         />
       )}
       {!!isCircle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
-      {!!isLegal && <LegalMove size={size * 0.3} />}
+      {!!legalMoves && legalMoves.includes(pieceName) && <LegalMove size={size * 0.3} />}
     </button>
   )
 }
@@ -45,7 +49,6 @@ const Square = ({ color, size, circle, isLegal, piece, circleColor, handlePieceC
 Square.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.number.isRequired,
-  isLegal: PropTypes.bool.isRequired,
   circle: PropTypes.bool.isRequired,
   piece: PropTypes.object
 }
