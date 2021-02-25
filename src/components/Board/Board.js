@@ -11,6 +11,7 @@ const Board = ({
   ranks,
   files,
   pieces,
+  circles,
   movable,
   boardStyle,
   perspective,
@@ -44,6 +45,8 @@ const Board = ({
         `${files[(files.length - 1) - col]}${ranks[row]}` :
         `${files[col]}${ranks[(ranks.length - 1) - row]}`
 
+      const haveCircle = circles && circles.includes(pieceCoordinates)
+
       squares.push(
         <Square
           handlePieceClick={handlePieceClick}
@@ -54,7 +57,7 @@ const Board = ({
           pieceName={pieceCoordinates}
           pieceDepends={movable[pieceCoordinates]}
           color={color}
-          circle={false}
+          circle={haveCircle}
           legalMoves={legalMoves}
         />
       )

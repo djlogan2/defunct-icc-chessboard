@@ -28,6 +28,7 @@ const ChessBoard = ({
   files,
   styles,
   movable,
+  circles,
   ranksSide,
   filesSide,
   pieceImages,
@@ -62,23 +63,24 @@ const ChessBoard = ({
             ranks={ranks}
             files={files}
             boardSquares={boardSquares}
-            size={size * 0.9}
+            size={size * 0.85}
             styles={styles}
             pieces={pieces}
             perspective={perspective}
             circleColor={circleColor}
             movable={movable}
+            circles={circles}
           />
           <Files
             files={files}
-            width={size * 0.9}
+            width={size * 0.85}
             side={filesSide}
             perspective={perspective}
             filesStyle={styles?.files}
           />
           <Ranks
             ranks={ranks}
-            height={size * 0.9}
+            height={size * 0.85}
             side={ranksSide}
             perspective={perspective}
             ranksStyle={styles?.ranks}
@@ -111,7 +113,8 @@ ChessBoard.propTypes = {
   pieceImages: PropTypes.object.isRequired,
   boardSquares: PropTypes.object.isRequired,
   circleColor: PropTypes.string.isRequired,
-  movable: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired
+  movable: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  circles: PropTypes.array
 }
 
 export default withWindowSize(ChessBoard)

@@ -29,6 +29,7 @@ const App = () => {
       files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
       circleColor="#000000"
       movable={{e2: ["e3", "e4"]}}
+      circles={[]}
     />
   );
 };
