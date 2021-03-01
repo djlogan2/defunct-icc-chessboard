@@ -7,16 +7,52 @@ export const FILES_TOP_SIDE = 'top'
 export const FILES_DISABLED = 'none'
 
 export const PIECES_MAP = {
-  b: 'bB',
-  k: 'bK',
-  n: 'bN',
-  p: 'bP',
-  q: 'bQ',
-  r: 'bR',
-  B: 'wB',
-  K: 'wK',
-  N: 'wN',
-  P: 'wP',
-  Q: 'wQ',
-  R: 'wR'
+  b: {
+    code: 'bB',
+    color: 'black'
+  },
+  k: {
+    code: 'bK',
+    color: 'black'
+  },
+  n: {
+    code: 'bN',
+    color: 'black'
+  },
+  p: {
+    code: 'bP',
+    color: 'black'
+  },
+  q: {
+    code: 'bQ',
+    color: 'black'
+  },
+  r: {
+    code: 'bR',
+    color: 'black'
+  },
+  B: {
+    code: 'wB',
+    color: 'white'
+  },
+  K: {
+    code: 'wK',
+    color: 'white'
+  },
+  N: {
+    code: 'wN',
+    color: 'white'
+  },
+  P: {
+    code: 'wP',
+    color: 'white'
+  },
+  Q: {
+    code: 'wQ',
+    color: 'white'
+  },
+  R: {
+    code: 'wR',
+    color: 'white'
+  }
 }

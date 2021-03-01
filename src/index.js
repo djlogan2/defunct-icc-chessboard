@@ -18,6 +18,9 @@ import {
 } from './constants/boardConstants'
 import {
   BLACK_PLAYER_PERSPECTIVE,
+  STATUS_EDIT,
+  STATUS_EXAMINE,
+  STATUS_GAME,
   WHITE_PLAYER_PERSPECTIVE
 } from './constants/systemConstants'
 import { getPiecesFromFen } from './utils/utils'
@@ -29,6 +32,7 @@ const ChessBoard = ({
   styles,
   movable,
   circles,
+  arrows,
   ranksSide,
   filesSide,
   pieceImages,
@@ -36,7 +40,10 @@ const ChessBoard = ({
   windowWidth,
   windowHeight,
   boardSquares,
-  circleColor
+  arrowColor,
+  circleColor,
+  onUpdateCircles,
+  onUpdateArrows
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
@@ -67,9 +74,13 @@ const ChessBoard = ({
             styles={styles}
             pieces={pieces}
             perspective={perspective}
+            arrowColor={arrowColor}
             circleColor={circleColor}
             movable={movable}
             circles={circles}
+            arrows={arrows}
+            onUpdateCircles={onUpdateCircles}
+            onUpdateArrows={onUpdateArrows}
           />
           <Files
             files={files}
@@ -113,8 +124,14 @@ ChessBoard.propTypes = {
   pieceImages: PropTypes.object.isRequired,
   boardSquares: PropTypes.object.isRequired,
   circleColor: PropTypes.string.isRequired,
+  arrowColor: PropTypes.string.isRequired,
   movable: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
-  circles: PropTypes.array
+  circles: PropTypes.array,
+  arrows: PropTypes.array,
+  status: PropTypes.oneOf([STATUS_GAME, STATUS_EXAMINE, STATUS_EDIT])
+    .isRequired,
+  onUpdateCircles: PropTypes.func.isRequired,
+  onUpdateArrows: PropTypes.func.isRequired
 }
 
 export default withWindowSize(ChessBoard)

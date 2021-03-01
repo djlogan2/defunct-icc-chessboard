@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import Piece from '../Piece/Piece'
@@ -7,21 +7,38 @@ import Circle from '../Circle/Circle'
 import styles from './square.module.css'
 import LegalMove from '../LegalMove/LegalMove'
 
-const Square = ({ color, size, circle, piece, circleColor, handlePieceClick, pieceName, pieceDepends, legalMoves }) => {
-  const [isCircle, updateCircle] = useState(circle)
-
+const Square = ({
+  color,
+  size,
+  circle,
+  piece,
+  circleColor,
+  handlePieceClick,
+  pieceName,
+  pieceDepends,
+  legalMoves,
+  updateSquareMouseDown,
+  updateSquareMouseUp
+}) => {
   const handleMouseUp = (event) => {
     if (typeof event === 'object' && event.button === 2) {
-      updateCircle(!isCircle)
+      updateSquareMouseUp(pieceName)
+    }
+  }
+
+  const handleMouseDown = (event) => {
+    if (typeof event === 'object' && event.button === 2) {
+      updateSquareMouseDown(pieceName)
     }
   }
 
   return (
     <button
       onMouseUp={handleMouseUp}
+      onMouseDown={handleMouseDown}
       onContextMenu={(e) => e.preventDefault()}
       className={styles.square}
-      onClick={(event) => {
+      onClick={() => {
         handlePieceClick(pieceDepends)
       }}
       style={{
@@ -40,8 +57,10 @@ const Square = ({ color, size, circle, piece, circleColor, handlePieceClick, pie
           size={size * 0.8}
         />
       )}
-      {!!isCircle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
-      {!!legalMoves && legalMoves.includes(pieceName) && <LegalMove size={size * 0.3} />}
+      {!!circle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
+      {!!legalMoves && legalMoves.includes(pieceName) && (
+        <LegalMove size={size * 0.3} />
+      )}
     </button>
   )
 }

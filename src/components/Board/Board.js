@@ -1,25 +1,73 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import Square from '../Square/Square'
 
 import classes from './board.module.css'
-import {BLACK_PLAYER_PERSPECTIVE} from "../../constants/systemConstants";
+import { BLACK_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
+import { generateArrowCoordinates } from '../../utils/utils'
 
 const Board = ({
   size,
   ranks,
   files,
   pieces,
+  arrows,
   circles,
   movable,
   boardStyle,
   perspective,
   boardSquares,
-  circleColor
+  circleColor,
+  arrowColor,
+  onUpdateArrows,
+  onUpdateCircles
 }) => {
   const squares = []
   const [legalMoves, updateLegalMoves] = useState(null)
+  const [squareMouseDown, updateSquareMouseDown] = useState(null)
+  const [squareMouseUp, updateSquareMouseUp] = useState(null)
+
+  const canvasRef = React.useRef(null)
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current
+    const context = canvas.getContext('2d')
+
+    const arrowsCoordinates = generateArrowCoordinates(
+      arrows,
+      size,
+      files,
+      ranks,
+      perspective
+    )
+
+    context.clearRect(0, 0, canvas.width, canvas.height)
+
+    arrowsCoordinates.forEach((arrow) => {
+      context.beginPath()
+      context.moveTo(arrow.from.x, arrow.from.y)
+      context.lineTo(arrow.to.x, arrow.to.y)
+      context.strokeStyle = arrowColor
+      context.lineWidth = 5
+      context.stroke()
+    })
+  }, [arrows])
+
+  useEffect(() => {
+    if (!squareMouseDown || !squareMouseUp) {
+      return
+    }
+
+    if (squareMouseDown !== squareMouseUp) {
+      onUpdateArrows([squareMouseDown, squareMouseUp])
+    } else {
+      onUpdateCircles(squareMouseUp)
+    }
+
+    updateSquareMouseDown(null)
+    updateSquareMouseUp(null)
+  }, [squareMouseDown, squareMouseUp])
 
   const handlePieceClick = (piece) => {
     if (legalMoves === piece) {
@@ -41,9 +89,10 @@ const Board = ({
           ? boardSquares.dark
           : boardSquares.light
 
-      const pieceCoordinates = perspective === BLACK_PLAYER_PERSPECTIVE ?
-        `${files[(files.length - 1) - col]}${ranks[row]}` :
-        `${files[col]}${ranks[(ranks.length - 1) - row]}`
+      const pieceCoordinates =
+        perspective === BLACK_PLAYER_PERSPECTIVE
+          ? `${files[files.length - 1 - col]}${ranks[row]}`
+          : `${files[col]}${ranks[ranks.length - 1 - row]}`
 
       const haveCircle = circles && circles.includes(pieceCoordinates)
 
@@ -59,6 +108,8 @@ const Board = ({
           color={color}
           circle={haveCircle}
           legalMoves={legalMoves}
+          updateSquareMouseDown={updateSquareMouseDown}
+          updateSquareMouseUp={updateSquareMouseUp}
         />
       )
     }
@@ -69,6 +120,16 @@ const Board = ({
       style={{ width: size, height: size, ...boardStyle }}
       className={classes.board}
     >
+      <canvas
+        ref={canvasRef}
+        width={size}
+        height={size}
+        style={{
+          position: 'absolute',
+          zIndex: 999,
+          pointerEvents: 'none'
+        }}
+      />
       {squares}
     </div>
   )

@@ -1,8 +1,55 @@
 import { PIECES_MAP } from '../constants/boardConstants'
-import { BLACK_PLAYER_PERSPECTIVE } from '../constants/systemConstants'
+import {
+  BLACK_PLAYER_PERSPECTIVE,
+  WHITE_PLAYER_PERSPECTIVE
+} from '../constants/systemConstants'
 
 export const checkIsOdd = (value) => {
   return value % 2 === 1
+}
+
+export const generateArrowCoordinates = (
+  arrows,
+  size,
+  files,
+  ranks,
+  perspective
+) => {
+  return arrows.reduce((acc, arrow) => {
+    const squareSize = size / 8
+    const currentArrow = {}
+
+    const from = arrow[0].split('')
+    const to = arrow[1].split('')
+
+    const fromSizeX =
+      squareSize / 2 +
+      (perspective === WHITE_PLAYER_PERSPECTIVE
+        ? files.indexOf(from[0]) * squareSize
+        : (files.length - 1 - files.indexOf(from[0])) * squareSize)
+    const fromSizeY =
+      squareSize / 2 +
+      (perspective === BLACK_PLAYER_PERSPECTIVE
+        ? ranks.indexOf(from[1]) * squareSize
+        : (ranks.length - 1 - ranks.indexOf(from[1])) * squareSize)
+
+    const toSizeX =
+      squareSize / 2 +
+      (perspective === WHITE_PLAYER_PERSPECTIVE
+        ? files.indexOf(to[0]) * squareSize
+        : (files.length - 1 - files.indexOf(to[0])) * squareSize)
+    const toSizeY =
+      squareSize / 2 +
+      (perspective === BLACK_PLAYER_PERSPECTIVE
+        ? ranks.indexOf(to[1]) * squareSize
+        : (ranks.length - 1 - ranks.indexOf(to[1])) * squareSize)
+
+    currentArrow.from = { x: fromSizeX, y: fromSizeY }
+    currentArrow.to = { x: toSizeX, y: toSizeY }
+
+    acc.push(currentArrow)
+    return acc
+  }, [])
 }
 
 export const getPiecesFromFen = (fen, pieceImages, perspective) => {
@@ -29,13 +76,15 @@ export const getPiecesFromFen = (fen, pieceImages, perspective) => {
       } else {
         perspective === BLACK_PLAYER_PERSPECTIVE
           ? pieces[addNumber].unshift({
-            image: pieceImages[PIECES_MAP[element]],
-            description: PIECES_MAP[element]
-          })
+              color: PIECES_MAP[element]?.color,
+              image: pieceImages[PIECES_MAP[element]?.code],
+              description: PIECES_MAP[element]?.code
+            })
           : pieces[addNumber].push({
-            image: pieceImages[PIECES_MAP[element]],
-            description: PIECES_MAP[element]
-          })
+              color: PIECES_MAP[element]?.color,
+              image: pieceImages[PIECES_MAP[element]?.code],
+              description: PIECES_MAP[element]?.code
+            })
       }
     })
   })
