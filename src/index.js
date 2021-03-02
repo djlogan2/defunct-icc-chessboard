@@ -18,21 +18,23 @@ import {
 } from './constants/boardConstants'
 import {
   BLACK_PLAYER_PERSPECTIVE,
-  STATUS_EDIT,
-  STATUS_EXAMINE,
-  STATUS_GAME,
-  WHITE_PLAYER_PERSPECTIVE
+  WHITE_PLAYER_PERSPECTIVE,
+  MODE_EDIT,
+  MODE_EXAMINE,
+  MODE_GAME
 } from './constants/systemConstants'
 import { getPiecesFromFen } from './utils/utils'
 
 const ChessBoard = ({
   fen,
+  mode,
   ranks,
   files,
   styles,
   movable,
   circles,
   arrows,
+  onMove,
   ranksSide,
   filesSide,
   pieceImages,
@@ -67,6 +69,7 @@ const ChessBoard = ({
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
           <Board
+            mode={mode}
             ranks={ranks}
             files={files}
             boardSquares={boardSquares}
@@ -79,6 +82,7 @@ const ChessBoard = ({
             movable={movable}
             circles={circles}
             arrows={arrows}
+            handleMove={onMove}
             onUpdateCircles={onUpdateCircles}
             onUpdateArrows={onUpdateArrows}
           />
@@ -128,10 +132,11 @@ ChessBoard.propTypes = {
   movable: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
   circles: PropTypes.array,
   arrows: PropTypes.array,
-  status: PropTypes.oneOf([STATUS_GAME, STATUS_EXAMINE, STATUS_EDIT])
+  mode: PropTypes.oneOf([MODE_GAME, MODE_EXAMINE, MODE_EDIT])
     .isRequired,
   onUpdateCircles: PropTypes.func.isRequired,
-  onUpdateArrows: PropTypes.func.isRequired
+  onUpdateArrows: PropTypes.func.isRequired,
+  onMove: PropTypes.func.isRequired
 }
 
 export default withWindowSize(ChessBoard)

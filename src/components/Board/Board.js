@@ -9,6 +9,7 @@ import { generateArrowCoordinates } from '../../utils/utils'
 
 const Board = ({
   size,
+  mode,
   ranks,
   files,
   pieces,
@@ -20,10 +21,12 @@ const Board = ({
   boardSquares,
   circleColor,
   arrowColor,
+  handleMove,
   onUpdateArrows,
   onUpdateCircles
 }) => {
   const squares = []
+  const [currentPiece, updateCurrentPiece] = useState(null)
   const [legalMoves, updateLegalMoves] = useState(null)
   const [squareMouseDown, updateSquareMouseDown] = useState(null)
   const [squareMouseUp, updateSquareMouseUp] = useState(null)
@@ -79,12 +82,19 @@ const Board = ({
   }, [squareMouseDown, squareMouseUp])
 
   const handlePieceClick = (piece) => {
-    if (legalMoves === piece) {
+    if (currentPiece === piece) {
       updateLegalMoves(null)
-      return
+    } else if (legalMoves && legalMoves.includes(piece)) {
+      handleMove([currentPiece, piece])
+    } else {
+      updateLegalMoves(movable[piece])
     }
 
-    updateLegalMoves(piece)
+    if (currentPiece === piece) {
+      updateCurrentPiece(null)
+    } else {
+      updateCurrentPiece(piece)
+    }
   }
 
   for (let row = 0; row < files.length; row++) {
@@ -107,13 +117,14 @@ const Board = ({
 
       squares.push(
         <Square
+          mode={mode}
           handlePieceClick={handlePieceClick}
           circleColor={circleColor}
           piece={pieces[row][col]}
           size={size / 8}
           key={`${row}${col}`}
           pieceName={pieceCoordinates}
-          pieceDepends={movable[pieceCoordinates]}
+          currentPiece={currentPiece}
           color={color}
           circle={haveCircle}
           legalMoves={legalMoves}

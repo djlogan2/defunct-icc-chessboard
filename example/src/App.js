@@ -19,6 +19,10 @@ const App = () => {
     }
   }
 
+  const handleMove = (move) => {
+    console.log(move)
+  }
+
   const handleUpdateArrows = (arrow) => {
     let equalIndex
     const isExists = arrows.some((element, index) => {
@@ -45,7 +49,10 @@ const App = () => {
       filesSide="bottom"
       perspective="white"
       fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-      boardSquares={{light: "#FFFFFF", dark: "#1565c0"}}
+      boardSquares={{
+        light: {default: "#FFFFFF", active: "#9c9c9c"},
+        dark: {default: "#1565c0", active: "#1255A1"}
+      }}
       pieceImages={{
         bB: 'static/images/defaultPieces/bB.png',
         bK: 'static/images/defaultPieces/bK.png',
@@ -69,7 +76,8 @@ const App = () => {
       arrows={arrows}
       onUpdateCircles={handleUpdateCircles}
       onUpdateArrows={handleUpdateArrows}
-      status="game"
+      onMove={handleMove}
+      mode="game"
     />
   );
 };
