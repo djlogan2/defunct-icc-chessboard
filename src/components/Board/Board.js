@@ -45,9 +45,18 @@ const Board = ({
     context.clearRect(0, 0, canvas.width, canvas.height)
 
     arrowsCoordinates.forEach((arrow) => {
+      const headlen = 20; // length of head in pixels
+      const dx = arrow.to.x - arrow.from.x;
+      const dy = arrow.to.y - arrow.from.y;
+      const angle = Math.atan2(dy, dx);
+
       context.beginPath()
       context.moveTo(arrow.from.x, arrow.from.y)
       context.lineTo(arrow.to.x, arrow.to.y)
+
+      context.lineTo(arrow.to.x - headlen * Math.cos(angle - Math.PI / 6), arrow.to.y - headlen * Math.sin(angle - Math.PI / 6));
+      context.moveTo(arrow.to.x, arrow.to.y);
+      context.lineTo(arrow.to.x - headlen * Math.cos(angle + Math.PI / 6), arrow.to.y - headlen * Math.sin(angle + Math.PI / 6));
       context.strokeStyle = arrowColor
       context.lineWidth = 5
       context.stroke()
