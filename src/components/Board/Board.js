@@ -92,6 +92,7 @@ const Board = ({
       updateLegalMoves(null)
     } else if (legalMoves && legalMoves.includes(piece)) {
       handleMove([currentPiece, piece])
+      updateLegalMoves(null)
     } else {
       updateLegalMoves(movable[piece])
     }
