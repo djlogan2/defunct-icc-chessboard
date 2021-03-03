@@ -108,6 +108,7 @@ class App extends React.Component {
         onUpdateArrows={arrow => this.handleUpdateArrows(arrow)}
         onMove={move => this.handleMove(move)}
         mode='game'
+        showLegalMoves
       />
     )
   }

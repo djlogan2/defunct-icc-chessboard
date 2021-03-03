@@ -6,7 +6,7 @@ import Circle from '../Circle/Circle'
 
 import styles from './square.module.css'
 import LegalMove from '../LegalMove/LegalMove'
-import {MODE_EDIT} from "../../constants/systemConstants";
+import { MODE_EDIT } from '../../constants/systemConstants'
 
 const Square = ({
   color,
@@ -18,6 +18,7 @@ const Square = ({
   handlePieceClick,
   pieceName,
   legalMoves,
+  showLegalMoves,
   updateSquareMouseDown,
   updateSquareMouseUp,
   currentPiece
@@ -46,7 +47,8 @@ const Square = ({
       style={{
         width: size,
         height: size,
-        backgroundColor: currentPiece === pieceName ? color.active : color.default,
+        backgroundColor:
+          currentPiece === pieceName ? color.active : color.default,
         position: 'relative',
         outline: 'none'
       }}
@@ -60,9 +62,10 @@ const Square = ({
         />
       )}
       {!!circle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
-      {!!legalMoves && mode !== MODE_EDIT && legalMoves.includes(pieceName) && (
-        <LegalMove size={size * 0.3} />
-      )}
+      {showLegalMoves &&
+        !!legalMoves &&
+        mode !== MODE_EDIT &&
+        legalMoves.includes(pieceName) && <LegalMove size={size * 0.3} />}
     </button>
   )
 }

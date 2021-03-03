@@ -23,7 +23,8 @@ const Board = ({
   arrowColor,
   handleMove,
   onUpdateArrows,
-  onUpdateCircles
+  onUpdateCircles,
+  showLegalMoves
 }) => {
   const squares = []
   const [currentPiece, updateCurrentPiece] = useState(null)
@@ -135,6 +136,7 @@ const Board = ({
           color={color}
           circle={haveCircle}
           legalMoves={legalMoves}
+          showLegalMoves={showLegalMoves}
           updateSquareMouseDown={updateSquareMouseDown}
           updateSquareMouseUp={updateSquareMouseUp}
         />

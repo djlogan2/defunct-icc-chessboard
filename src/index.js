@@ -45,7 +45,8 @@ const ChessBoard = ({
   arrowColor,
   circleColor,
   onUpdateCircles,
-  onUpdateArrows
+  onUpdateArrows,
+  showLegalMoves
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
@@ -85,6 +86,7 @@ const ChessBoard = ({
             handleMove={onMove}
             onUpdateCircles={onUpdateCircles}
             onUpdateArrows={onUpdateArrows}
+            showLegalMoves={showLegalMoves}
           />
           <Files
             files={files}
@@ -130,6 +132,7 @@ ChessBoard.propTypes = {
   circleColor: PropTypes.string.isRequired,
   arrowColor: PropTypes.string.isRequired,
   movable: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  showLegalMoves: PropTypes.bool.isRequired,
   circles: PropTypes.array,
   arrows: PropTypes.array,
   mode: PropTypes.oneOf([MODE_GAME, MODE_EXAMINE, MODE_EDIT])
