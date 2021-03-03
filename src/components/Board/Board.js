@@ -33,13 +33,10 @@ const Board = ({
 
   const canvasRef = useRef(null)
 
-  console.log(arrows)
-
   useEffect(() => {
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
 
-    console.log("effect")
     const arrowsCoordinates = generateArrowCoordinates(
       arrows,
       size,
