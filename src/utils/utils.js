@@ -47,6 +47,7 @@ export const generateArrowCoordinates = (
     currentArrow.from = { x: fromSizeX, y: fromSizeY }
     currentArrow.to = { x: toSizeX, y: toSizeY }
 
+    console.log(currentArrow)
     acc.push(currentArrow)
     return acc
   }, [])

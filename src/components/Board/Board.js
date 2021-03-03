@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import Square from '../Square/Square'
@@ -31,12 +31,15 @@ const Board = ({
   const [squareMouseDown, updateSquareMouseDown] = useState(null)
   const [squareMouseUp, updateSquareMouseUp] = useState(null)
 
-  const canvasRef = React.useRef(null)
+  const canvasRef = useRef(null)
 
-  React.useEffect(() => {
+  console.log(arrows)
+
+  useEffect(() => {
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
 
+    console.log("effect")
     const arrowsCoordinates = generateArrowCoordinates(
       arrows,
       size,
@@ -48,18 +51,24 @@ const Board = ({
     context.clearRect(0, 0, canvas.width, canvas.height)
 
     arrowsCoordinates.forEach((arrow) => {
-      const headlen = 20; // length of head in pixels
-      const dx = arrow.to.x - arrow.from.x;
-      const dy = arrow.to.y - arrow.from.y;
-      const angle = Math.atan2(dy, dx);
+      const headlen = 20 // length of head in pixels
+      const dx = arrow.to.x - arrow.from.x
+      const dy = arrow.to.y - arrow.from.y
+      const angle = Math.atan2(dy, dx)
 
       context.beginPath()
       context.moveTo(arrow.from.x, arrow.from.y)
       context.lineTo(arrow.to.x, arrow.to.y)
 
-      context.lineTo(arrow.to.x - headlen * Math.cos(angle - Math.PI / 6), arrow.to.y - headlen * Math.sin(angle - Math.PI / 6));
-      context.moveTo(arrow.to.x, arrow.to.y);
-      context.lineTo(arrow.to.x - headlen * Math.cos(angle + Math.PI / 6), arrow.to.y - headlen * Math.sin(angle + Math.PI / 6));
+      context.lineTo(
+        arrow.to.x - headlen * Math.cos(angle - Math.PI / 6),
+        arrow.to.y - headlen * Math.sin(angle - Math.PI / 6)
+      )
+      context.moveTo(arrow.to.x, arrow.to.y)
+      context.lineTo(
+        arrow.to.x - headlen * Math.cos(angle + Math.PI / 6),
+        arrow.to.y - headlen * Math.sin(angle + Math.PI / 6)
+      )
       context.strokeStyle = arrowColor
       context.lineWidth = 5
       context.stroke()
