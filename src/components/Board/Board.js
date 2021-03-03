@@ -95,7 +95,11 @@ const Board = ({
       handleMove([currentPiece, piece])
       updateLegalMoves(null)
     } else {
-      updateLegalMoves(movable[piece])
+      if (typeof movable === 'function') {
+        updateLegalMoves(movable(piece))
+      } else if (typeof movable === 'object') {
+        updateLegalMoves(movable[piece])
+      }
     }
 
     if (currentPiece === piece) {
