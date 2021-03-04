@@ -60,5 +60,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "react-dnd": "^13.1.1"
+  }
 }
