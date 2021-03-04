@@ -44,6 +44,7 @@ const ChessBoard = ({
   boardSquares,
   arrowColor,
   circleColor,
+  smartMoves,
   onUpdateCircles,
   onUpdateArrows,
   showLegalMoves
@@ -84,6 +85,7 @@ const ChessBoard = ({
             circles={circles}
             arrows={arrows}
             handleMove={onMove}
+            smartMoves={smartMoves}
             onUpdateCircles={onUpdateCircles}
             onUpdateArrows={onUpdateArrows}
             showLegalMoves={showLegalMoves}
@@ -135,11 +137,11 @@ ChessBoard.propTypes = {
   showLegalMoves: PropTypes.bool.isRequired,
   circles: PropTypes.array,
   arrows: PropTypes.array,
-  mode: PropTypes.oneOf([MODE_GAME, MODE_EXAMINE, MODE_EDIT])
-    .isRequired,
+  mode: PropTypes.oneOf([MODE_GAME, MODE_EXAMINE, MODE_EDIT]).isRequired,
   onUpdateCircles: PropTypes.func.isRequired,
   onUpdateArrows: PropTypes.func.isRequired,
-  onMove: PropTypes.func.isRequired
+  onMove: PropTypes.func.isRequired,
+  smartMoves: PropTypes.bool
 }
 
 export default withWindowSize(ChessBoard)

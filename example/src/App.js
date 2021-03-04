@@ -77,7 +77,7 @@ class App extends React.Component {
       <ChessBoard
         ranksSide='right'
         filesSide='bottom'
-        perspective='black'
+        perspective='white'
         fen={fen}
         boardSquares={{
           light: { default: '#FFFFFF', active: '#9c9c9c' },
@@ -108,6 +108,7 @@ class App extends React.Component {
         onUpdateArrows={arrow => this.handleUpdateArrows(arrow)}
         onMove={move => this.handleMove(move)}
         mode='game'
+        smartMoves
         showLegalMoves
       />
     )

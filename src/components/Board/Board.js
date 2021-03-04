@@ -22,6 +22,7 @@ const Board = ({
   circleColor,
   arrowColor,
   handleMove,
+  smartMoves,
   onUpdateArrows,
   onUpdateCircles,
   showLegalMoves
@@ -96,9 +97,19 @@ const Board = ({
       updateLegalMoves(null)
     } else {
       if (typeof movable === 'function') {
-        updateLegalMoves(movable(piece))
+        const moves = movable(piece)
+        if (smartMoves && moves && moves.length === 1) {
+          handleMove([piece, moves[0]])
+        } else {
+          updateLegalMoves(movable(piece))
+        }
       } else if (typeof movable === 'object') {
-        updateLegalMoves(movable[piece])
+        const moves = movable[piece]
+        if (smartMoves && moves && moves.length === 1) {
+          handleMove([piece, moves[0]])
+        } else {
+          updateLegalMoves(movable[piece])
+        }
       }
     }
 
