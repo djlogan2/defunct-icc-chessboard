@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import Board from './components/Board/Board'
@@ -96,7 +96,7 @@ const ChessBoard = ({
             signatureSquares={signatureSquares}
           />
           {size * BOARD_SIZE_RELATIVE > smallSize && (
-            <>
+            <Fragment>
               <Files
                 files={files}
                 width={size * BOARD_SIZE_RELATIVE}
@@ -111,7 +111,7 @@ const ChessBoard = ({
                 perspective={perspective}
                 ranksStyle={styles?.ranks}
               />
-            </>
+            </Fragment>
           )}
         </BoardWrapper>
       )}
