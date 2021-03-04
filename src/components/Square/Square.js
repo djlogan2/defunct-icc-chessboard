@@ -18,7 +18,9 @@ const Square = ({
   handlePieceClick,
   pieceName,
   legalMoves,
+  smallSize,
   showLegalMoves,
+  signatureSquares,
   updateSquareMouseDown,
   updateSquareMouseUp,
   currentPiece
@@ -34,6 +36,8 @@ const Square = ({
       updateSquareMouseDown(pieceName)
     }
   }
+
+  console.log(signatureSquares, smallSize, size)
 
   return (
     <button
@@ -53,6 +57,7 @@ const Square = ({
         outline: 'none'
       }}
     >
+      {signatureSquares && smallSize > size && pieceName}
       {!!Object.keys(piece).length && (
         <Piece
           handlePieceClick={handlePieceClick}

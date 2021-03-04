@@ -110,6 +110,8 @@ class App extends React.Component {
         mode='game'
         smartMoves
         showLegalMoves
+        smallSize={500}
+        signatureSquares
       />
     )
   }

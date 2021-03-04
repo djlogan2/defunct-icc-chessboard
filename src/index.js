@@ -21,7 +21,8 @@ import {
   WHITE_PLAYER_PERSPECTIVE,
   MODE_EDIT,
   MODE_EXAMINE,
-  MODE_GAME
+  MODE_GAME,
+  BOARD_SIZE_RELATIVE
 } from './constants/systemConstants'
 import { getPiecesFromFen } from './utils/utils'
 
@@ -45,6 +46,8 @@ const ChessBoard = ({
   arrowColor,
   circleColor,
   smartMoves,
+  smallSize,
+  signatureSquares,
   onUpdateCircles,
   onUpdateArrows,
   showLegalMoves
@@ -75,7 +78,7 @@ const ChessBoard = ({
             ranks={ranks}
             files={files}
             boardSquares={boardSquares}
-            size={size * 0.85}
+            size={size * BOARD_SIZE_RELATIVE}
             styles={styles}
             pieces={pieces}
             perspective={perspective}
@@ -86,24 +89,30 @@ const ChessBoard = ({
             arrows={arrows}
             handleMove={onMove}
             smartMoves={smartMoves}
+            smallSize={smallSize}
             onUpdateCircles={onUpdateCircles}
             onUpdateArrows={onUpdateArrows}
             showLegalMoves={showLegalMoves}
+            signatureSquares={signatureSquares}
           />
-          <Files
-            files={files}
-            width={size * 0.85}
-            side={filesSide}
-            perspective={perspective}
-            filesStyle={styles?.files}
-          />
-          <Ranks
-            ranks={ranks}
-            height={size * 0.85}
-            side={ranksSide}
-            perspective={perspective}
-            ranksStyle={styles?.ranks}
-          />
+          {size * BOARD_SIZE_RELATIVE > smallSize && (
+            <>
+              <Files
+                files={files}
+                width={size * BOARD_SIZE_RELATIVE}
+                side={filesSide}
+                perspective={perspective}
+                filesStyle={styles?.files}
+              />
+              <Ranks
+                ranks={ranks}
+                height={size * BOARD_SIZE_RELATIVE}
+                side={ranksSide}
+                perspective={perspective}
+                ranksStyle={styles?.ranks}
+              />
+            </>
+          )}
         </BoardWrapper>
       )}
     </div>
@@ -141,7 +150,9 @@ ChessBoard.propTypes = {
   onUpdateCircles: PropTypes.func.isRequired,
   onUpdateArrows: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
-  smartMoves: PropTypes.bool
+  smartMoves: PropTypes.bool,
+  smallSize: PropTypes.number.isRequired,
+  signatureSquares: PropTypes.bool
 }
 
 export default withWindowSize(ChessBoard)

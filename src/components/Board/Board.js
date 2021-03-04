@@ -16,6 +16,7 @@ const Board = ({
   arrows,
   circles,
   movable,
+  smallSize,
   boardStyle,
   perspective,
   boardSquares,
@@ -23,6 +24,7 @@ const Board = ({
   arrowColor,
   handleMove,
   smartMoves,
+  signatureSquares,
   onUpdateArrows,
   onUpdateCircles,
   showLegalMoves
@@ -151,6 +153,8 @@ const Board = ({
           color={color}
           circle={haveCircle}
           legalMoves={legalMoves}
+          smallSize={smallSize / 8}
+          signatureSquares={signatureSquares}
           showLegalMoves={showLegalMoves}
           updateSquareMouseDown={updateSquareMouseDown}
           updateSquareMouseUp={updateSquareMouseUp}
