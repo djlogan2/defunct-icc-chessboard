@@ -111,7 +111,7 @@ class App extends React.Component {
         smartMoves
         showLegalMoves
         smallSize={500}
-        signatureSquares
+        signatureSquares={false}
       />
     )
   }

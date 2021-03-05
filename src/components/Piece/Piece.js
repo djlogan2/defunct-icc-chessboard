@@ -11,6 +11,7 @@ const Piece = ({
   size,
   handlePieceClick
 }) => {
+
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
       item: { type: pieceName },
