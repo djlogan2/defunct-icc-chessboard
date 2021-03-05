@@ -45,18 +45,16 @@ const Square = ({
         handlePieceClick(pieceName)
         console.log('canDrop')
 
-        return true
+        console.log(legalMoves, pieceName)
+        console.log(!!legalMoves && legalMoves.includes(pieceName))
+        return !!legalMoves && legalMoves.includes(pieceName)
       },
-      drop: () => {
-        handlePieceClick(pieceName)
-        console.log('drop')
-      },
+      drop: () => handlePieceClick(pieceName),
       collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop()
       })
     }),
-    []
+    [pieceName, legalMoves, currentPiece]
   )
 
   return (
