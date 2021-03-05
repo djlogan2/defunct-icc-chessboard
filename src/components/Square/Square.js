@@ -38,9 +38,9 @@ const Square = ({
     }
   }
 
-  const [{ isOver, canDrop }, drop] = useDrop(
+  const [, drop] = useDrop(
     () => ({
-      accept: currentPiece,
+      accept: pieceName,
       canDrop: () => {
         handlePieceClick(pieceName)
         console.log('canDrop')
