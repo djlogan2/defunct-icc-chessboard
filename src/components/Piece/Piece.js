@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { DragPreviewImage, useDrag } from 'react-dnd'
 
 import style from './piece.module.css'
 
-const Piece = ({ pieceImage, description, size, handlePieceClick }) => {
+const Piece = ({
+  pieceImage,
+  description,
+  pieceName,
+  size,
+  handlePieceClick
+}) => {
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
-      item: { type: description },
+      item: { type: pieceName },
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging()
-      })
+      }),
+      begin: handlePieceClick
     }),
     []
   )
 
   return (
-    <>
+    <Fragment>
       <DragPreviewImage connect={preview} src={pieceImage} />
       <img
         ref={drag}
@@ -35,7 +42,7 @@ const Piece = ({ pieceImage, description, size, handlePieceClick }) => {
           opacity: isDragging ? 0.5 : 1
         }}
       />
-    </>
+    </Fragment>
   )
 }
 

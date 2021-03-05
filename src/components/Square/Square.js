@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useDrop } from 'react-dnd'
 
 import Piece from '../Piece/Piece'
 import Circle from '../Circle/Circle'
@@ -37,41 +38,63 @@ const Square = ({
     }
   }
 
-  console.log(signatureSquares, smallSize, size)
+  const [{ isOver, canDrop }, drop] = useDrop(
+    () => ({
+      accept: currentPiece,
+      canDrop: () => {
+        handlePieceClick(pieceName)
+        console.log('canDrop')
+
+        return true
+      },
+      drop: () => {
+        handlePieceClick(pieceName)
+        console.log('drop')
+      },
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+        canDrop: !!monitor.canDrop()
+      })
+    }),
+    []
+  )
 
   return (
-    <button
-      onMouseUp={handleMouseUp}
-      onMouseDown={handleMouseDown}
-      onContextMenu={(e) => e.preventDefault()}
-      className={styles.square}
-      onClick={() => {
-        handlePieceClick(pieceName)
-      }}
-      style={{
-        width: size,
-        height: size,
-        backgroundColor:
-          currentPiece === pieceName ? color.active : color.default,
-        position: 'relative',
-        outline: 'none'
-      }}
-    >
-      {signatureSquares && smallSize > size && pieceName}
-      {!!Object.keys(piece).length && (
-        <Piece
-          handlePieceClick={handlePieceClick}
-          pieceImage={piece.image}
-          description={piece.description || 'not now'}
-          size={size * 0.8}
-        />
-      )}
-      {!!circle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
-      {showLegalMoves &&
-        !!legalMoves &&
-        mode !== MODE_EDIT &&
-        legalMoves.includes(pieceName) && <LegalMove size={size * 0.3} />}
-    </button>
+    <div ref={drop} role='Space'>
+      <button
+        onMouseUp={handleMouseUp}
+        onMouseDown={handleMouseDown}
+        onContextMenu={(e) => e.preventDefault()}
+        className={styles.square}
+        onClick={() => {
+          handlePieceClick(pieceName)
+        }}
+        style={{
+          width: size,
+          height: size,
+          backgroundColor:
+            currentPiece === pieceName ? color.active : color.default,
+          position: 'relative',
+          outline: 'none'
+        }}
+      >
+        {signatureSquares && smallSize > size && pieceName}
+        {!!Object.keys(piece).length && (
+          <Piece
+            handlePieceClick={handlePieceClick}
+            pieceImage={piece.image}
+            description={piece.description || 'not now'}
+            size={size * 0.8}
+            pieceName={pieceName}
+          />
+        )}
+        {!!circle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
+        {showLegalMoves &&
+          !!legalMoves &&
+          mode !== MODE_EDIT &&
+          legalMoves.includes(pieceName) && <LegalMove size={size * 0.3} />}
+      </button>
+    </div>
   )
 }
 

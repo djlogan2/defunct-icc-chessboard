@@ -62,6 +62,7 @@
     "dist"
   ],
   "dependencies": {
-    "react-dnd": "^13.1.1"
+    "react-dnd": "^13.1.1",
+    "react-dnd-html5-backend": "^12.1.1"
   }
 }
