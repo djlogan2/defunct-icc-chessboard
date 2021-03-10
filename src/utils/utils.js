@@ -21,6 +21,7 @@ export const generateArrowCoordinates = (
 
     const from = arrow[0].split('')
     const to = arrow[1].split('')
+    const color = arrow[2]
 
     const fromSizeX =
       squareSize / 2 +
@@ -46,6 +47,7 @@ export const generateArrowCoordinates = (
 
     currentArrow.from = { x: fromSizeX, y: fromSizeY }
     currentArrow.to = { x: toSizeX, y: toSizeY }
+    currentArrow.color = color
 
     acc.push(currentArrow)
     return acc

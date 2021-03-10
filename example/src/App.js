@@ -99,8 +99,8 @@ class App extends React.Component {
         }}
         ranks={['1', '2', '3', '4', '5', '6', '7', '8']}
         files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
-        circleColor='#000000'
-        arrowColor='#000000'
+        circleColors={{ red: '#FF0000', yellow: '#FFFF00', green: '#008000' }}
+        arrowColors={{ red: '#FF0000', yellow: '#FFFF00', green: '#008000' }}
         movable={legalmoves}
         circles={circles}
         arrows={arrows}

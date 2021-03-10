@@ -21,7 +21,7 @@ const Board = ({
   perspective,
   boardSquares,
   circleColor,
-  arrowColor,
+  arrowColors,
   handleMove,
   smartMoves,
   signatureSquares,
@@ -70,19 +70,29 @@ const Board = ({
         arrow.to.x - headlen * Math.cos(angle + Math.PI / 6),
         arrow.to.y - headlen * Math.sin(angle + Math.PI / 6)
       )
-      context.strokeStyle = arrowColor
+
+      context.strokeStyle = arrow.color
       context.lineWidth = 5
       context.stroke()
     })
   }, [arrows])
 
   useEffect(() => {
-    if (!squareMouseDown || !squareMouseUp) {
+    if (
+      !squareMouseDown ||
+      !squareMouseUp ||
+      !squareMouseDown.piece ||
+      !squareMouseDown.color
+    ) {
       return
     }
 
-    if (squareMouseDown !== squareMouseUp) {
-      onUpdateArrows([squareMouseDown, squareMouseUp])
+    if (squareMouseDown?.piece !== squareMouseUp) {
+      onUpdateArrows([
+        squareMouseDown.piece,
+        squareMouseUp,
+        squareMouseDown.color
+      ])
     } else {
       onUpdateCircles(squareMouseUp)
     }
@@ -153,6 +163,7 @@ const Board = ({
           color={color}
           circle={haveCircle}
           legalMoves={legalMoves}
+          arrowColors={arrowColors}
           smallSize={smallSize / 8}
           signatureSquares={signatureSquares}
           showLegalMoves={showLegalMoves}
