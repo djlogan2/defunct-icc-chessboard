@@ -9,11 +9,15 @@ const Piece = ({
   description,
   pieceName,
   size,
-  handlePieceClick
+  handlePieceClick,
+  currentPiece
 }) => {
   const handleDragStart = (event) => {
     event.dataTransfer.setData(DATA_TRANSFER, pieceName)
-    handlePieceClick(pieceName)
+
+    if (currentPiece !== pieceName) {
+      handlePieceClick(pieceName)
+    }
   }
 
   return (
@@ -32,7 +36,6 @@ const Piece = ({
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)'
-          // opacity: isDragging ? 0.5 : 1
         }}
       />
     </Fragment>

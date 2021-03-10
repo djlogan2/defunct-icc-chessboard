@@ -72,10 +72,11 @@ const Square = ({
       {!!Object.keys(piece).length && (
         <Piece
           handlePieceClick={handlePieceClick}
-          pieceImage={piece.image}
-          description={piece.description || 'not now'}
-          size={size * 0.8}
+          pieceImage={piece?.image}
+          description={piece?.description}
+          size={size}
           pieceName={pieceName}
+          currentPiece={currentPiece}
         />
       )}
       {!!circle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
