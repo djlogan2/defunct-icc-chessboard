@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { DragPreviewImage, useDrag } from 'react-dnd'
 
 import style from './piece.module.css'
+import { DATA_TRANSFER } from '../../constants/systemConstants'
 
 const Piece = ({
   pieceImage,
@@ -11,27 +11,19 @@ const Piece = ({
   size,
   handlePieceClick
 }) => {
-
-  const [{ isDragging }, drag, preview] = useDrag(
-    () => ({
-      item: { type: pieceName },
-      collect: (monitor) => ({
-        isDragging: !!monitor.isDragging()
-      }),
-      begin: handlePieceClick
-    }),
-    []
-  )
+  const handleDragStart = (event) => {
+    event.dataTransfer.setData(DATA_TRANSFER, pieceName)
+    handlePieceClick(pieceName)
+  }
 
   return (
     <Fragment>
-      <DragPreviewImage connect={preview} src={pieceImage} />
       <img
-        ref={drag}
-        onClick={handlePieceClick}
         alt={description}
         src={pieceImage}
         className={style.piece}
+        draggable
+        onDragStart={handleDragStart}
         style={{
           width: size,
           height: 'auto',
@@ -39,8 +31,8 @@ const Piece = ({
           margin: 0,
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)',
-          opacity: isDragging ? 0.5 : 1
+          transform: 'translate(-50%, -50%)'
+          // opacity: isDragging ? 0.5 : 1
         }}
       />
     </Fragment>

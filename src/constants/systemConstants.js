@@ -6,3 +6,5 @@ export const MODE_EXAMINE = 'examine'
 export const MODE_EDIT = 'edit'
 
 export const BOARD_SIZE_RELATIVE = 0.85
+
+export const DATA_TRANSFER = 'activePiece'

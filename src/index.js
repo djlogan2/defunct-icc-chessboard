@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import Board from './components/Board/Board'
 import withWindowSize from './HOCs/withWindowSize'
@@ -74,50 +72,48 @@ const ChessBoard = ({
       style={styles?.wrapper}
     >
       {!!boardSize.width && !!boardSize.height && (
-        <DndProvider backend={HTML5Backend}>
-          <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
-            <Board
-              mode={mode}
-              ranks={ranks}
-              files={files}
-              boardSquares={boardSquares}
-              size={size * BOARD_SIZE_RELATIVE}
-              styles={styles}
-              pieces={pieces}
-              perspective={perspective}
-              arrowColor={arrowColor}
-              circleColor={circleColor}
-              movable={movable}
-              circles={circles}
-              arrows={arrows}
-              handleMove={onMove}
-              smartMoves={smartMoves}
-              smallSize={smallSize}
-              onUpdateCircles={onUpdateCircles}
-              onUpdateArrows={onUpdateArrows}
-              showLegalMoves={showLegalMoves}
-              signatureSquares={signatureSquares}
-            />
-            {size * BOARD_SIZE_RELATIVE > smallSize && (
-              <Fragment>
-                <Files
-                  files={files}
-                  width={size * BOARD_SIZE_RELATIVE}
-                  side={filesSide}
-                  perspective={perspective}
-                  filesStyle={styles?.files}
-                />
-                <Ranks
-                  ranks={ranks}
-                  height={size * BOARD_SIZE_RELATIVE}
-                  side={ranksSide}
-                  perspective={perspective}
-                  ranksStyle={styles?.ranks}
-                />
-              </Fragment>
-            )}
-          </BoardWrapper>
-        </DndProvider>
+        <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
+          <Board
+            mode={mode}
+            ranks={ranks}
+            files={files}
+            boardSquares={boardSquares}
+            size={size * BOARD_SIZE_RELATIVE}
+            styles={styles}
+            pieces={pieces}
+            perspective={perspective}
+            arrowColor={arrowColor}
+            circleColor={circleColor}
+            movable={movable}
+            circles={circles}
+            arrows={arrows}
+            handleMove={onMove}
+            smartMoves={smartMoves}
+            smallSize={smallSize}
+            onUpdateCircles={onUpdateCircles}
+            onUpdateArrows={onUpdateArrows}
+            showLegalMoves={showLegalMoves}
+            signatureSquares={signatureSquares}
+          />
+          {size * BOARD_SIZE_RELATIVE > smallSize && (
+            <Fragment>
+              <Files
+                files={files}
+                width={size * BOARD_SIZE_RELATIVE}
+                side={filesSide}
+                perspective={perspective}
+                filesStyle={styles?.files}
+              />
+              <Ranks
+                ranks={ranks}
+                height={size * BOARD_SIZE_RELATIVE}
+                side={ranksSide}
+                perspective={perspective}
+                ranksStyle={styles?.ranks}
+              />
+            </Fragment>
+          )}
+        </BoardWrapper>
       )}
     </div>
   )
