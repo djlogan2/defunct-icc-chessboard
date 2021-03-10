@@ -22,7 +22,8 @@ import {
   MODE_EDIT,
   MODE_EXAMINE,
   MODE_GAME,
-  BOARD_SIZE_RELATIVE
+  BOARD_SIZE_RELATIVE,
+  BOARD_SIZE_MARGIN
 } from './constants/systemConstants'
 import { getPiecesFromFen } from './utils/utils'
 
@@ -100,6 +101,7 @@ const ChessBoard = ({
               <Files
                 files={files}
                 width={size * BOARD_SIZE_RELATIVE}
+                height={size * BOARD_SIZE_MARGIN}
                 side={filesSide}
                 perspective={perspective}
                 filesStyle={styles?.files}
@@ -107,6 +109,7 @@ const ChessBoard = ({
               <Ranks
                 ranks={ranks}
                 height={size * BOARD_SIZE_RELATIVE}
+                width={size * BOARD_SIZE_MARGIN}
                 side={ranksSide}
                 perspective={perspective}
                 ranksStyle={styles?.ranks}

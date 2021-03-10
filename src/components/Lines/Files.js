@@ -6,7 +6,7 @@ import {
 } from '../../constants/boardConstants'
 import { WHITE_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
 
-const Files = ({ width, side, perspective, files }) => {
+const Files = ({ width, height, side, perspective, files }) => {
   if (side === FILES_DISABLED) {
     return null
   }
@@ -15,6 +15,7 @@ const Files = ({ width, side, perspective, files }) => {
     <div
       style={{
         width,
+        height,
         bottom: side === FILES_BOTTOM_SIDE && 0,
         top: side === FILES_TOP_SIDE && 0,
         position: 'absolute',
@@ -25,7 +26,16 @@ const Files = ({ width, side, perspective, files }) => {
       }}
     >
       {files.map((file, index) => (
-        <p key={index}>{file}</p>
+        <p
+          key={index}
+          style={{
+            marginTop: side === FILES_BOTTOM_SIDE ? 0 : 'auto',
+            marginBottom: side === FILES_TOP_SIDE ? 0 : 'auto',
+            verticalAlign: 'text-bottom'
+          }}
+        >
+          {file}
+        </p>
       ))}
     </div>
   )
