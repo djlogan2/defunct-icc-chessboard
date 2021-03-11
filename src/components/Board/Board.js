@@ -87,6 +87,8 @@ const Board = ({
       context.beginPath()
 
       context.strokeStyle = circle.color
+      context.lineWidth = 5
+
       context.arc(circle.square.x, circle.square.y, circle.radius, 0, Math.PI * 2)
 
       context.stroke()

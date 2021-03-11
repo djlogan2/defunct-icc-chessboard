@@ -23,7 +23,7 @@ class App extends React.Component {
 
     let equalIndex
     const isExists = circles.some((element, index) => {
-      const isEqual = arraysEqual(element, circle)
+      const isEqual = circle.piece === element.piece
 
       if (isEqual) {
         equalIndex = index
