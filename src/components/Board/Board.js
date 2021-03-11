@@ -5,7 +5,7 @@ import Square from '../Square/Square'
 
 import classes from './board.module.css'
 import { BLACK_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
-import { generateArrowCoordinates } from '../../utils/utils'
+import {generateArrowCoordinates, generateCircleCoordinates} from '../../utils/utils';
 
 const Board = ({
   size,
@@ -20,8 +20,7 @@ const Board = ({
   boardStyle,
   perspective,
   boardSquares,
-  circleColor,
-  arrowColor,
+  arrowColors,
   handleMove,
   smartMoves,
   signatureSquares,
@@ -49,6 +48,14 @@ const Board = ({
       perspective
     )
 
+    const circlesCoordinates = generateCircleCoordinates(
+      circles,
+      size,
+      files,
+      ranks,
+      perspective
+    )
+
     context.clearRect(0, 0, canvas.width, canvas.height)
 
     arrowsCoordinates.forEach((arrow) => {
@@ -70,21 +77,42 @@ const Board = ({
         arrow.to.x - headlen * Math.cos(angle + Math.PI / 6),
         arrow.to.y - headlen * Math.sin(angle + Math.PI / 6)
       )
-      context.strokeStyle = arrowColor
+
+      context.strokeStyle = arrow.color
       context.lineWidth = 5
       context.stroke()
     })
-  }, [arrows])
+
+    circlesCoordinates.forEach(circle => {
+      context.beginPath()
+
+      context.strokeStyle = circle.color
+      context.lineWidth = 5
+
+      context.arc(circle.square.x, circle.square.y, circle.radius, 0, Math.PI * 2)
+
+      context.stroke()
+    })
+  }, [arrows, circles])
 
   useEffect(() => {
-    if (!squareMouseDown || !squareMouseUp) {
+    if (
+      !squareMouseDown ||
+      !squareMouseUp ||
+      !squareMouseDown.piece ||
+      !squareMouseDown.color
+    ) {
       return
     }
 
-    if (squareMouseDown !== squareMouseUp) {
-      onUpdateArrows([squareMouseDown, squareMouseUp])
+    if (squareMouseDown?.piece !== squareMouseUp) {
+      onUpdateArrows([
+        squareMouseDown.piece,
+        squareMouseUp,
+        squareMouseDown.color
+      ])
     } else {
-      onUpdateCircles(squareMouseUp)
+      onUpdateCircles(squareMouseDown)
     }
 
     updateSquareMouseDown(null)
@@ -138,21 +166,18 @@ const Board = ({
           ? `${files[files.length - 1 - col]}${ranks[row]}`
           : `${files[col]}${ranks[ranks.length - 1 - row]}`
 
-      const haveCircle = circles && circles.includes(pieceCoordinates)
-
       squares.push(
         <Square
           mode={mode}
           handlePieceClick={handlePieceClick}
-          circleColor={circleColor}
           piece={pieces[row][col]}
           size={size / 8}
           key={`${row}${col}`}
           pieceName={pieceCoordinates}
           currentPiece={currentPiece}
           color={color}
-          circle={haveCircle}
           legalMoves={legalMoves}
+          arrowColors={arrowColors}
           smallSize={smallSize / 8}
           signatureSquares={signatureSquares}
           showLegalMoves={showLegalMoves}
