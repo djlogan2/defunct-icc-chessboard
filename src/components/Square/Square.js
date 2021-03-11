@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { DATA_TRANSFER, MODE_EDIT } from '../../constants/systemConstants'
-import Circle from '../Circle/Circle'
 import LegalMove from '../LegalMove/LegalMove'
 
 import Piece from '../Piece/Piece'
@@ -12,9 +11,7 @@ const Square = ({
   color,
   size,
   mode,
-  circle,
   piece,
-  circleColor,
   handlePieceClick,
   pieceName,
   legalMoves,
@@ -88,7 +85,6 @@ const Square = ({
           currentPiece={currentPiece}
         />
       )}
-      {!!circle && <Circle size={size * 0.8} strokeStyle={circleColor} />}
       {showLegalMoves &&
         !!legalMoves &&
         mode !== MODE_EDIT &&
@@ -100,7 +96,6 @@ const Square = ({
 Square.propTypes = {
   color: PropTypes.object.isRequired,
   size: PropTypes.number.isRequired,
-  circle: PropTypes.bool.isRequired,
   piece: PropTypes.object
 }
 

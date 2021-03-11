@@ -21,13 +21,24 @@ class App extends React.Component {
   handleUpdateCircles = (circle) => {
     const { circles } = this.state;
 
-    if (circles.includes(circle)) {
-      const index = circles.indexOf(circle)
-      circles.splice(index, 1)
+    let equalIndex
+    const isExists = circles.some((element, index) => {
+      const isEqual = arraysEqual(element, circle)
+
+      if (isEqual) {
+        equalIndex = index
+      }
+
+      return isEqual
+    })
+
+    if (isExists) {
+      circles.splice(equalIndex, 1)
     } else {
       circles.push(circle)
     }
-    this.setState({ circles })
+
+    this.setState({ circles: [...circles] })
   }
 
   getLegalMoves = () => {

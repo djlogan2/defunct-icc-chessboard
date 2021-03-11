@@ -54,6 +54,39 @@ export const generateArrowCoordinates = (
   }, [])
 }
 
+export const generateCircleCoordinates = (
+  circles,
+  size,
+  files,
+  ranks,
+  perspective
+) => {
+  return circles.reduce((acc, circle) => {
+    const squareSize = size / files.length
+    const currentCircle = {}
+
+    const {color, piece} = circle
+
+    const sizeX =
+      squareSize / 2 +
+      (perspective === WHITE_PLAYER_PERSPECTIVE
+        ? files.indexOf(piece[0]) * squareSize
+        : (files.length - 1 - files.indexOf(piece[0])) * squareSize)
+    const sizeY =
+      squareSize / 2 +
+      (perspective === BLACK_PLAYER_PERSPECTIVE
+        ? ranks.indexOf(piece[1]) * squareSize
+        : (ranks.length - 1 - ranks.indexOf(piece[1])) * squareSize)
+
+    currentCircle.square = { x: sizeX, y: sizeY }
+    currentCircle.radius = squareSize * 0.4
+    currentCircle.color = color
+
+    acc.push(currentCircle)
+    return acc
+  }, [])
+}
+
 export const getPiecesFromFen = (fen, pieceImages, perspective) => {
   const pieces = []
 
