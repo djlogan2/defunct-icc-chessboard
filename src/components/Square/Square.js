@@ -33,20 +33,14 @@ const Square = ({
   }
 
   const handleMouseDown = (event) => {
-    console.log(event.altKey, event.shiftKey, event.ctrlKey)
-
     if (typeof event === 'object' && event.button === 2) {
       if (event.altKey && event.shiftKey) {
-        console.log('red')
         updateSquareMouseDown({ piece: pieceName, color: arrowColors.red })
       } else if (event.altKey && event.ctrlKey) {
-        console.log('yellow')
         updateSquareMouseDown({ piece: pieceName, color: arrowColors.yellow })
       } else if (event.altKey) {
-        console.log('green')
         updateSquareMouseDown({ piece: pieceName, color: arrowColors.green })
       } else {
-        console.log('default green')
         updateSquareMouseDown({ piece: pieceName, color: arrowColors.green })
       }
     }
