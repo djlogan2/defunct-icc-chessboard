@@ -68,11 +68,13 @@ const Board = ({
       context.moveTo(arrow.from.x, arrow.from.y)
       context.lineTo(arrow.to.x, arrow.to.y)
 
-      context.lineTo(
+      context.moveTo(
         arrow.to.x - headlen * Math.cos(angle - Math.PI / 6),
         arrow.to.y - headlen * Math.sin(angle - Math.PI / 6)
       )
-      context.moveTo(arrow.to.x, arrow.to.y)
+
+      context.lineTo(arrow.to.x, arrow.to.y)
+
       context.lineTo(
         arrow.to.x - headlen * Math.cos(angle + Math.PI / 6),
         arrow.to.y - headlen * Math.sin(angle + Math.PI / 6)
