@@ -19,8 +19,6 @@ import { getPiecesFromFen, parseRaf } from './utils/utils'
 const ChessBoard = ({
   fen,
   raf,
-  ranks,
-  files,
   styles,
   movable,
   circles,
@@ -63,8 +61,6 @@ const ChessBoard = ({
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
           <Board
-            ranks={ranks}
-            files={files}
             boardSquares={boardSquares}
             size={size * BOARD_SIZE_RELATIVE}
             styles={styles}
@@ -86,7 +82,6 @@ const ChessBoard = ({
           {size * BOARD_SIZE_RELATIVE > smallSize && (
             <Fragment>
               <Files
-                files={files}
                 width={size * BOARD_SIZE_RELATIVE}
                 height={size * BOARD_SIZE_MARGIN}
                 side={filesSide}
@@ -94,7 +89,6 @@ const ChessBoard = ({
                 filesStyle={styles?.files}
               />
               <Ranks
-                ranks={ranks}
                 height={size * BOARD_SIZE_RELATIVE}
                 width={size * BOARD_SIZE_MARGIN}
                 side={ranksSide}
@@ -110,8 +104,6 @@ const ChessBoard = ({
 }
 
 ChessBoard.propTypes = {
-  ranks: PropTypes.array.isRequired,
-  files: PropTypes.array.isRequired,
   raf: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
   perspective: PropTypes.oneOf([
     WHITE_PLAYER_PERSPECTIVE,

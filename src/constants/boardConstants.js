@@ -6,6 +6,9 @@ export const FILES_BOTTOM_SIDE = 'bottom'
 export const FILES_TOP_SIDE = 'top'
 export const FILES_DISABLED = 'none'
 
+export const FILES_ARRAY = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+export const RANKS_ARRAY = ['1', '2', '3', '4', '5', '6', '7', '8']
+
 export const PIECES_MAP = {
   b: {
     code: 'bB',
