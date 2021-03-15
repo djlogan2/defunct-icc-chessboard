@@ -25,14 +25,9 @@ const Square = ({
   updateDataTransfer
 }) => {
   const handleMouseUp = (event) => {
-    console.log(currentPiece)
     if (typeof event === 'object' && event.button === 2) {
       updateSquareMouseUp(pieceName)
     }
-  }
-
-  const handlePointerUp = (event) => {
-    console.log(currentPiece)
   }
 
   const handleMouseDown = (event) => {
@@ -61,20 +56,30 @@ const Square = ({
   }
 
   const handleTouchEnd = (event) => {
-    if (dataTransfer) {
-      if (!!legalMoves && legalMoves.includes(pieceName)) {
-        console.log('legal')
-        handlePieceClick(pieceName)
+    if (event.currentTarget.tagName !== 'HTML') {
+      let target
+      if (event.clientX) {
+        target = document.elementFromPoint(event.clientX, event.clientY)
       } else {
-        console.log(dataTransfer, currentPiece)
-        handlePieceClick(dataTransfer)
+        target = document.elementFromPoint(
+          event.changedTouches[0].clientX,
+          event.changedTouches[0].clientY
+        )
+      }
+
+      if (target && target.id) {
+        if (!!legalMoves && legalMoves.includes(target.id)) {
+          handlePieceClick(target.id)
+        } else {
+          handlePieceClick(dataTransfer)
+        }
       }
     }
   }
 
   return (
     <button
-      onPointerUp={handlePointerUp}
+      id={pieceName}
       onDrop={handleDrop}
       onTouchEnd={handleTouchEnd}
       onDragOver={(e) => e.preventDefault()}
@@ -97,6 +102,7 @@ const Square = ({
       {signatureSquares && smallSize > size && pieceName}
       {!!Object.keys(piece).length && (
         <Piece
+          id={pieceName}
           handlePieceClick={handlePieceClick}
           pieceImage={piece?.image}
           description={piece?.description}
@@ -107,7 +113,7 @@ const Square = ({
         />
       )}
       {showLegalMoves && !!legalMoves && legalMoves.includes(pieceName) && (
-        <LegalMove size={size * 0.3} />
+        <LegalMove id={pieceName} size={size * 0.3} />
       )}
     </button>
   )

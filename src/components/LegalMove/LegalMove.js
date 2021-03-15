@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const LegalMove = ({ size }) => {
+const LegalMove = ({ size, id }) => {
   return (
     <div
+      id={id}
       style={{
         position: 'absolute',
         margin: 0,

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { DATA_TRANSFER } from '../../constants/systemConstants'
 
 const Piece = ({
+  id,
   pieceImage,
   description,
   pieceName,
@@ -41,6 +42,8 @@ const Piece = ({
     currentStyles.height = event.target.clientHeight
     currentStyles.width = event.target.clientWidth
     currentStyles.position = 'fixed'
+    currentStyles.pointerEvents = 'none'
+    currentStyles.zIndex = 999
 
     updatePieceStyle(currentStyles)
   }
@@ -78,6 +81,7 @@ const Piece = ({
 
   return (
     <img
+      id={id}
       alt={description}
       src={pieceImage}
       draggable

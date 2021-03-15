@@ -19,7 +19,7 @@ class App extends Component {
       circles: [],
       arrows: [],
       smartMoves: false,
-      showLegalMoves: false,
+      showLegalMoves: true,
       smallSize: 500
     }
   }
