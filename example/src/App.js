@@ -19,26 +19,15 @@ class App extends React.Component {
   }
 
   handleUpdateCircles = (circle) => {
-    const { circles } = this.state;
+    let { circles } = this.state;
 
-    let equalIndex
-    const isExists = circles.some((element, index) => {
-      const isEqual = circle.piece === element.piece
-
-      if (isEqual) {
-        equalIndex = index
-      }
-
-      return isEqual
-    })
-
-    if (isExists) {
-      circles.splice(equalIndex, 1)
+    if (circles.includes(circle)) {
+      circles = circles.filter(c => c.square === circle);
     } else {
-      circles.push(circle)
+      // DJL - This is what I want to be able to do.
+      circles.push({square: circle, color: "red", width: 3});
     }
-
-    this.setState({ circles: [...circles] })
+    this.setState({ circles })
   }
 
   getLegalMoves = () => {
@@ -59,25 +48,13 @@ class App extends React.Component {
   }
 
   handleUpdateArrows(arrow) {
-    const { arrows } = this.state;
+    let { arrows } = this.state;
 
-    let equalIndex
-    const isExists = arrows.some((element, index) => {
-      const isEqual = arraysEqual(element, arrow)
-
-      if (isEqual) {
-        equalIndex = index
-      }
-
-      return isEqual
-    })
-
-    if (isExists) {
-      arrows.splice(equalIndex, 1)
-    } else {
-      arrows.push(arrow)
+    arrows = arrows.filter(a => a.from === arrow[0] && a.to === arrow[1]);
+    if(arrows.length === this.state.arrows.length) {
+      // DJL - This is what I want to be able to do.
+      arrows.push({from: arrow[0], to: arrow[1], color: "green", width: 3});
     }
-
     this.setState({ arrows: [...arrows] })
   }
 
@@ -88,6 +65,13 @@ class App extends React.Component {
       <ChessBoard
         ranksSide='right'
         filesSide='bottom'
+        signatureSquares={false} // DJL If this is what I think it is, instead of having the above three, I would rather have one prop like:
+        raf={where} // where is either an object or a string
+                    // For example:
+                    // {inside: true, vertical: "top", horizontal: "left"} (top, middle, bottom, left, middle, right)
+                    // {inside: false, vertical: "top", horizontal: "bottom"} (top, bottom, left, right)
+                    // or
+                    // strings, like "tl", "tr", "bl", "br", "stm", "smm" ('s'=in square, 'm'=middle, 'm'=middle, etc.)
         perspective='white'
         fen={fen}
         boardSquares={{
@@ -108,21 +92,20 @@ class App extends React.Component {
           wQ: 'static/images/defaultPieces/wQ.png',
           wR: 'static/images/defaultPieces/wR.png'
         }}
-        ranks={['1', '2', '3', '4', '5', '6', '7', '8']}
-        files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
-        circleColors={{ red: '#FF0000', yellow: '#FFFF00', green: '#008000' }}
-        arrowColors={{ red: '#FF0000', yellow: '#FFFF00', green: '#008000' }}
+        ranks={['1', '2', '3', '4', '5', '6', '7', '8']} // DJL We really do not need these, ranks and files will always be in english letters. That's a world wide standard.
+        files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']} // DJL We really do not need these, ranks and files will always be in english letters. That's a world wide standard.
+        circleColor='#000000' // DJL Get rid of this prop. Useless. See the handle function
+        arrowColor='#000000'  // DJL Get rid of this prop. Useless. See the handle function
         movable={legalmoves}
-        circles={circles}
-        arrows={arrows}
+        circles={circles} // DJL See the handle function
+        arrows={arrows}   // DJL See the handle function
         onUpdateCircles={circle => this.handleUpdateCircles(circle)}
         onUpdateArrows={arrow => this.handleUpdateArrows(arrow)}
         onMove={move => this.handleMove(move)}
-        mode='game'
-        smartMoves
-        showLegalMoves
-        smallSize={500}
-        signatureSquares={false}
+        mode='game' // DJL - What the heck is this? See comment in constants.js
+        smartMoves={false} // DJL - This has to be controllable by a variable
+        showLegalMoves={false} // DJL - This has to be controllable by a variable
+        smallSize={500} // DJL I'm still not sure about this, but it sounds like a mobile thing
       />
     )
   }
