@@ -1,20 +1,26 @@
-import React  from 'react'
+import React, { Component }  from 'react'
 
 import ChessBoard from 'chessboard'
-import 'chessboard/dist/index.css'  // TODO: why?
+import 'chessboard/dist/index.css'
+
 import { arraysEqual } from './utils'
 
 const Chess = require('chess.js')
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props)
+
     this.chess = new Chess()
+
     this.state = {
-      legalmoves: this.getLegalMoves(),
+      legalMoves: this.getLegalMoves(),
       fen: this.chess.fen(),
       circles: [],
-      arrows: []
+      arrows: [],
+      smartMoves: false,
+      showLegalMoves: false,
+      smallSize: 500
     }
   }
 
@@ -53,12 +59,12 @@ class App extends React.Component {
     return moves
   }
 
-  handleMove(move) {
+  handleMove = (move) => {
     this.chess.move(move[0] + move[1], { sloppy: true })
-    this.setState({ legalmoves: this.getLegalMoves(), fen: this.chess.fen() })
+    this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen() })
   }
 
-  handleUpdateArrows(arrow) {
+  handleUpdateArrows = (arrow) => {
     const { arrows } = this.state;
 
     let equalIndex
@@ -82,17 +88,31 @@ class App extends React.Component {
   }
 
   render() {
-    const {fen, legalmoves, circles, arrows} = this.state;
-    console.log(fen);
+    const {fen, legalMoves, circles, arrows, smartMoves, showLegalMoves, smallSize} = this.state;
+
     return (
       <ChessBoard
-        ranksSide='right'
-        filesSide='bottom'
+        raf={{ inside: true, vertical: 'bottom', horizontal: 'right' }} // where is either an object or a string
+                    // For example:
+                    // {inside: true, vertical: "top", horizontal: "left"} (top, middle, bottom, left, middle, right)
+                    // {inside: false, vertical: "top", horizontal: "bottom"} (top, bottom, left, right)
+                    // or
+                    // strings, like "tl", "tr", "bl", "br", "stm", "smm" ('s'=in square, 'm'=middle, 'm'=middle, etc.)
         perspective='white'
         fen={fen}
         boardSquares={{
           light: { default: '#FFFFFF', active: '#9c9c9c' },
           dark: { default: '#1565c0', active: '#1255A1' }
+        }}
+        circleColors={{
+          red: '#FF5733',
+          yellow: '#F3FF33',
+          green: '#3CFF33'
+        }}
+        arrowColors={{
+          red: '#FF5733',
+          yellow: '#F3FF33',
+          green: '#3CFF33'
         }}
         pieceImages={{
           bB: 'static/images/defaultPieces/bB.png',
@@ -110,19 +130,15 @@ class App extends React.Component {
         }}
         ranks={['1', '2', '3', '4', '5', '6', '7', '8']}
         files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
-        circleColors={{ red: '#FF0000', yellow: '#FFFF00', green: '#008000' }}
-        arrowColors={{ red: '#FF0000', yellow: '#FFFF00', green: '#008000' }}
-        movable={legalmoves}
+        movable={legalMoves}
         circles={circles}
         arrows={arrows}
         onUpdateCircles={circle => this.handleUpdateCircles(circle)}
         onUpdateArrows={arrow => this.handleUpdateArrows(arrow)}
         onMove={move => this.handleMove(move)}
-        mode='game'
-        smartMoves
-        showLegalMoves
-        smallSize={500}
-        signatureSquares={false}
+        smartMoves={smartMoves}
+        showLegalMoves={showLegalMoves}
+        smallSize={smallSize}
       />
     )
   }

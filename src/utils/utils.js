@@ -1,11 +1,42 @@
 import { PIECES_MAP } from '../constants/boardConstants'
 import {
   BLACK_PLAYER_PERSPECTIVE,
+  sidesMapping,
   WHITE_PLAYER_PERSPECTIVE
 } from '../constants/systemConstants'
 
 export const checkIsOdd = (value) => {
   return value % 2 === 1
+}
+
+export const parseRaf = (raf) => {
+  if (typeof raf === 'object') {
+    const { inside, vertical, horizontal } = raf
+
+    return {
+      ranksSide: horizontal,
+      filesSide: vertical,
+      signatureSquares: inside
+    }
+  }
+
+  if (typeof raf === 'string') {
+    if (raf[0] === 's') {
+      return {
+        signatureSquares: true,
+        filesSide: sidesMapping[raf[1]],
+        ranksSide: sidesMapping[raf[2]]
+      }
+    } else {
+      return {
+        signatureSquares: false,
+        filesSide: sidesMapping[raf[0]],
+        ranksSide: sidesMapping[raf[3]]
+      }
+    }
+  }
+
+  console.error('Incorrect type of raf property')
 }
 
 export const generateArrowCoordinates = (
@@ -65,7 +96,7 @@ export const generateCircleCoordinates = (
     const squareSize = size / files.length
     const currentCircle = {}
 
-    const {color, piece} = circle
+    const { color, piece } = circle
 
     const sizeX =
       squareSize / 2 +
