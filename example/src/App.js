@@ -1,7 +1,7 @@
 import React  from 'react'
 
 import ChessBoard from 'chessboard'
-import 'chessboard/dist/index.css'
+import 'chessboard/dist/index.css'  // TODO: why?
 import { arraysEqual } from './utils'
 
 const Chess = require('chess.js')
@@ -83,7 +83,7 @@ class App extends React.Component {
 
   render() {
     const {fen, legalmoves, circles, arrows} = this.state;
-
+    console.log(fen);
     return (
       <ChessBoard
         ranksSide='right'

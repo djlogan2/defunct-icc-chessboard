@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import style from './piece.module.css'
@@ -10,13 +10,36 @@ const Piece = ({
   pieceName,
   size,
   handlePieceClick,
-  currentPiece
+  currentPiece,
+  updateDataTransfer
 }) => {
+  const [moving, updateMoving] = useState(null)
   const handleDragStart = (event) => {
     event.dataTransfer.setData(DATA_TRANSFER, pieceName)
 
     if (currentPiece !== pieceName) {
       handlePieceClick(pieceName)
+    }
+  }
+
+  const handleTouchStart = (event) => {
+    updateDataTransfer(pieceName)
+
+    if (currentPiece !== pieceName) {
+      handlePieceClick(pieceName)
+    }
+
+    const currentMoving = event.target
+    currentMoving.style.position = 'fixed'
+
+    updateMoving(currentMoving)
+  }
+
+  const handleTouchMove = (event) => {
+    if (moving) {
+      moving.style.left = event.changedTouches[0].clientX
+      moving.style.top = event.changedTouches[0].clientY
+      console.log(moving);
     }
   }
 
@@ -27,6 +50,8 @@ const Piece = ({
         src={pieceImage}
         className={style.piece}
         draggable
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onDragStart={handleDragStart}
         style={{
           width: size,

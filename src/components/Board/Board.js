@@ -33,6 +33,7 @@ const Board = ({
   const [legalMoves, updateLegalMoves] = useState(null)
   const [squareMouseDown, updateSquareMouseDown] = useState(null)
   const [squareMouseUp, updateSquareMouseUp] = useState(null)
+  const [dataTransfer, updateDataTransfer] = useState(null)
 
   const canvasRef = useRef(null)
 
@@ -178,6 +179,8 @@ const Board = ({
           pieceName={pieceCoordinates}
           currentPiece={currentPiece}
           color={color}
+          dataTransfer={dataTransfer}
+          updateDataTransfer={updateDataTransfer}
           legalMoves={legalMoves}
           arrowColors={arrowColors}
           smallSize={smallSize / 8}
