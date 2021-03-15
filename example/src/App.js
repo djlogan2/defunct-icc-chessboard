@@ -3,8 +3,6 @@ import React, { Component }  from 'react'
 import ChessBoard from 'chessboard'
 import 'chessboard/dist/index.css'
 
-import { arraysEqual } from './utils'
-
 const Chess = require('chess.js')
 
 class App extends Component {
@@ -25,26 +23,11 @@ class App extends Component {
   }
 
   handleUpdateCircles = (circle) => {
-    const { circles } = this.state;
-
-    let equalIndex
-    const isExists = circles.some((element, index) => {
-      const isEqual = circle.piece === element.piece
-
-      if (isEqual) {
-        equalIndex = index
-      }
-
-      return isEqual
-    })
-
-    if (isExists) {
-      circles.splice(equalIndex, 1)
-    } else {
-      circles.push(circle)
-    }
-
-    this.setState({ circles: [...circles] })
+    // DJL I still want this: color: "#123456" width: 10 -- for EACH circle
+    const circles = this.state.circles.filter(c => c.square === circle);
+    if(circles.length === this.state.circles.length)
+      circles.push({square: circle, color: "red", width: 3});
+    this.setState({ circles })
   }
 
   getLegalMoves = () => {
@@ -64,27 +47,12 @@ class App extends Component {
     this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen() })
   }
 
-  handleUpdateArrows = (arrow) => {
-    const { arrows } = this.state;
-
-    let equalIndex
-    const isExists = arrows.some((element, index) => {
-      const isEqual = arraysEqual(element, arrow)
-
-      if (isEqual) {
-        equalIndex = index
-      }
-
-      return isEqual
-    })
-
-    if (isExists) {
-      arrows.splice(equalIndex, 1)
-    } else {
-      arrows.push(arrow)
-    }
-
-    this.setState({ arrows: [...arrows] })
+  handleUpdateArrows(arrow) {
+    // DJL I still want this: color: "#123456" width: 10 -- for EACH arrow
+    const arrows = this.state.arrows.filter(a => a.from === arrow[0] && a.to === arrow[1]);
+    if(arrows.length === this.state.arrows.length)
+      arrows.push({from: arrow[0], to: arrow[1], color: "green", width: 3});
+    this.setState({arrows: arrows});
   }
 
   render() {
@@ -100,20 +68,20 @@ class App extends Component {
                     // strings, like "tl", "tr", "bl", "br", "stm", "smm" ('s'=in square, 'm'=middle, 'm'=middle, etc.)
         perspective='white'
         fen={fen}
-        boardSquares={{
+        boardSquares={{ // DJL Have you tested square images?
           light: { default: '#FFFFFF', active: '#9c9c9c' },
           dark: { default: '#1565c0', active: '#1255A1' }
         }}
-        circleColors={{
-          red: '#FF5733',
-          yellow: '#F3FF33',
-          green: '#3CFF33'
-        }}
-        arrowColors={{
-          red: '#FF5733',
-          yellow: '#F3FF33',
-          green: '#3CFF33'
-        }}
+        // circleColors={{      // DJL Still want these removed
+        //   red: '#FF5733',
+        //   yellow: '#F3FF33',
+        //   green: '#3CFF33'
+        // }}
+        // arrowColors={{       // DJL Still want these removed
+        //   red: '#FF5733',
+        //   yellow: '#F3FF33',
+        //   green: '#3CFF33'
+        // }}
         pieceImages={{
           bB: 'static/images/defaultPieces/bB.png',
           bK: 'static/images/defaultPieces/bK.png',
@@ -128,8 +96,8 @@ class App extends Component {
           wQ: 'static/images/defaultPieces/wQ.png',
           wR: 'static/images/defaultPieces/wR.png'
         }}
-        ranks={['1', '2', '3', '4', '5', '6', '7', '8']}
-        files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
+        // ranks={['1', '2', '3', '4', '5', '6', '7', '8']} DJL Still do not need these
+        // files={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']} DJL Still do not need these
         movable={legalMoves}
         circles={circles}
         arrows={arrows}
