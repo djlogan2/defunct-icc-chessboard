@@ -64,6 +64,18 @@ const Piece = ({
     }
   }
 
+  const handleTouchEnd = () => {
+    updatePieceStyle({
+      width: size,
+      height: 'auto',
+      position: 'absolute',
+      margin: 0,
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    })
+  }
+
   return (
     <img
       alt={description}
@@ -71,6 +83,7 @@ const Piece = ({
       draggable
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       onDragStart={handleDragStart}
       style={pieceStyle}
     />
