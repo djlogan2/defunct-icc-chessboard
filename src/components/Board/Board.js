@@ -5,11 +5,13 @@ import Square from '../Square/Square'
 
 import classes from './board.module.css'
 import { BLACK_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
-import {generateArrowCoordinates, generateCircleCoordinates} from '../../utils/utils';
+import {
+  generateArrowCoordinates,
+  generateCircleCoordinates
+} from '../../utils/utils'
 
 const Board = ({
   size,
-  mode,
   ranks,
   files,
   pieces,
@@ -85,13 +87,19 @@ const Board = ({
       context.stroke()
     })
 
-    circlesCoordinates.forEach(circle => {
+    circlesCoordinates.forEach((circle) => {
       context.beginPath()
 
       context.strokeStyle = circle.color
       context.lineWidth = 5
 
-      context.arc(circle.square.x, circle.square.y, circle.radius, 0, Math.PI * 2)
+      context.arc(
+        circle.square.x,
+        circle.square.y,
+        circle.radius,
+        0,
+        Math.PI * 2
+      )
 
       context.stroke()
     })
@@ -170,7 +178,6 @@ const Board = ({
 
       squares.push(
         <Square
-          mode={mode}
           handlePieceClick={handlePieceClick}
           piece={pieces[row][col]}
           size={size / 8}

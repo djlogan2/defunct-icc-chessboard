@@ -9,27 +9,16 @@ import Files from './components/Lines/Files'
 import Ranks from './components/Lines/Ranks'
 import BoardWrapper from './components/BoardWrapper/BoardWrapper'
 import {
-  FILES_BOTTOM_SIDE,
-  FILES_DISABLED,
-  FILES_TOP_SIDE,
-  RANKS_DISABLED,
-  RANKS_LEFT_SIDE,
-  RANKS_RIGHT_SIDE
-} from './constants/boardConstants'
-import {
   BLACK_PLAYER_PERSPECTIVE,
   WHITE_PLAYER_PERSPECTIVE,
-  MODE_EDIT,
-  MODE_EXAMINE,
-  MODE_GAME,
   BOARD_SIZE_RELATIVE,
   BOARD_SIZE_MARGIN
 } from './constants/systemConstants'
-import { getPiecesFromFen } from './utils/utils'
+import { getPiecesFromFen, parseRaf } from './utils/utils'
 
 const ChessBoard = ({
   fen,
-  mode,
+  raf,
   ranks,
   files,
   styles,
@@ -37,8 +26,6 @@ const ChessBoard = ({
   circles,
   arrows,
   onMove,
-  ranksSide,
-  filesSide,
   pieceImages,
   perspective,
   windowWidth,
@@ -48,7 +35,6 @@ const ChessBoard = ({
   circleColors,
   smartMoves,
   smallSize,
-  signatureSquares,
   onUpdateCircles,
   onUpdateArrows,
   showLegalMoves
@@ -63,6 +49,8 @@ const ChessBoard = ({
     updateBoardSize({ width, height })
   }, [currentElement, windowWidth, windowHeight])
 
+  const { ranksSide, filesSide, signatureSquares } = parseRaf(raf)
+
   const size = Math.min(boardSize.width, boardSize.height)
   const pieces = getPiecesFromFen(fen, pieceImages, perspective)
 
@@ -75,7 +63,6 @@ const ChessBoard = ({
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
           <Board
-            mode={mode}
             ranks={ranks}
             files={files}
             boardSquares={boardSquares}
@@ -125,16 +112,7 @@ const ChessBoard = ({
 ChessBoard.propTypes = {
   ranks: PropTypes.array.isRequired,
   files: PropTypes.array.isRequired,
-  ranksSide: PropTypes.oneOf([
-    RANKS_RIGHT_SIDE,
-    RANKS_LEFT_SIDE,
-    RANKS_DISABLED
-  ]).isRequired,
-  filesSide: PropTypes.oneOf([
-    FILES_BOTTOM_SIDE,
-    FILES_TOP_SIDE,
-    FILES_DISABLED
-  ]).isRequired,
+  raf: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
   perspective: PropTypes.oneOf([
     WHITE_PLAYER_PERSPECTIVE,
     BLACK_PLAYER_PERSPECTIVE
@@ -149,13 +127,11 @@ ChessBoard.propTypes = {
   showLegalMoves: PropTypes.bool.isRequired,
   circles: PropTypes.array,
   arrows: PropTypes.array,
-  mode: PropTypes.oneOf([MODE_GAME, MODE_EXAMINE, MODE_EDIT]).isRequired,
   onUpdateCircles: PropTypes.func.isRequired,
   onUpdateArrows: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   smartMoves: PropTypes.bool,
-  smallSize: PropTypes.number.isRequired,
-  signatureSquares: PropTypes.bool
+  smallSize: PropTypes.number.isRequired
 }
 
 export default withWindowSize(ChessBoard)

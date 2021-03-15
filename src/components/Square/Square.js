@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { DATA_TRANSFER, MODE_EDIT } from '../../constants/systemConstants'
+import { DATA_TRANSFER } from '../../constants/systemConstants'
 import LegalMove from '../LegalMove/LegalMove'
 
 import Piece from '../Piece/Piece'
@@ -10,7 +10,6 @@ import styles from './square.module.css'
 const Square = ({
   color,
   size,
-  mode,
   piece,
   handlePieceClick,
   pieceName,
@@ -85,10 +84,9 @@ const Square = ({
           currentPiece={currentPiece}
         />
       )}
-      {showLegalMoves &&
-        !!legalMoves &&
-        mode !== MODE_EDIT &&
-        legalMoves.includes(pieceName) && <LegalMove size={size * 0.3} />}
+      {showLegalMoves && !!legalMoves && legalMoves.includes(pieceName) && (
+        <LegalMove size={size * 0.3} />
+      )}
     </button>
   )
 }
