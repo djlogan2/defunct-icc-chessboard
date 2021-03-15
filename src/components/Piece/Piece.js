@@ -1,7 +1,6 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import style from './piece.module.css'
 import { DATA_TRANSFER } from '../../constants/systemConstants'
 
 const Piece = ({
@@ -13,7 +12,16 @@ const Piece = ({
   currentPiece,
   updateDataTransfer
 }) => {
-  const [moving, updateMoving] = useState(null)
+  const [pieceStyle, updatePieceStyle] = useState({
+    width: size,
+    height: 'auto',
+    position: 'absolute',
+    margin: 0,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  })
+
   const handleDragStart = (event) => {
     event.dataTransfer.setData(DATA_TRANSFER, pieceName)
 
@@ -29,41 +37,43 @@ const Piece = ({
       handlePieceClick(pieceName)
     }
 
-    const currentMoving = event.target
-    currentMoving.style.position = 'fixed'
+    const currentStyles = {}
+    currentStyles.height = event.target.clientHeight
+    currentStyles.width = event.target.clientWidth
+    currentStyles.position = 'fixed'
 
-    updateMoving(currentMoving)
+    updatePieceStyle(currentStyles)
   }
 
   const handleTouchMove = (event) => {
-    if (moving) {
-      moving.style.left = event.changedTouches[0].clientX
-      moving.style.top = event.changedTouches[0].clientY
-      console.log(moving);
+    if (event.target) {
+      const currentStyles = { ...pieceStyle }
+      if (event.clientX) {
+        // mousemove
+        currentStyles.left = event.clientX - event.target.clientWidth / 2
+        currentStyles.top = event.clientY - event.target.clientHeight / 2
+      } else {
+        // touchmove
+        currentStyles.left =
+          event.changedTouches[0].clientX - event.target.clientWidth / 2
+        currentStyles.top =
+          event.changedTouches[0].clientY - event.target.clientHeight / 2
+      }
+
+      updatePieceStyle(currentStyles)
     }
   }
 
   return (
-    <Fragment>
-      <img
-        alt={description}
-        src={pieceImage}
-        className={style.piece}
-        draggable
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onDragStart={handleDragStart}
-        style={{
-          width: size,
-          height: 'auto',
-          position: 'absolute',
-          margin: 0,
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}
-      />
-    </Fragment>
+    <img
+      alt={description}
+      src={pieceImage}
+      draggable
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onDragStart={handleDragStart}
+      style={pieceStyle}
+    />
   )
 }
 
