@@ -9,6 +9,7 @@ import {
   generateArrowCoordinates,
   generateCircleCoordinates
 } from '../../utils/utils'
+import { FILES_ARRAY, RANKS_ARRAY } from '../../constants/boardConstants'
 
 const Board = ({
   size,
@@ -46,16 +47,16 @@ const Board = ({
     const arrowsCoordinates = generateArrowCoordinates(
       arrows,
       size,
-      files,
-      ranks,
+      FILES_ARRAY,
+      RANKS_ARRAY,
       perspective
     )
 
     const circlesCoordinates = generateCircleCoordinates(
       circles,
       size,
-      files,
-      ranks,
+      FILES_ARRAY,
+      RANKS_ARRAY,
       perspective
     )
 
@@ -161,8 +162,8 @@ const Board = ({
     }
   }
 
-  for (let row = 0; row < files.length; row++) {
-    for (let col = 0; col < ranks.length; col++) {
+  for (let row = 0; row < FILES_ARRAY.length; row++) {
+    for (let col = 0; col < RANKS_ARRAY.length; col++) {
       const color =
         row % 2
           ? col % 2
@@ -174,8 +175,8 @@ const Board = ({
 
       const pieceCoordinates =
         perspective === BLACK_PLAYER_PERSPECTIVE
-          ? `${files[files.length - 1 - col]}${ranks[row]}`
-          : `${files[col]}${ranks[ranks.length - 1 - row]}`
+          ? `${FILES_ARRAY[FILES_ARRAY.length - 1 - col]}${RANKS_ARRAY[row]}`
+          : `${FILES_ARRAY[col]}${RANKS_ARRAY[RANKS_ARRAY.length - 1 - row]}`
 
       squares.push(
         <Square
