@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import classes from './piece.module.css'
 
 import { DATA_TRANSFER } from '../../constants/systemConstants'
 
@@ -90,6 +91,7 @@ const Piece = ({
       onTouchEnd={handleTouchEnd}
       onDragStart={handleDragStart}
       style={pieceStyle}
+      className={classes.piece}
     />
   )
 }

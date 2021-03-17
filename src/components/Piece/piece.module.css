@@ -1,7 +1,14 @@
 .piece {
   background: transparent;
+  opacity: 1;
 }
 
 .piece::after {
   background: transparent;
+  opacity: 1;
+}
+
+.piece:drop {
+  background: transparent;
+  opacity: 1;
 }

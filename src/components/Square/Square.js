@@ -93,6 +93,7 @@ const Square = ({
       style={{
         width: size,
         height: size,
+        padding: 0,
         backgroundColor:
           currentPiece === pieceName ? color.active : color.default,
         position: 'relative',
