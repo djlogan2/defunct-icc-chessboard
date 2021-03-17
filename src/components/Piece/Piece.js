@@ -24,12 +24,19 @@ const Piece = ({
     transform: 'translate(-50%, -50%)'
   })
 
+  const [isDragging, updateIsDragging] = useState(false)
+
   const handleDragStart = (event) => {
     event.dataTransfer.setData(DATA_TRANSFER, pieceName)
 
     if (currentPiece !== pieceName) {
       handlePieceClick(pieceName)
+      updateIsDragging(true)
     }
+  }
+
+  const handleDragEnd = () => {
+    updateIsDragging(false)
   }
 
   const handleTouchStart = (event) => {
@@ -90,7 +97,11 @@ const Piece = ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onDragStart={handleDragStart}
-      style={pieceStyle}
+      onDragEnd={handleDragEnd}
+      style={{
+        ...pieceStyle,
+        opacity: isDragging ? 0 : 1
+      }}
       className={classes.piece}
     />
   )
