@@ -15,7 +15,6 @@ const Square = ({
   pieceName,
   legalMoves,
   smallSize,
-  arrowColors,
   showLegalMoves,
   signatureSquares,
   updateSquareMouseDown,
@@ -32,15 +31,7 @@ const Square = ({
 
   const handleMouseDown = (event) => {
     if (typeof event === 'object' && event.button === 2) {
-      if (event.altKey && event.shiftKey) {
-        updateSquareMouseDown({ piece: pieceName, color: arrowColors.red })
-      } else if (event.altKey && event.ctrlKey) {
-        updateSquareMouseDown({ piece: pieceName, color: arrowColors.yellow })
-      } else if (event.altKey) {
-        updateSquareMouseDown({ piece: pieceName, color: arrowColors.green })
-      } else {
-        updateSquareMouseDown({ piece: pieceName, color: arrowColors.green })
-      }
+      updateSquareMouseDown({ event, piece: pieceName })
     }
   }
 

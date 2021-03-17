@@ -13,8 +13,6 @@ import { FILES_ARRAY, RANKS_ARRAY } from '../../constants/boardConstants'
 
 const Board = ({
   size,
-  ranks,
-  files,
   pieces,
   arrows,
   circles,
@@ -23,7 +21,6 @@ const Board = ({
   boardStyle,
   perspective,
   boardSquares,
-  arrowColors,
   handleMove,
   smartMoves,
   signatureSquares,
@@ -112,17 +109,16 @@ const Board = ({
       !squareMouseDown ||
       !squareMouseUp ||
       !squareMouseDown.piece ||
-      !squareMouseDown.color
+      !squareMouseDown.event
     ) {
       return
     }
 
     if (squareMouseDown?.piece !== squareMouseUp) {
-      onUpdateArrows([
-        squareMouseDown.piece,
-        squareMouseUp,
-        squareMouseDown.color
-      ])
+      onUpdateArrows({
+        event: squareMouseDown.event,
+        piece: { from: squareMouseDown.piece, to: squareMouseUp }
+      })
     } else {
       onUpdateCircles(squareMouseDown)
     }
@@ -190,7 +186,6 @@ const Board = ({
           dataTransfer={dataTransfer}
           updateDataTransfer={updateDataTransfer}
           legalMoves={legalMoves}
-          arrowColors={arrowColors}
           smallSize={smallSize / 8}
           signatureSquares={signatureSquares}
           showLegalMoves={showLegalMoves}

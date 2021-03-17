@@ -3,8 +3,6 @@ import React, { Component }  from 'react'
 import ChessBoard from 'chessboard'
 import 'chessboard/dist/index.css'
 
-import { arraysEqual } from './utils'
-
 const Chess = require('chess.js')
 
 class App extends Component {
@@ -24,8 +22,15 @@ class App extends Component {
     }
   }
 
+  getColorFromEvent = (event) => {
+    return '#fafafa'
+  }
+
   handleUpdateCircles = (circle) => {
     const { circles } = this.state;
+
+    circle.color = this.getColorFromEvent(circle.event)
+    delete circle.event
 
     let equalIndex
     const isExists = circles.some((element, index) => {
@@ -64,12 +69,15 @@ class App extends Component {
     this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen() })
   }
 
-  handleUpdateArrows(arrow) {
-       const { arrows } = this.state;
+  handleUpdateArrows = (arrow) => {
+    const { arrows } = this.state;
+
+    arrow.color = this.getColorFromEvent(arrow.event)
+    delete arrow.event
 
     let equalIndex
     const isExists = arrows.some((element, index) => {
-      const isEqual = arraysEqual(element, arrow)
+      const isEqual = element.piece.to === arrow.piece.to && element.piece.from === arrow.piece.from
 
       if (isEqual) {
         equalIndex = index
@@ -103,16 +111,6 @@ class App extends Component {
         boardSquares={{
           light: { default: '#FFFFFF', active: '#9c9c9c' },
           dark: { default: '#1565c0', active: '#1255A1' }
-        }}
-        circleColors={{
-          red: '#FF5733',
-          yellow: '#F3FF33',
-          green: '#3CFF33'
-        }}
-        arrowColors={{
-          red: '#FF5733',
-          yellow: '#F3FF33',
-          green: '#3CFF33'
         }}
         pieceImages={{
           bB: 'static/images/defaultPieces/bB.png',
