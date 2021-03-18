@@ -16,12 +16,10 @@ const Piece = ({
 }) => {
   const [pieceStyle, updatePieceStyle] = useState({
     width: size,
-    height: 'auto',
-    position: 'absolute',
-    margin: 0,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
+    height: size,
+    position: 'relative',
+    display: 'inline-block',
+    textAlign: 'center'
   })
 
   const [isDragging, updateIsDragging] = useState(false)
@@ -78,12 +76,10 @@ const Piece = ({
   const handleTouchEnd = () => {
     updatePieceStyle({
       width: size,
-      height: 'auto',
-      position: 'absolute',
-      margin: 0,
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)'
+      height: size,
+      position: 'relative',
+      display: 'inline-block',
+      textAlign: 'center'
     })
   }
 
