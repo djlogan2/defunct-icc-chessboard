@@ -50,9 +50,9 @@ export const generateArrowCoordinates = (
     const squareSize = size / 8
     const currentArrow = {}
 
-    const from = arrow[0].split('')
-    const to = arrow[1].split('')
-    const color = arrow[2]
+    const from = arrow.piece.from
+    const to = arrow.piece.to
+    const color = arrow.color
 
     const fromSizeX =
       squareSize / 2 +

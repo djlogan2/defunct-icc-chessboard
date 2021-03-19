@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import classes from './piece.module.css'
 
 import { DATA_TRANSFER } from '../../constants/systemConstants'
 
@@ -15,20 +16,25 @@ const Piece = ({
 }) => {
   const [pieceStyle, updatePieceStyle] = useState({
     width: size,
-    height: 'auto',
-    position: 'absolute',
-    margin: 0,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
+    height: size,
+    position: 'relative',
+    display: 'inline-block',
+    textAlign: 'center'
   })
+
+  const [isDragging, updateIsDragging] = useState(false)
 
   const handleDragStart = (event) => {
     event.dataTransfer.setData(DATA_TRANSFER, pieceName)
 
     if (currentPiece !== pieceName) {
       handlePieceClick(pieceName)
+      updateIsDragging(true)
     }
+  }
+
+  const handleDragEnd = () => {
+    updateIsDragging(false)
   }
 
   const handleTouchStart = (event) => {
@@ -70,12 +76,10 @@ const Piece = ({
   const handleTouchEnd = () => {
     updatePieceStyle({
       width: size,
-      height: 'auto',
-      position: 'absolute',
-      margin: 0,
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)'
+      height: size,
+      position: 'relative',
+      display: 'inline-block',
+      textAlign: 'center'
     })
   }
 
@@ -89,7 +93,12 @@ const Piece = ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onDragStart={handleDragStart}
-      style={pieceStyle}
+      onDragEnd={handleDragEnd}
+      style={{
+        ...pieceStyle,
+        opacity: isDragging ? 0 : 1
+      }}
+      className={classes.piece}
     />
   )
 }

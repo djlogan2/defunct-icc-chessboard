@@ -1,7 +1,3 @@
 .piece {
-  background: transparent;
-}
-
-.piece::after {
-  background: transparent;
+  opacity: 1 !important;
 }

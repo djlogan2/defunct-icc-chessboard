@@ -29,8 +29,6 @@ const ChessBoard = ({
   windowWidth,
   windowHeight,
   boardSquares,
-  arrowColors,
-  circleColors,
   smartMoves,
   smallSize,
   onUpdateCircles,
@@ -66,8 +64,6 @@ const ChessBoard = ({
             styles={styles}
             pieces={pieces}
             perspective={perspective}
-            arrowColors={arrowColors}
-            circleColors={circleColors}
             movable={movable}
             circles={circles}
             arrows={arrows}
@@ -113,8 +109,6 @@ ChessBoard.propTypes = {
   styles: PropTypes.object,
   pieceImages: PropTypes.object.isRequired,
   boardSquares: PropTypes.object.isRequired,
-  circleColors: PropTypes.object.isRequired,
-  arrowColors: PropTypes.object.isRequired,
   movable: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
   showLegalMoves: PropTypes.bool.isRequired,
   circles: PropTypes.array,
