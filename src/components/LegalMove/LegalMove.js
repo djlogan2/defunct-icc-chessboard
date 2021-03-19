@@ -14,7 +14,8 @@ const LegalMove = ({ size, id }) => {
         height: size,
         width: size,
         backgroundColor: '#bbb',
-        borderRadius: '50%'
+        borderRadius: '50%',
+        pointerEvents: 'none'
       }}
     />
   )
