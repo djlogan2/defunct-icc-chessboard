@@ -1,4 +1,4 @@
-import React, { Component }  from 'react'
+import React, { Component } from 'react'
 
 import ChessBoard from 'chessboard'
 import 'chessboard/dist/index.css'
@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   handleUpdateCircles = (circle) => {
-    const { circles } = this.state;
+    const { circles } = this.state
 
     circle.color = this.getColorFromEvent(circle.event)
     delete circle.event
@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   handleUpdateArrows = (arrow) => {
-    const { arrows } = this.state;
+    const { arrows } = this.state
 
     arrow.color = this.getColorFromEvent(arrow.event)
     delete arrow.event
@@ -96,16 +96,16 @@ class App extends Component {
   }
 
   render() {
-    const {fen, legalMoves, circles, arrows, smartMoves, showLegalMoves, smallSize} = this.state;
+    const { fen, legalMoves, circles, arrows, smartMoves, showLegalMoves, smallSize } = this.state
 
     return (
       <ChessBoard
         raf={{ inside: true, vertical: 'bottom', horizontal: 'right' }} // where is either an object or a string
-                    // For example:
-                    // {inside: true, vertical: "top", horizontal: "left"} (top, middle, bottom, left, middle, right)
-                    // {inside: false, vertical: "top", horizontal: "bottom"} (top, bottom, left, right)
-                    // or
-                    // strings, like "tl", "tr", "bl", "br", "stm", "smm" ('s'=in square, 'm'=middle, 'm'=middle, etc.)
+        // For example:
+        // {inside: true, vertical: "top", horizontal: "left"} (top, middle, bottom, left, middle, right)
+        // {inside: false, vertical: "top", horizontal: "bottom"} (top, bottom, left, right)
+        // or
+        // strings, like "tl", "tr", "bl", "br", "stm", "smm" ('s'=in square, 'm'=middle, 'm'=middle, etc.)
         perspective='white'
         fen={fen}
         boardSquares={{
@@ -125,6 +125,17 @@ class App extends Component {
           wP: 'static/images/defaultPieces/wP.png',
           wQ: 'static/images/defaultPieces/wQ.png',
           wR: 'static/images/defaultPieces/wR.png'
+        }}
+        styles={{
+          wrapper: {
+            backgroundColor: '#292929'
+          },
+          files: {
+            color: 'white'
+          },
+          ranks: {
+            color: "white"
+          }
         }}
         movable={legalMoves}
         circles={circles}

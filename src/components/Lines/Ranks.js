@@ -7,7 +7,7 @@ import {
 } from '../../constants/boardConstants'
 import { WHITE_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
 
-const Ranks = ({ width, height, side, perspective }) => {
+const Ranks = ({ width, height, side, perspective, ranksStyle }) => {
   if (side === RANKS_DISABLED) {
     return null
   }
@@ -31,7 +31,10 @@ const Ranks = ({ width, height, side, perspective }) => {
       {RANKS_ARRAY.map((rank, index) => {
         return (
           <p
-            style={{ textAlign: side === RANKS_LEFT_SIDE ? 'right' : 'left' }}
+            style={{
+              textAlign: side === RANKS_LEFT_SIDE ? 'right' : 'left',
+              ...ranksStyle
+            }}
             key={index}
           >
             {rank}

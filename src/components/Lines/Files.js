@@ -7,7 +7,7 @@ import {
 } from '../../constants/boardConstants'
 import { WHITE_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
 
-const Files = ({ width, height, side, perspective }) => {
+const Files = ({ width, height, side, perspective, filesStyle }) => {
   if (side === FILES_DISABLED) {
     return null
   }
@@ -32,7 +32,8 @@ const Files = ({ width, height, side, perspective }) => {
           style={{
             marginTop: side === FILES_BOTTOM_SIDE ? 0 : 'auto',
             marginBottom: side === FILES_TOP_SIDE ? 0 : 'auto',
-            verticalAlign: 'text-bottom'
+            verticalAlign: 'text-bottom',
+            ...filesStyle
           }}
         >
           {file}
