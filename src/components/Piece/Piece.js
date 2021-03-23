@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classes from './piece.module.css'
 
@@ -21,6 +21,16 @@ const Piece = ({
     display: 'inline-block',
     textAlign: 'center'
   })
+
+  useEffect(() => {
+    updatePieceStyle({
+      width: size,
+      height: size,
+      position: 'relative',
+      display: 'inline-block',
+      textAlign: 'center'
+    })
+  }, [size])
 
   const [isDragging, updateIsDragging] = useState(false)
 
