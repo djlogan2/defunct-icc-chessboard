@@ -133,11 +133,17 @@ const Board = ({
     } else if (legalMoves && legalMoves.includes(piece)) {
       handleMove([currentPiece, piece])
       updateLegalMoves(null)
+      updateCurrentPiece(null)
+
+      return
     } else {
       if (typeof movable === 'function') {
         const moves = movable(piece)
         if (smartMoves && moves && moves.length === 1) {
           handleMove([piece, moves[0]])
+          updateCurrentPiece(null)
+
+          return
         } else {
           updateLegalMoves(movable(piece))
         }
@@ -145,6 +151,9 @@ const Board = ({
         const moves = movable[piece]
         if (smartMoves && moves && moves.length === 1) {
           handleMove([piece, moves[0]])
+          updateCurrentPiece(null)
+
+          return
         } else {
           updateLegalMoves(movable[piece])
         }

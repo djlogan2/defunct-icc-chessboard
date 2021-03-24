@@ -91,16 +91,19 @@ const Square = ({
         outline: 'none'
       }}
     >
-      {signatureSquares && smallSize > size &&
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        pointerEvents: 'none'
-      }}>
-        {pieceName}
-      </div>}
+      {signatureSquares && smallSize > size && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            pointerEvents: 'none'
+          }}
+        >
+          {pieceName}
+        </div>
+      )}
       {!!Object.keys(piece).length && (
         <Piece
           id={pieceName}
