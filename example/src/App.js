@@ -146,6 +146,7 @@ class App extends Component {
         smartMoves={smartMoves}
         showLegalMoves={showLegalMoves}
         smallSize={smallSize}
+        promotionPieces={['q', 'n', 'b', 'r']}
       />
     )
   }

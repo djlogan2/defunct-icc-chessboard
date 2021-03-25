@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import Promotion from '../Promotion/Promotion';
 
 import Square from '../Square/Square'
 
@@ -26,7 +27,8 @@ const Board = ({
   signatureSquares,
   onUpdateArrows,
   onUpdateCircles,
-  showLegalMoves
+  showLegalMoves,
+  promotionPieces
 }) => {
   const squares = []
   const [currentPiece, updateCurrentPiece] = useState(null)
@@ -34,6 +36,7 @@ const Board = ({
   const [squareMouseDown, updateSquareMouseDown] = useState(null)
   const [squareMouseUp, updateSquareMouseUp] = useState(null)
   const [dataTransfer, updateDataTransfer] = useState(null)
+  const [promotion, updatePromotion] = useState(false)
 
   const canvasRef = useRef(null)
 
@@ -127,21 +130,38 @@ const Board = ({
     updateSquareMouseUp(null)
   }, [squareMouseDown, squareMouseUp])
 
+  const handlePromotion = (chosenPiece) => {
+    handleMove(promotion, chosenPiece)
+    updatePromotion(null)
+    updateCurrentPiece(null)
+  }
+
+  const handlePieceMove = (prevPiece, piece) => {
+    if (piece[1] === RANKS_ARRAY[0] || piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1]) {
+      updatePromotion([prevPiece, piece])
+    } else {
+      handleMove([prevPiece, piece])
+      updateCurrentPiece(null)
+    }
+  }
+
   const handlePieceClick = (piece) => {
     if (currentPiece === piece) {
       updateLegalMoves(null)
     } else if (legalMoves && legalMoves.includes(piece)) {
-      handleMove([currentPiece, piece])
+      handlePieceMove(currentPiece, piece)
       updateLegalMoves(null)
-      updateCurrentPiece(null)
+      // handleMove([currentPiece, piece])
+      // updateCurrentPiece(null)
 
       return
     } else {
       if (typeof movable === 'function') {
         const moves = movable(piece)
         if (smartMoves && moves && moves.length === 1) {
-          handleMove([piece, moves[0]])
-          updateCurrentPiece(null)
+          handlePieceMove(currentPiece, moves[0])
+          // handleMove([piece, moves[0]])
+          // updateCurrentPiece(null)
 
           return
         } else {
@@ -150,8 +170,9 @@ const Board = ({
       } else if (typeof movable === 'object') {
         const moves = movable[piece]
         if (smartMoves && moves && moves.length === 1) {
-          handleMove([piece, moves[0]])
-          updateCurrentPiece(null)
+          handlePieceMove(currentPiece, moves[0])
+          // handleMove([piece, moves[0]])
+          // updateCurrentPiece(null)
 
           return
         } else {
@@ -220,6 +241,9 @@ const Board = ({
           pointerEvents: 'none'
         }}
       />
+      {!!promotion &&
+      <Promotion promotionPieces={promotionPieces} />
+      }
       {squares}
     </div>
   )

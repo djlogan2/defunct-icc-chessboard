@@ -33,7 +33,8 @@ const ChessBoard = ({
   smallSize,
   onUpdateCircles,
   onUpdateArrows,
-  showLegalMoves
+  showLegalMoves,
+  promotionPieces
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
@@ -74,6 +75,7 @@ const ChessBoard = ({
             onUpdateArrows={onUpdateArrows}
             showLegalMoves={showLegalMoves}
             signatureSquares={signatureSquares}
+            promotionPieces={promotionPieces}
           />
           {size * BOARD_SIZE_RELATIVE > smallSize && (
             <Fragment>
@@ -117,7 +119,8 @@ ChessBoard.propTypes = {
   onUpdateArrows: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   smartMoves: PropTypes.bool,
-  smallSize: PropTypes.number.isRequired
+  smallSize: PropTypes.number.isRequired,
+  promotionPieces: PropTypes.array.isRequired
 }
 
 export default withWindowSize(ChessBoard)
