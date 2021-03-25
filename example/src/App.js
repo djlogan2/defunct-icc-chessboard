@@ -64,8 +64,8 @@ class App extends Component {
     return moves
   }
 
-  handleMove = (move) => {
-    this.chess.move(move[0] + move[1], { sloppy: true })
+  handleMove = (move, promotion) => {
+    this.chess.move(move[0] + move[1] + promotion, { sloppy: true })
     this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen() })
   }
 
@@ -134,7 +134,10 @@ class App extends Component {
             color: 'white'
           },
           ranks: {
-            color: "white"
+            color: 'white'
+          },
+          promotion: {
+            backgroundColor: '#535353'
           }
         }}
         movable={legalMoves}
@@ -142,11 +145,11 @@ class App extends Component {
         arrows={arrows}
         onUpdateCircles={circle => this.handleUpdateCircles(circle)}
         onUpdateArrows={arrow => this.handleUpdateArrows(arrow)}
-        onMove={move => this.handleMove(move)}
+        onMove={(move, promotion) => this.handleMove(move, promotion)}
         smartMoves={smartMoves}
         showLegalMoves={showLegalMoves}
         smallSize={smallSize}
-        promotionPieces={['q', 'n', 'b', 'r']}
+        promotionPieces={['q', 'n']}
       />
     )
   }

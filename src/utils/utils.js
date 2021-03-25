@@ -1,4 +1,4 @@
-import { PIECES_MAP } from '../constants/boardConstants'
+import { FILES_ARRAY, PIECES_MAP, RANKS_ARRAY } from '../constants/boardConstants'
 import {
   BLACK_PLAYER_PERSPECTIVE,
   sidesMapping,
@@ -156,6 +156,99 @@ export const getPiecesFromFen = (fen, pieceImages, perspective) => {
   })
 
   return pieces
+}
+
+export const getPieceNameFromCoordinates = (pieces, perspective, coordinates) => {
+  const row = perspective === WHITE_PLAYER_PERSPECTIVE ? RANKS_ARRAY.length - Number(coordinates[1]) : Number(coordinates[1]) - 1
+  const col = perspective === WHITE_PLAYER_PERSPECTIVE ? FILES_ARRAY.indexOf(coordinates[0]) : FILES_ARRAY.length - FILES_ARRAY.indexOf(coordinates[0]) - 1
+
+  return { row, col, pieceName: pieces[row][col].description }
+}
+
+export const generateCoordinatesForPromotion = (coordinates, variantsCount, perspective, size, pieceColor) => {
+  if (perspective === WHITE_PLAYER_PERSPECTIVE) {
+    if (variantsCount === 2) {
+    return [{
+      left: (coordinates.row - 2) * size,
+      top: (coordinates.col - 1) * size
+    },
+    {
+      left: (coordinates.row) * size ,
+      top: (coordinates.col - 1) * size
+    }]
+  } else if (variantsCount === 3) {
+    return [{
+      left: (coordinates.row - 2) * size,
+      top: (coordinates.col - 1) * size
+    },
+      {
+      left: (coordinates.row - 1) * size,
+      top: perspective === WHITE_PLAYER_PERSPECTIVE ? (coordinates.col) * size : (coordinates.col - 2) * size
+    },
+    {
+      left: (coordinates.row) * size,
+      top: (coordinates.col - 1) * size
+    }]
+  } else if (variantsCount === 4) {
+    return [{
+      left: (coordinates.row - 2) * size,
+      top: (coordinates.col - 1) * size
+    },
+      {
+      left: (coordinates.row - 1) * size,
+      top: coordinates.col * size
+    },
+      {
+      left: (coordinates.row - 1) * size,
+      top: (coordinates.col - 2) * size
+    },
+    {
+      left: (coordinates.row) * size,
+      top: (coordinates.col - 1) * size
+    }]
+  }
+  } else {
+    if (variantsCount === 2) {
+    return [{
+      left: (coordinates.row - 2) * size,
+      top: (coordinates.col - 1) * size
+    },
+    {
+      left: (coordinates.row) * size,
+      top: (coordinates.col - 1) * size
+    }]
+  } else if (variantsCount === 3) {
+    return [{
+      left: (coordinates.row - 2) * size,
+      top: (coordinates.col - 1) * size
+    },
+      {
+      left: (coordinates.row - 1) * size,
+      top: (coordinates.col) * size
+    },
+    {
+      left: (coordinates.row) * size,
+      top: (coordinates.col - 1) * size
+    }]
+  } else if (variantsCount === 4) {
+    return [{
+      left: (coordinates.row - 2) * size,
+      top: (coordinates.col - 1) * size
+    },
+      {
+      left: (coordinates.row - 1) * size,
+      top: coordinates.col * size
+    },
+      {
+      left: (coordinates.row - 1) * size,
+      top: (coordinates.col - 2) * size
+    },
+    {
+      left: (coordinates.row) * size,
+      top: (coordinates.col - 1) * size
+    }]
+  }
+  }
 }
 
 export const validateFen = (fen) => {

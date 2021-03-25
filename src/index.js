@@ -69,6 +69,7 @@ const ChessBoard = ({
             circles={circles}
             arrows={arrows}
             handleMove={onMove}
+            pieceImages={pieceImages}
             smartMoves={smartMoves}
             smallSize={smallSize}
             onUpdateCircles={onUpdateCircles}

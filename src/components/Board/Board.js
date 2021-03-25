@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import Promotion from '../Promotion/Promotion';
+import Promotion from '../Promotion/Promotion'
 
 import Square from '../Square/Square'
 
@@ -8,28 +8,31 @@ import classes from './board.module.css'
 import { BLACK_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
 import {
   generateArrowCoordinates,
-  generateCircleCoordinates
+  generateCircleCoordinates,
+  getPieceNameFromCoordinates
 } from '../../utils/utils'
 import { FILES_ARRAY, RANKS_ARRAY } from '../../constants/boardConstants'
 
 const Board = ({
-  size,
-  pieces,
-  arrows,
-  circles,
-  movable,
-  smallSize,
-  boardStyle,
-  perspective,
-  boardSquares,
-  handleMove,
-  smartMoves,
-  signatureSquares,
-  onUpdateArrows,
-  onUpdateCircles,
-  showLegalMoves,
-  promotionPieces
-}) => {
+                 size,
+                 pieces,
+                 styles,
+                 arrows,
+                 circles,
+                 movable,
+                 smallSize,
+                 boardStyle,
+                 perspective,
+                 boardSquares,
+                 handleMove,
+                 smartMoves,
+                 signatureSquares,
+                 onUpdateArrows,
+                 onUpdateCircles,
+                 showLegalMoves,
+                 promotionPieces,
+                 pieceImages
+               }) => {
   const squares = []
   const [currentPiece, updateCurrentPiece] = useState(null)
   const [legalMoves, updateLegalMoves] = useState(null)
@@ -131,14 +134,31 @@ const Board = ({
   }, [squareMouseDown, squareMouseUp])
 
   const handlePromotion = (chosenPiece) => {
-    handleMove(promotion, chosenPiece)
+    handleMove([promotion.prevPiece, promotion.piece], chosenPiece)
     updatePromotion(null)
     updateCurrentPiece(null)
   }
 
   const handlePieceMove = (prevPiece, piece) => {
-    if (piece[1] === RANKS_ARRAY[0] || piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1]) {
-      updatePromotion([prevPiece, piece])
+    const { row, col, pieceName } = getPieceNameFromCoordinates(pieces, perspective, prevPiece)
+
+    if (
+      pieceName &&
+      pieceName[1] === 'P' &&
+      (piece[1] === RANKS_ARRAY[0] ||
+        piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1])
+      && promotionPieces.length > 1
+    ) {
+      updatePromotion({ prevPiece, piece, color: pieceName[0], coordinates: { row, col } })
+    } else if (
+      pieceName &&
+      pieceName[1] === 'P' &&
+      (piece[1] === RANKS_ARRAY[0] ||
+        piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1])
+      && promotionPieces.length === 1
+    ) {
+      handleMove([prevPiece, piece], promotionPieces[0])
+      updateCurrentPiece(null)
     } else {
       handleMove([prevPiece, piece])
       updateCurrentPiece(null)
@@ -151,8 +171,6 @@ const Board = ({
     } else if (legalMoves && legalMoves.includes(piece)) {
       handlePieceMove(currentPiece, piece)
       updateLegalMoves(null)
-      // handleMove([currentPiece, piece])
-      // updateCurrentPiece(null)
 
       return
     } else {
@@ -160,8 +178,6 @@ const Board = ({
         const moves = movable(piece)
         if (smartMoves && moves && moves.length === 1) {
           handlePieceMove(currentPiece, moves[0])
-          // handleMove([piece, moves[0]])
-          // updateCurrentPiece(null)
 
           return
         } else {
@@ -171,8 +187,6 @@ const Board = ({
         const moves = movable[piece]
         if (smartMoves && moves && moves.length === 1) {
           handlePieceMove(currentPiece, moves[0])
-          // handleMove([piece, moves[0]])
-          // updateCurrentPiece(null)
 
           return
         } else {
@@ -193,8 +207,8 @@ const Board = ({
       const color =
         row % 2
           ? col % 2
-            ? boardSquares.light
-            : boardSquares.dark
+          ? boardSquares.light
+          : boardSquares.dark
           : col % 2
           ? boardSquares.dark
           : boardSquares.light
@@ -241,9 +255,17 @@ const Board = ({
           pointerEvents: 'none'
         }}
       />
-      {!!promotion &&
-      <Promotion promotionPieces={promotionPieces} />
-      }
+      {!!promotion && (
+        <Promotion
+          perspective={perspective}
+          size={size / 8}
+          promotionPieces={promotionPieces}
+          pieceImages={pieceImages}
+          currentPiece={promotion}
+          onPromotion={handlePromotion}
+          styles={styles?.promotion}
+        />
+      )}
       {squares}
     </div>
   )
