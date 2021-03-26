@@ -54,7 +54,6 @@ const Promotion = ({
 
 Promotion.propTypes = {
   promotionPieces: PropTypes.array.isRequired,
-  currentPiece: PropTypes.object.isRequired,
   onPromotion: PropTypes.func.isRequired,
   pieceImages: PropTypes.object.isRequired,
   perspective: PropTypes.string.isRequired,
