@@ -14,25 +14,25 @@ import {
 import { FILES_ARRAY, RANKS_ARRAY } from '../../constants/boardConstants'
 
 const Board = ({
-                 size,
-                 pieces,
-                 styles,
-                 arrows,
-                 circles,
-                 movable,
-                 smallSize,
-                 boardStyle,
-                 perspective,
-                 boardSquares,
-                 handleMove,
-                 smartMoves,
-                 signatureSquares,
-                 onUpdateArrows,
-                 onUpdateCircles,
-                 showLegalMoves,
-                 promotionPieces,
-                 pieceImages
-               }) => {
+  size,
+  pieces,
+  styles,
+  arrows,
+  circles,
+  movable,
+  smallSize,
+  boardStyle,
+  perspective,
+  boardSquares,
+  handleMove,
+  smartMoves,
+  signatureSquares,
+  onUpdateArrows,
+  onUpdateCircles,
+  showLegalMoves,
+  promotionPieces,
+  pieceImages
+}) => {
   const squares = []
   const [currentPiece, updateCurrentPiece] = useState(null)
   const [legalMoves, updateLegalMoves] = useState(null)
@@ -140,22 +140,34 @@ const Board = ({
   }
 
   const handlePieceMove = (prevPiece, piece) => {
-    const { row, col, pieceName } = getPieceNameFromCoordinates(pieces, perspective, prevPiece)
+    const { row, col, pieceName } = getPieceNameFromCoordinates(
+      pieces,
+      perspective,
+      piece,
+      prevPiece
+    )
+
+    console.log(pieceName, row, col)
 
     if (
       pieceName &&
       pieceName[1] === 'P' &&
       (piece[1] === RANKS_ARRAY[0] ||
-        piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1])
-      && promotionPieces.length > 1
+        piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1]) &&
+      promotionPieces.length > 1
     ) {
-      updatePromotion({ prevPiece, piece, color: pieceName[0], coordinates: { row, col } })
+      updatePromotion({
+        prevPiece,
+        piece,
+        color: pieceName[0],
+        coordinates: { row, col }
+      })
     } else if (
       pieceName &&
       pieceName[1] === 'P' &&
       (piece[1] === RANKS_ARRAY[0] ||
-        piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1])
-      && promotionPieces.length === 1
+        piece[1] === RANKS_ARRAY[RANKS_ARRAY.length - 1]) &&
+      promotionPieces.length === 1
     ) {
       handleMove([prevPiece, piece], promotionPieces[0])
       updateCurrentPiece(null)
@@ -207,8 +219,8 @@ const Board = ({
       const color =
         row % 2
           ? col % 2
-          ? boardSquares.light
-          : boardSquares.dark
+            ? boardSquares.light
+            : boardSquares.dark
           : col % 2
           ? boardSquares.dark
           : boardSquares.light
@@ -235,6 +247,11 @@ const Board = ({
           showLegalMoves={showLegalMoves}
           updateSquareMouseDown={updateSquareMouseDown}
           updateSquareMouseUp={updateSquareMouseUp}
+          promotion={promotion}
+          promotionPieces={promotionPieces}
+          pieceImages={pieceImages}
+          onPromotion={handlePromotion}
+          promotionStyles={styles?.promotion}
         />
       )
     }
@@ -255,17 +272,6 @@ const Board = ({
           pointerEvents: 'none'
         }}
       />
-      {!!promotion && (
-        <Promotion
-          perspective={perspective}
-          size={size / 8}
-          promotionPieces={promotionPieces}
-          pieceImages={pieceImages}
-          currentPiece={promotion}
-          onPromotion={handlePromotion}
-          styles={styles?.promotion}
-        />
-      )}
       {squares}
     </div>
   )

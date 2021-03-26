@@ -21,7 +21,11 @@ const Square = ({
   updateSquareMouseUp,
   currentPiece,
   dataTransfer,
-  updateDataTransfer
+  updateDataTransfer,
+  promotion,
+  promotionPieces,
+  promotionStyles,
+  onPromotion
 }) => {
   const handleMouseUp = (event) => {
     if (typeof event === 'object' && event.button === 2) {
@@ -67,6 +71,8 @@ const Square = ({
       }
     }
   }
+
+  console.log(promotion)
 
   return (
     <button

@@ -3,10 +3,24 @@ import PropTypes from 'prop-types'
 import { BOARD_SIZE_RELATIVE } from '../../constants/systemConstants'
 import { generateCoordinatesForPromotion } from '../../utils/utils'
 
-const Promotion = ({ promotionPieces, currentPiece, pieceImages, onPromotion, size, styles, perspective }) => {
-  const offset = (size * 8) * ((1 - BOARD_SIZE_RELATIVE) / 2)
+const Promotion = ({
+  promotionPieces,
+  currentPiece,
+  pieceImages,
+  onPromotion,
+  size,
+  styles,
+  perspective
+}) => {
+  const offset = size * 8 * ((1 - BOARD_SIZE_RELATIVE) / 2)
 
-  const piecesStyles = generateCoordinatesForPromotion(currentPiece.coordinates, promotionPieces.length, perspective, size)
+  const piecesStyles = generateCoordinatesForPromotion(
+    currentPiece.coordinates,
+    promotionPieces.length,
+    perspective,
+    size,
+    currentPiece.color
+  )
 
   const pieces = promotionPieces.map((piece, index) => {
     return (
@@ -22,7 +36,8 @@ const Promotion = ({ promotionPieces, currentPiece, pieceImages, onPromotion, si
           outline: 'none',
           ...styles
         }}
-        onClick={() => onPromotion(piece)}>
+        onClick={() => onPromotion(piece)}
+      >
         <img
           style={{
             position: 'absolute',
@@ -40,11 +55,7 @@ const Promotion = ({ promotionPieces, currentPiece, pieceImages, onPromotion, si
     )
   })
 
-  return (
-    <Fragment>
-      {pieces}
-    </Fragment>
-  )
+  return <Fragment>{pieces}</Fragment>
 }
 
 Promotion.propTypes = {
