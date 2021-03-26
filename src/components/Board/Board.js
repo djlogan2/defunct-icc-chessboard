@@ -147,8 +147,6 @@ const Board = ({
       prevPiece
     )
 
-    console.log(pieceName, row, col)
-
     if (
       pieceName &&
       pieceName[1] === 'P' &&

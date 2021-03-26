@@ -5,21 +5,17 @@ import { generateCoordinatesForPromotion } from '../../utils/utils'
 
 const Promotion = ({
   promotionPieces,
-  currentPiece,
   pieceImages,
   onPromotion,
   size,
   styles,
   perspective
 }) => {
-  const offset = size * 8 * ((1 - BOARD_SIZE_RELATIVE) / 2)
 
   const piecesStyles = generateCoordinatesForPromotion(
-    currentPiece.coordinates,
     promotionPieces.length,
     perspective,
-    size,
-    currentPiece.color
+    size
   )
 
   const pieces = promotionPieces.map((piece, index) => {
@@ -27,14 +23,12 @@ const Promotion = ({
       <button
         key={piece}
         style={{
-          position: 'absolute',
-          left: offset + piecesStyles[index].left,
-          top: offset + piecesStyles[index].top,
           width: size,
           height: size,
           zIndex: 999,
           outline: 'none',
-          ...styles
+          ...styles,
+          ...piecesStyles[index]
         }}
         onClick={() => onPromotion(piece)}
       >
@@ -49,7 +43,7 @@ const Promotion = ({
           width={size}
           height={size}
           alt={piece}
-          src={pieceImages[`${currentPiece.color}${piece.toUpperCase()}`]}
+          src={pieceImages[`${perspective}${piece.toUpperCase()}`]}
         />
       </button>
     )

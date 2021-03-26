@@ -4,6 +4,7 @@ import { DATA_TRANSFER } from '../../constants/systemConstants'
 import LegalMove from '../LegalMove/LegalMove'
 
 import Piece from '../Piece/Piece'
+import Promotion from '../Promotion/Promotion';
 
 import styles from './square.module.css'
 
@@ -25,7 +26,8 @@ const Square = ({
   promotion,
   promotionPieces,
   promotionStyles,
-  onPromotion
+  onPromotion,
+  pieceImages
 }) => {
   const handleMouseUp = (event) => {
     if (typeof event === 'object' && event.button === 2) {
@@ -71,8 +73,6 @@ const Square = ({
       }
     }
   }
-
-  console.log(promotion)
 
   return (
     <button
@@ -125,6 +125,16 @@ const Square = ({
       {showLegalMoves && !!legalMoves && legalMoves.includes(pieceName) && (
         <LegalMove id={pieceName} size={size * 0.3} />
       )}
+      {!!promotion && promotion.piece === pieceName &&
+      <Promotion
+        perspective={promotion.color}
+        onPromotion={onPromotion}
+        size={size}
+        promotionPieces={promotionPieces}
+        pieceImages={pieceImages}
+        styles={promotionStyles}
+      />
+      }
     </button>
   )
 }

@@ -165,7 +165,8 @@ export const getPiecesFromFen = (fen, pieceImages, perspective) => {
 export const getPieceNameFromCoordinates = (
   pieces,
   perspective,
-  coordinates
+  coordinates,
+  prevCoordinates
 ) => {
   const row =
     perspective === WHITE_PLAYER_PERSPECTIVE
@@ -176,62 +177,75 @@ export const getPieceNameFromCoordinates = (
       ? FILES_ARRAY.indexOf(coordinates[0])
       : FILES_ARRAY.length - FILES_ARRAY.indexOf(coordinates[0]) - 1
 
-  return { row, col, pieceName: pieces[row][col].description }
+  const prevRow =
+    perspective === WHITE_PLAYER_PERSPECTIVE
+      ? RANKS_ARRAY.length - Number(prevCoordinates[1])
+      : Number(prevCoordinates[1]) - 1
+  const prevCol =
+    perspective === WHITE_PLAYER_PERSPECTIVE
+      ? FILES_ARRAY.indexOf(prevCoordinates[0])
+      : FILES_ARRAY.length - FILES_ARRAY.indexOf(prevCoordinates[0]) - 1
+
+  return { row, col, pieceName: pieces[prevRow][prevCol].description }
 }
 
 export const generateCoordinatesForPromotion = (
-  coordinates,
   variantsCount,
   perspective,
-  size,
-  pieceColor
+  size
 ) => {
   if (variantsCount === 2) {
     return [
       {
-        left: (coordinates.row - 2) * size,
-        top: (coordinates.col - 1) * size
+        position: 'absolute',
+        left: -size,
+        top: 0
       },
       {
-        left: coordinates.row * size,
-        top: (coordinates.col - 1) * size
+        position: 'absolute',
+        left: size,
+        top: 0
       }
     ]
   } else if (variantsCount === 3) {
     return [
       {
-        left: (coordinates.row - 2) * size,
-        top: (coordinates.col - 1) * size
+        position: 'absolute',
+        left: -size,
+        top: 0
       },
       {
-        left: (coordinates.row - 1) * size,
-        top:
-          perspective === WHITE_PLAYER_PERSPECTIVE
-            ? coordinates.col * size
-            : (coordinates.col - 2) * size
+        position: 'absolute',
+        left: size,
+        top: 0
       },
       {
-        left: coordinates.row * size,
-        top: (coordinates.col - 1) * size
-      }
+        position: 'absolute',
+        left: 0,
+        top: perspective === WHITE_PLAYER_PERSPECTIVE ? -size : size
+      },
     ]
   } else if (variantsCount === 4) {
     return [
       {
-        left: (coordinates.row - 2) * size,
-        top: (coordinates.col - 1) * size
+        position: 'absolute',
+        left: -size,
+        top: 0
       },
       {
-        left: (coordinates.row - 1) * size,
-        top: coordinates.col * size
+        position: 'absolute',
+        left: size,
+        top: 0
       },
       {
-        left: (coordinates.row - 1) * size,
-        top: (coordinates.col - 2) * size
+        position: 'absolute',
+        left: 0,
+        top: size
       },
       {
-        left: coordinates.row * size,
-        top: (coordinates.col - 1) * size
+        position: 'absolute',
+        left: 0,
+        top: - size
       }
     ]
   }
