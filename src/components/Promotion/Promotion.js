@@ -21,8 +21,6 @@ const Promotion = ({
     column
   )
 
-  console.log(piecesStyles)
-
   const pieces = promotionPieces.map((piece, index) => {
     return (
       <button
