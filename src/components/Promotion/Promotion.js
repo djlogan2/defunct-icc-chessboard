@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { BOARD_SIZE_RELATIVE } from '../../constants/systemConstants'
 import { generateCoordinatesForPromotion } from '../../utils/utils'
+import { PROMOTION_SIZE_RELATIVE } from '../../constants/systemConstants'
 
 const Promotion = ({
   promotionPieces,
@@ -9,24 +9,30 @@ const Promotion = ({
   onPromotion,
   size,
   styles,
-  perspective
+  perspective,
+  promotionColor,
+  column
 }) => {
-
   const piecesStyles = generateCoordinatesForPromotion(
     promotionPieces.length,
     perspective,
-    size
+    promotionColor,
+    size,
+    column
   )
+
+  console.log(piecesStyles)
 
   const pieces = promotionPieces.map((piece, index) => {
     return (
       <button
         key={piece}
         style={{
-          width: size,
-          height: size,
+          width: size * PROMOTION_SIZE_RELATIVE,
+          height: size * PROMOTION_SIZE_RELATIVE,
           zIndex: 999,
           outline: 'none',
+          borderRadius: '50%',
           ...styles,
           ...piecesStyles[index]
         }}
@@ -38,12 +44,13 @@ const Promotion = ({
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            borderRadius: '50%'
           }}
-          width={size}
-          height={size}
+          width={size * PROMOTION_SIZE_RELATIVE}
+          height={size * PROMOTION_SIZE_RELATIVE}
           alt={piece}
-          src={pieceImages[`${perspective}${piece.toUpperCase()}`]}
+          src={pieceImages[`${promotionColor}${piece.toUpperCase()}`]}
         />
       </button>
     )
@@ -57,7 +64,8 @@ Promotion.propTypes = {
   onPromotion: PropTypes.func.isRequired,
   pieceImages: PropTypes.object.isRequired,
   perspective: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired
+  size: PropTypes.number.isRequired,
+  column: PropTypes.number.isRequired
 }
 
 export default Promotion

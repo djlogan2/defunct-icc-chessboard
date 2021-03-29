@@ -4,7 +4,7 @@ import { DATA_TRANSFER } from '../../constants/systemConstants'
 import LegalMove from '../LegalMove/LegalMove'
 
 import Piece from '../Piece/Piece'
-import Promotion from '../Promotion/Promotion';
+import Promotion from '../Promotion/Promotion'
 
 import styles from './square.module.css'
 
@@ -27,7 +27,8 @@ const Square = ({
   promotionPieces,
   promotionStyles,
   onPromotion,
-  pieceImages
+  pieceImages,
+  perspective
 }) => {
   const handleMouseUp = (event) => {
     if (typeof event === 'object' && event.button === 2) {
@@ -125,16 +126,18 @@ const Square = ({
       {showLegalMoves && !!legalMoves && legalMoves.includes(pieceName) && (
         <LegalMove id={pieceName} size={size * 0.3} />
       )}
-      {!!promotion && promotion.piece === pieceName &&
-      <Promotion
-        perspective={promotion.color}
-        onPromotion={onPromotion}
-        size={size}
-        promotionPieces={promotionPieces}
-        pieceImages={pieceImages}
-        styles={promotionStyles}
-      />
-      }
+      {!!promotion && promotion.piece === pieceName && (
+        <Promotion
+          column={promotion.coordinates.col}
+          promotionColor={promotion.color}
+          perspective={perspective}
+          onPromotion={onPromotion}
+          size={size}
+          promotionPieces={promotionPieces}
+          pieceImages={pieceImages}
+          styles={promotionStyles}
+        />
+      )}
     </button>
   )
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import Promotion from '../Promotion/Promotion'
 
 import Square from '../Square/Square'
 
@@ -39,7 +38,7 @@ const Board = ({
   const [squareMouseDown, updateSquareMouseDown] = useState(null)
   const [squareMouseUp, updateSquareMouseUp] = useState(null)
   const [dataTransfer, updateDataTransfer] = useState(null)
-  const [promotion, updatePromotion] = useState(false)
+  const [promotion, updatePromotion] = useState(null)
 
   const canvasRef = useRef(null)
 
@@ -250,6 +249,7 @@ const Board = ({
           pieceImages={pieceImages}
           onPromotion={handlePromotion}
           promotionStyles={styles?.promotion}
+          perspective={perspective}
         />
       )
     }

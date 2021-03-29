@@ -5,6 +5,7 @@ import {
 } from '../constants/boardConstants'
 import {
   BLACK_PLAYER_PERSPECTIVE,
+  PROMOTION_OFFSET_RELATIVE,
   sidesMapping,
   WHITE_PLAYER_PERSPECTIVE
 } from '../constants/systemConstants'
@@ -189,66 +190,93 @@ export const getPieceNameFromCoordinates = (
   return { row, col, pieceName: pieces[prevRow][prevCol].description }
 }
 
+const convertToRad = (element) => (element * Math.PI) / 180
+
 export const generateCoordinatesForPromotion = (
   variantsCount,
   perspective,
-  size
+  promotionColor,
+  size,
+  column
 ) => {
-  if (variantsCount === 2) {
-    return [
-      {
-        position: 'absolute',
-        left: -size,
-        top: 0
-      },
-      {
-        position: 'absolute',
-        left: size,
-        top: 0
-      }
-    ]
-  } else if (variantsCount === 3) {
-    return [
-      {
-        position: 'absolute',
-        left: -size,
-        top: 0
-      },
-      {
-        position: 'absolute',
-        left: size,
-        top: 0
-      },
-      {
-        position: 'absolute',
-        left: 0,
-        top: perspective === WHITE_PLAYER_PERSPECTIVE ? -size : size
-      },
-    ]
-  } else if (variantsCount === 4) {
-    return [
-      {
-        position: 'absolute',
-        left: -size,
-        top: 0
-      },
-      {
-        position: 'absolute',
-        left: size,
-        top: 0
-      },
-      {
-        position: 'absolute',
-        left: 0,
-        top: size
-      },
-      {
-        position: 'absolute',
-        left: 0,
-        top: - size
-      }
-    ]
+  let endAngle = 180
+  let startAngle = perspective[0] === promotionColor ? 0 : 360
+
+  if (column === 0) {
+    endAngle = promotionColor === perspective[0] ? 90 : 270
+  } else if (column === 7) {
+    startAngle = promotionColor === perspective[0] ? 180 : 270
+    endAngle = promotionColor === perspective[0] ? 90 : 180
   }
+
+  return new Array(variantsCount).fill(0, 0, variantsCount).map((el, index) => {
+    const angle =
+      startAngle + ((endAngle - startAngle) / (variantsCount - 1)) * index
+
+    return {
+      position: 'absolute',
+      left:
+        size * PROMOTION_OFFSET_RELATIVE + Math.cos(convertToRad(angle)) * size,
+      top:
+        size * PROMOTION_OFFSET_RELATIVE + Math.sin(convertToRad(angle)) * size
+    }
+  })
+
+  // if (variantsCount === 2) {
+  //   return [
+  //     {
+  //       position: 'absolute',
+  //       left: -size,
+  //       top: 0
+  //     },
+  //     {
+  //       position: 'absolute',
+  //       left: size,
+  //       top: 0
+  //     }
+  //   ]
+  // } else if (variantsCount === 3) {
+  //   return [
+  //     {
+  //       position: 'absolute',
+  //       left: -size,
+  //       top: 0
+  //     },
+  //     {
+  //       position: 'absolute',
+  //       left: size,
+  //       top: 0
+  //     },
+  //     {
+  //       position: 'absolute',
+  //       left: 0,
+  //       top: perspective === WHITE_PLAYER_PERSPECTIVE ? -size : size
+  //     },
+  //   ]
+  // } else if (variantsCount === 4) {
+  //   return [
+  //     {
+  //       position: 'absolute',
+  //       left: -size,
+  //       top: 0
+  //     },
+  //     {
+  //       position: 'absolute',
+  //       left: size,
+  //       top: 0
+  //     },
+  //     {
+  //       position: 'absolute',
+  //       left: 0,
+  //       top: size
+  //     },
+  //     {
+  //       position: 'absolute',
+  //       left: 0,
+  //       top: - size
+  //     }
+  //   ]
+  // }
 }
 
 export const validateFen = (fen) => {

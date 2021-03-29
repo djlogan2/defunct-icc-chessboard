@@ -22,7 +22,7 @@ class App extends Component {
     }
   }
 
-  getColorFromEvent = (event) => {
+  getColorFromEvent = () => {
     return '#fafafa'
   }
 
@@ -137,7 +137,7 @@ class App extends Component {
             color: 'white'
           },
           promotion: {
-            backgroundColor: '#535353'
+            backgroundColor: '#a8a8a8'
           }
         }}
         movable={legalMoves}
