@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Board from './components/Board/Board'
 import withWindowSize from './HOCs/withWindowSize'
 
+import Edit from './components/Edit/Edit'
 import classes from './styles.module.css'
 import Files from './components/Lines/Files'
 import Ranks from './components/Lines/Ranks'
@@ -123,5 +124,7 @@ ChessBoard.propTypes = {
   smallSize: PropTypes.number.isRequired,
   promotionPieces: PropTypes.array.isRequired
 }
+
+export { Edit as PiecesSidebar }
 
 export default withWindowSize(ChessBoard)
