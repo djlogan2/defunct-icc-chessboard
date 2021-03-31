@@ -16,6 +16,7 @@ import {
   BOARD_SIZE_MARGIN
 } from './constants/systemConstants'
 import { getPiecesFromFen, parseRaf } from './utils/utils'
+import { FILES_ARRAY, RANKS_ARRAY } from './constants/boardConstants'
 
 const ChessBoard = ({
   fen,
@@ -57,7 +58,7 @@ const ChessBoard = ({
   const pieces = getPiecesFromFen(fen, pieceImages, perspective)
 
   const handleDragEnd = (event) => {
-    if (event.currentTarget.tagName !== 'HTML') {
+    if (event.currentTarget.tagName !== 'HTML' && edit) {
       let target
       if (event.clientX) {
         target = document.elementFromPoint(event.clientX, event.clientY)
@@ -69,8 +70,10 @@ const ChessBoard = ({
       }
 
       if (
-        target?.id &&
-        (target.id === 'board-container' || target.id === 'board-wrapper')
+        !target ||
+        !target.id ||
+        !FILES_ARRAY.includes(target.id[0]) ||
+        !RANKS_ARRAY.includes(target.id[1])
       ) {
         updateDeletePiece(Date.now())
         handleDelete(event.target.id)
