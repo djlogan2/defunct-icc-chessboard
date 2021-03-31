@@ -20,6 +20,7 @@ import { getPiecesFromFen, parseRaf } from './utils/utils'
 const ChessBoard = ({
   fen,
   raf,
+  edit,
   styles,
   movable,
   circles,
@@ -32,6 +33,8 @@ const ChessBoard = ({
   boardSquares,
   smartMoves,
   smallSize,
+  handleAdd,
+  handleDelete,
   onUpdateCircles,
   onUpdateArrows,
   showLegalMoves,
@@ -57,10 +60,14 @@ const ChessBoard = ({
       ref={currentElement}
       className={classes.wrapper}
       style={styles?.wrapper}
+      onDrop={(event) => {
+        console.log(event.target)
+      }}
     >
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
           <Board
+            edit={edit}
             boardSquares={boardSquares}
             size={size * BOARD_SIZE_RELATIVE}
             styles={styles}
@@ -73,6 +80,7 @@ const ChessBoard = ({
             pieceImages={pieceImages}
             smartMoves={smartMoves}
             smallSize={smallSize}
+            handleAdd={handleAdd}
             onUpdateCircles={onUpdateCircles}
             onUpdateArrows={onUpdateArrows}
             showLegalMoves={showLegalMoves}
@@ -122,7 +130,10 @@ ChessBoard.propTypes = {
   onMove: PropTypes.func.isRequired,
   smartMoves: PropTypes.bool,
   smallSize: PropTypes.number.isRequired,
-  promotionPieces: PropTypes.array.isRequired
+  promotionPieces: PropTypes.array.isRequired,
+  edit: PropTypes.object,
+  handleAdd: PropTypes.func,
+  handleDelete: PropTypes.func
 }
 
 export { Edit as PiecesSidebar }

@@ -14,6 +14,7 @@ import { FILES_ARRAY, RANKS_ARRAY } from '../../constants/boardConstants'
 
 const Board = ({
   size,
+  edit,
   pieces,
   styles,
   arrows,
@@ -24,6 +25,7 @@ const Board = ({
   perspective,
   boardSquares,
   handleMove,
+  handleAdd,
   smartMoves,
   signatureSquares,
   onUpdateArrows,
@@ -139,6 +141,11 @@ const Board = ({
   }
 
   const handlePieceMove = (prevPiece, piece) => {
+    if (edit) {
+      handleMove([prevPiece, piece])
+      return
+    }
+
     const { row, col, pieceName } = getPieceNameFromCoordinates(
       pieces,
       perspective,
@@ -229,6 +236,8 @@ const Board = ({
 
       squares.push(
         <Square
+          edit={edit}
+          handleAdd={handleAdd}
           handlePieceClick={handlePieceClick}
           piece={pieces[row][col]}
           size={size / 8}

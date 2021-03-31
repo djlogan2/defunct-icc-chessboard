@@ -11,6 +11,8 @@ import styles from './square.module.css'
 const Square = ({
   color,
   size,
+  edit,
+  handleAdd,
   piece,
   handlePieceClick,
   pieceName,
@@ -44,6 +46,12 @@ const Square = ({
 
   const handleDrop = (event) => {
     event.preventDefault()
+
+    if (edit && edit.add) {
+      handleAdd(edit.add, pieceName)
+
+      return
+    }
 
     if (!!legalMoves && legalMoves.includes(pieceName)) {
       handlePieceClick(pieceName)

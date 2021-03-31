@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Edit = ({ pieceImages, size }) => {
+const Edit = ({ pieceImages, size, onAdd }) => {
   const keys = Object.keys(pieceImages)
 
   const pieces = keys.map((key) => {
@@ -11,7 +11,9 @@ const Edit = ({ pieceImages, size }) => {
         alt={key}
         src={pieceImages[key]}
         width={size}
+        onDragStart={() => onAdd(key)}
         height={size}
+        draggable
       />
     )
   })
@@ -31,7 +33,8 @@ const Edit = ({ pieceImages, size }) => {
 
 Edit.propTypes = {
   pieceImages: PropTypes.object.isRequired,
-  size: PropTypes.number.isRequired
+  size: PropTypes.number.isRequired,
+  onAdd: PropTypes.func.isRequired
 }
 
 export default Edit
