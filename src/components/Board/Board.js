@@ -218,6 +218,13 @@ const Board = ({
     }
   }
 
+  const handlePieceAdd = (piece, square) => {
+    handleAdd(piece, square)
+
+    updateCurrentPiece(null)
+    updateLegalMoves(null)
+  }
+
   for (let row = 0; row < FILES_ARRAY.length; row++) {
     for (let col = 0; col < RANKS_ARRAY.length; col++) {
       const color =
@@ -237,7 +244,7 @@ const Board = ({
       squares.push(
         <Square
           edit={edit}
-          handleAdd={handleAdd}
+          handleAdd={handlePieceAdd}
           handlePieceClick={handlePieceClick}
           piece={pieces[row][col]}
           size={size / 8}
