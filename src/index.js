@@ -42,6 +42,7 @@ const ChessBoard = ({
 }) => {
   const currentElement = useRef(null)
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
+  const [deletePiece, updateDeletePiece] = useState(Date.now())
 
   useEffect(() => {
     const height = currentElement?.current?.clientHeight
@@ -55,14 +56,35 @@ const ChessBoard = ({
   const size = Math.min(boardSize.width, boardSize.height)
   const pieces = getPiecesFromFen(fen, pieceImages, perspective)
 
+  const handleDragEnd = (event) => {
+    if (event.currentTarget.tagName !== 'HTML') {
+      let target
+      if (event.clientX) {
+        target = document.elementFromPoint(event.clientX, event.clientY)
+      } else {
+        target = document.elementFromPoint(
+          event.changedTouches[0].clientX,
+          event.changedTouches[0].clientY
+        )
+      }
+
+      if (
+        target?.id &&
+        (target.id === 'board-container' || target.id === 'board-wrapper')
+      ) {
+        updateDeletePiece(Date.now())
+        handleDelete(event.target.id)
+      }
+    }
+  }
+
   return (
     <div
       ref={currentElement}
       className={classes.wrapper}
       style={styles?.wrapper}
-      onDrop={(event) => {
-        console.log(event.target)
-      }}
+      onDragEnd={handleDragEnd}
+      id='board-container'
     >
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
@@ -81,6 +103,7 @@ const ChessBoard = ({
             smartMoves={smartMoves}
             smallSize={smallSize}
             handleAdd={handleAdd}
+            deletePiece={deletePiece}
             onUpdateCircles={onUpdateCircles}
             onUpdateArrows={onUpdateArrows}
             showLegalMoves={showLegalMoves}

@@ -26,6 +26,7 @@ const Board = ({
   boardSquares,
   handleMove,
   handleAdd,
+  deletePiece,
   smartMoves,
   signatureSquares,
   onUpdateArrows,
@@ -43,6 +44,13 @@ const Board = ({
   const [promotion, updatePromotion] = useState(null)
 
   const canvasRef = useRef(null)
+
+  useEffect(() => {
+    updateSquareMouseDown(null)
+    updateSquareMouseUp(null)
+    updatePromotion(null)
+    updateCurrentPiece(null)
+  }, [deletePiece])
 
   useEffect(() => {
     const canvas = canvasRef.current
