@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { DATA_TRANSFER } from '../../constants/systemConstants'
 import LegalMove from '../LegalMove/LegalMove'
 
@@ -30,8 +30,17 @@ const Square = ({
   promotionStyles,
   onPromotion,
   pieceImages,
-  perspective
+  perspective,
+  activePiece
 }) => {
+  const activeButton = useRef()
+
+  useEffect(() => {
+    if (activePiece && activePiece === pieceName) {
+      activeButton.current.focus()
+    }
+  }, [activePiece])
+
   const handleMouseUp = (event) => {
     if (typeof event === 'object' && event.button === 2) {
       updateSquareMouseUp(pieceName)
@@ -85,6 +94,7 @@ const Square = ({
 
   return (
     <button
+      ref={activeButton}
       id={pieceName}
       onDrop={handleDrop}
       onTouchEnd={handleTouchEnd}

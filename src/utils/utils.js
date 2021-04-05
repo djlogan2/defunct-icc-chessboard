@@ -14,6 +14,24 @@ export const checkIsOdd = (value) => {
   return value % 2 === 1
 }
 
+export const getStep = (event) => {
+  if (event.key === 'ArrowUp') {
+    return -FILES_ARRAY.length
+  }
+
+  if (event.key === 'ArrowDown') {
+    return FILES_ARRAY.length
+  }
+
+  if (event.key === 'ArrowLeft') {
+    return -1
+  }
+
+  if (event.key === 'ArrowRight') {
+    return 1
+  }
+}
+
 export const parseRaf = (raf) => {
   if (typeof raf === 'object') {
     const { inside, vertical, horizontal } = raf

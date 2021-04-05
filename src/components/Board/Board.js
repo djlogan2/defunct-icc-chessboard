@@ -8,7 +8,8 @@ import { BLACK_PLAYER_PERSPECTIVE } from '../../constants/systemConstants'
 import {
   generateArrowCoordinates,
   generateCircleCoordinates,
-  getPieceNameFromCoordinates
+  getPieceNameFromCoordinates,
+  getStep
 } from '../../utils/utils'
 import { FILES_ARRAY, RANKS_ARRAY } from '../../constants/boardConstants'
 
@@ -36,6 +37,7 @@ const Board = ({
   pieceImages
 }) => {
   const squares = []
+  const [activePiece, updateActivePiece] = useState(null)
   const [currentPiece, updateCurrentPiece] = useState(null)
   const [legalMoves, updateLegalMoves] = useState(null)
   const [squareMouseDown, updateSquareMouseDown] = useState(null)
@@ -233,6 +235,8 @@ const Board = ({
     updateLegalMoves(null)
   }
 
+  const coordinates = []
+
   for (let row = 0; row < FILES_ARRAY.length; row++) {
     for (let col = 0; col < RANKS_ARRAY.length; col++) {
       const color =
@@ -248,6 +252,8 @@ const Board = ({
         perspective === BLACK_PLAYER_PERSPECTIVE
           ? `${FILES_ARRAY[FILES_ARRAY.length - 1 - col]}${RANKS_ARRAY[row]}`
           : `${FILES_ARRAY[col]}${RANKS_ARRAY[RANKS_ARRAY.length - 1 - row]}`
+
+      coordinates.push(pieceCoordinates)
 
       squares.push(
         <Square
@@ -274,13 +280,25 @@ const Board = ({
           onPromotion={handlePromotion}
           promotionStyles={styles?.promotion}
           perspective={perspective}
+          activePiece={activePiece}
         />
+      )
+    }
+  }
+
+  const handleOnKeyUp = (event) => {
+    const step = getStep(event)
+
+    if (step) {
+      updateActivePiece(
+        coordinates[coordinates.indexOf(event.target.id) + step]
       )
     }
   }
 
   return (
     <div
+      onKeyUp={handleOnKeyUp}
       style={{ width: size, height: size, ...boardStyle }}
       className={classes.board}
     >
