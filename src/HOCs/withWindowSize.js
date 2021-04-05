@@ -25,7 +25,7 @@ export default function withWindowSize(WrappedComponent) {
     updateWindowSize = () => {
       this.setState({
         windowWidth: window.innerWidth,
-        height: window.innerHeight
+        windowHeight: window.innerHeight
       })
     }
 

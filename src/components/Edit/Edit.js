@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Edit = ({ pieceImages, size, onAdd }) => {
+const Edit = ({ pieceImages, size, onAdd, style }) => {
   const keys = Object.keys(pieceImages)
 
   const pieces = keys.map((key) => {
@@ -23,7 +23,8 @@ const Edit = ({ pieceImages, size, onAdd }) => {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        ...style
       }}
     >
       {pieces}
