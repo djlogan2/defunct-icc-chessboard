@@ -100,7 +100,7 @@ const Piece = ({
       onDrag={handleOnDrag}
       style={{
         ...pieceStyle,
-        background: `url(${pieceImage})`,
+        backgroundImage: `url(${pieceImage})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: size,
         border: 'none'
