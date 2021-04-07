@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classes from './piece.module.css'
 
-import { DATA_TRANSFER } from '../../constants/systemConstants'
-
 const Piece = ({
-                 id,
-                 pieceImage,
-                 description,
-                 pieceName,
-                 size,
-                 handlePieceClick,
-                 currentPiece,
-                 updateDataTransfer
-               }) => {
+  id,
+  pieceImage,
+  pieceName,
+  size,
+  handlePieceClick,
+  currentPiece,
+  updateDataTransfer
+}) => {
   const [pieceStyle, updatePieceStyle] = useState({
     width: size,
     height: size,
@@ -109,16 +106,7 @@ const Piece = ({
         border: 'none'
       }}
       className={classes.div}
-    >
-      {/*<img*/}
-      {/*  alt={description}*/}
-      {/*  src={pieceImage}*/}
-      {/*  style={{*/}
-      {/*    ...pieceStyle*/}
-      {/*  }}*/}
-      {/*  className={classes.piece}*/}
-      {/*/>*/}
-    </div>
+    />
   )
 }
 
