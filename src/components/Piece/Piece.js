@@ -30,7 +30,7 @@ const Piece = ({
   }, [size])
 
   const handleDragStart = (event) => {
-    event.dataTransfer.dropEffect = 'move'
+    event.dataTransfer.dropEffect = 'none'
     event.dataTransfer.effectAllowed = 'move'
 
     if (currentPiece !== pieceName) {
@@ -39,7 +39,7 @@ const Piece = ({
   }
 
   const handleOnDrag = (event) => {
-    event.dataTransfer.dropEffect = 'move'
+    event.dataTransfer.dropEffect = 'none'
     event.dataTransfer.effectAllowed = 'move'
   }
 
