@@ -5,15 +5,15 @@ import classes from './piece.module.css'
 import { DATA_TRANSFER } from '../../constants/systemConstants'
 
 const Piece = ({
-  id,
-  pieceImage,
-  description,
-  pieceName,
-  size,
-  handlePieceClick,
-  currentPiece,
-  updateDataTransfer
-}) => {
+                 id,
+                 pieceImage,
+                 description,
+                 pieceName,
+                 size,
+                 handlePieceClick,
+                 currentPiece,
+                 updateDataTransfer
+               }) => {
   const [pieceStyle, updatePieceStyle] = useState({
     width: size,
     height: size,
@@ -34,20 +34,23 @@ const Piece = ({
 
   const image = document.createElement('img')
   image.src = pieceImage
+  image.width = size
+  image.height = size
 
-  const canvas = document.createElement('canvas')
-  canvas.width = size
-  canvas.height = size
-  const ctx = canvas.getContext('2d')
-  ctx.drawImage(image, 0, 0, size, size)
-
-  image.src = canvas.toDataURL()
+  const div = document.createElement('div')
+  div.style = {
+    width: size,
+    height: size,
+    display: 'block'
+  }
+  div.appendChild(image)
+  document.querySelector('body').appendChild(div)
 
   const handleDragStart = (event) => {
-    event.dataTransfer.setData(DATA_TRANSFER, pieceName)
     event.dataTransfer.dropEffect = 'none'
+    event.dataTransfer.effectAllowed = 'none'
 
-    event.dataTransfer.setDragImage(image, size / 2, size / 2)
+    event.dataTransfer.setDragImage(div, size / 2, size / 2)
 
     if (currentPiece !== pieceName) {
       handlePieceClick(pieceName)
@@ -56,6 +59,7 @@ const Piece = ({
 
   const handleOnDrag = (event) => {
     event.dataTransfer.dropEffect = 'none'
+    event.dataTransfer.effectAllowed = 'none'
   }
 
   const handleTouchStart = (event) => {
@@ -116,6 +120,7 @@ const Piece = ({
       style={{
         ...pieceStyle
       }}
+      className={classes.div}
     >
       <img
         alt={description}

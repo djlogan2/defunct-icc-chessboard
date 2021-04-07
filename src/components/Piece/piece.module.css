@@ -1,4 +1,9 @@
 .piece {
   opacity: 1 !important;
   pointer-events: none;
+  outline: 1px solid transparent;
+}
+
+.div {
+  outline: 1px solid transparent;
 }
