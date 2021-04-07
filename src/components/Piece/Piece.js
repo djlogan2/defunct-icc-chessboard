@@ -32,25 +32,9 @@ const Piece = ({
     })
   }, [size])
 
-  const image = document.createElement('img')
-  image.src = pieceImage
-  image.width = size
-  image.height = size
-
-  const div = document.createElement('div')
-  div.style = {
-    width: size,
-    height: size,
-    display: 'block'
-  }
-  div.appendChild(image)
-  document.querySelector('body').appendChild(div)
-
   const handleDragStart = (event) => {
     event.dataTransfer.dropEffect = 'move'
     event.dataTransfer.effectAllowed = 'move'
-
-    event.dataTransfer.setDragImage(div, size / 2, size / 2)
 
     if (currentPiece !== pieceName) {
       handlePieceClick(pieceName)
@@ -118,18 +102,22 @@ const Piece = ({
       onDragStart={handleDragStart}
       onDrag={handleOnDrag}
       style={{
-        ...pieceStyle
+        ...pieceStyle,
+        background: `url(${pieceImage})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: size,
+        border: 'none'
       }}
       className={classes.div}
     >
-      <img
-        alt={description}
-        src={pieceImage}
-        style={{
-          ...pieceStyle
-        }}
-        className={classes.piece}
-      />
+      {/*<img*/}
+      {/*  alt={description}*/}
+      {/*  src={pieceImage}*/}
+      {/*  style={{*/}
+      {/*    ...pieceStyle*/}
+      {/*  }}*/}
+      {/*  className={classes.piece}*/}
+      {/*/>*/}
     </div>
   )
 }

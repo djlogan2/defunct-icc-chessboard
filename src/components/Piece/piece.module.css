@@ -5,5 +5,7 @@
 }
 
 .div {
-  outline: 1px solid transparent;
+  outline: none;
+  border: none;
+  transform: translate(0, 0);
 }
