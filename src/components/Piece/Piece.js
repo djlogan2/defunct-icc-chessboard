@@ -47,8 +47,8 @@ const Piece = ({
   document.querySelector('body').appendChild(div)
 
   const handleDragStart = (event) => {
-    event.dataTransfer.dropEffect = 'none'
-    event.dataTransfer.effectAllowed = 'none'
+    event.dataTransfer.dropEffect = 'move'
+    event.dataTransfer.effectAllowed = 'move'
 
     event.dataTransfer.setDragImage(div, size / 2, size / 2)
 
@@ -58,8 +58,8 @@ const Piece = ({
   }
 
   const handleOnDrag = (event) => {
-    event.dataTransfer.dropEffect = 'none'
-    event.dataTransfer.effectAllowed = 'none'
+    event.dataTransfer.dropEffect = 'move'
+    event.dataTransfer.effectAllowed = 'move'
   }
 
   const handleTouchStart = (event) => {
