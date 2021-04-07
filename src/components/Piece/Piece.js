@@ -32,19 +32,30 @@ const Piece = ({
     })
   }, [size])
 
-  const [isDragging, updateIsDragging] = useState(false)
+  const image = document.createElement('img')
+  image.src = pieceImage
+
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(image, 0, 0, size, size)
+
+  image.src = canvas.toDataURL()
 
   const handleDragStart = (event) => {
     event.dataTransfer.setData(DATA_TRANSFER, pieceName)
+    event.dataTransfer.dropEffect = 'none'
+
+    event.dataTransfer.setDragImage(image, size / 2, size / 2)
 
     if (currentPiece !== pieceName) {
       handlePieceClick(pieceName)
-      updateIsDragging(true)
     }
   }
 
-  const handleDragEnd = () => {
-    updateIsDragging(false)
+  const handleOnDrag = (event) => {
+    event.dataTransfer.dropEffect = 'none'
   }
 
   const handleTouchStart = (event) => {
@@ -94,22 +105,27 @@ const Piece = ({
   }
 
   return (
-    <img
+    <div
       id={id}
-      alt={description}
-      src={pieceImage}
       draggable
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
+      onDrag={handleOnDrag}
       style={{
-        ...pieceStyle,
-        opacity: isDragging ? 0 : 1
+        ...pieceStyle
       }}
-      className={classes.piece}
-    />
+    >
+      <img
+        alt={description}
+        src={pieceImage}
+        style={{
+          ...pieceStyle
+        }}
+        className={classes.piece}
+      />
+    </div>
   )
 }
 

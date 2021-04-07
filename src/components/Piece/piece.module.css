@@ -1,3 +1,4 @@
 .piece {
   opacity: 1 !important;
+  pointer-events: none;
 }
