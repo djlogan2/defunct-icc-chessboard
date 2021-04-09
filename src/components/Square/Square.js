@@ -31,7 +31,8 @@ const Square = ({
   onPromotion,
   pieceImages,
   perspective,
-  activePiece
+  activePiece,
+  focusStyles
 }) => {
   const activeButton = useRef()
 
@@ -92,6 +93,16 @@ const Square = ({
     }
   }
 
+  const buttonStyle = {
+    width: size,
+    height: size,
+    padding: 0,
+    border: activePiece === pieceName ? focusStyles : 'none',
+    backgroundColor: currentPiece === pieceName ? color.active : color.default,
+    position: 'relative',
+    outline: 'none'
+  }
+
   return (
     <button
       ref={activeButton}
@@ -106,15 +117,7 @@ const Square = ({
       onClick={() => {
         handlePieceClick(pieceName)
       }}
-      style={{
-        width: size,
-        height: size,
-        padding: 0,
-        backgroundColor:
-          currentPiece === pieceName ? color.active : color.default,
-        position: 'relative',
-        outline: 'none'
-      }}
+      style={buttonStyle}
     >
       {signatureSquares && smallSize > size && (
         <div

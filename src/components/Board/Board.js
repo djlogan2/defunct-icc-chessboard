@@ -279,6 +279,7 @@ const Board = ({
           pieceImages={pieceImages}
           onPromotion={handlePromotion}
           promotionStyles={styles?.promotion}
+          focusStyles={styles?.focus}
           perspective={perspective}
           activePiece={activePiece}
         />

@@ -30,6 +30,10 @@ export const getStep = (event) => {
   if (event.key === 'ArrowRight') {
     return 1
   }
+
+  if (event.key === 'Tab') {
+    return 1
+  }
 }
 
 export const parseRaf = (raf) => {

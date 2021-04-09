@@ -138,7 +138,8 @@ class App extends Component {
           },
           promotion: {
             backgroundColor: '#a8a8a8'
-          }
+          },
+          focus: "2px solid #4CAF50"
         }}
         movable={legalMoves}
         circles={circles}
