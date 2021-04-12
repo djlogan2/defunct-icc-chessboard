@@ -106,6 +106,8 @@ const Square = ({
   return (
     <button
       ref={activeButton}
+      aria-label={pieceName}
+      aria-dropeffect='none'
       id={pieceName}
       onDrop={handleDrop}
       onTouchEnd={handleTouchEnd}
