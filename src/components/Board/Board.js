@@ -213,7 +213,7 @@ const Board = ({
       } else if (typeof movable === 'object') {
         const moves = movable[piece]
         if (smartMoves && moves && moves.length === 1) {
-          handlePieceMove(currentPiece, moves[0])
+          handlePieceMove(piece, moves[0])
 
           return
         } else {

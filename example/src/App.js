@@ -16,7 +16,7 @@ class App extends Component {
       fen: this.chess.fen(),
       circles: [],
       arrows: [],
-      smartMoves: false,
+      smartMoves: true,
       showLegalMoves: true,
       smallSize: 500
     }
