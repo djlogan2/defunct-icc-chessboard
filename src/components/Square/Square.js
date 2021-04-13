@@ -32,7 +32,8 @@ const Square = ({
   pieceImages,
   perspective,
   activePiece,
-  focusStyles
+  focusStyles,
+  accessibilityPieces
 }) => {
   const activeButton = useRef()
 
@@ -103,10 +104,14 @@ const Square = ({
     outline: 'none'
   }
 
+  const getPieceFullDescription = (description) => {
+    return accessibilityPieces[description] || accessibilityPieces.emptySquare
+  }
+
   return (
     <button
       ref={activeButton}
-      aria-label={pieceName}
+      aria-label={`${pieceName}-${getPieceFullDescription(piece?.description)}`}
       aria-dropeffect='none'
       id={pieceName}
       onDrop={handleDrop}

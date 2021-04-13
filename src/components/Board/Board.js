@@ -34,7 +34,8 @@ const Board = ({
   onUpdateCircles,
   showLegalMoves,
   promotionPieces,
-  pieceImages
+  pieceImages,
+  accessibilityPieces
 }) => {
   const squares = []
   const [activePiece, updateActivePiece] = useState(null)
@@ -282,6 +283,7 @@ const Board = ({
           focusStyles={styles?.focus}
           perspective={perspective}
           activePiece={activePiece}
+          accessibilityPieces={accessibilityPieces}
         />
       )
     }

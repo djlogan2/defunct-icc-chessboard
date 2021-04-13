@@ -151,6 +151,21 @@ class App extends Component {
         showLegalMoves={showLegalMoves}
         smallSize={smallSize}
         promotionPieces={['q', 'n', 'b', 'r']}
+        accessibilityPieces={{
+          bP: 'Black pawn',
+          bR: 'Black rook',
+          bN: 'Black knight',
+          bB: 'Black bishop',
+          bQ: 'Black queen',
+          bK: 'Black king',
+          wP: 'White pawn',
+          wR: 'White rook',
+          wN: 'White knight',
+          wB: 'White bishop',
+          wQ: 'White queen',
+          wK: 'White king',
+          emptySquare: 'Empty square'
+        }}
       />
     )
   }
