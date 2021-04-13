@@ -229,6 +229,9 @@ export const generateCoordinatesForPromotion = (
   } else if (column === 7) {
     startAngle = promotionColor === perspective[0] ? 180 : 270
     endAngle = promotionColor === perspective[0] ? 90 : 180
+  } else {
+    endAngle = perspective[0] === promotionColor ? 20 : 340
+    startAngle = perspective[0] === promotionColor ? 160 : 200
   }
 
   return new Array(variantsCount).fill(0, 0, variantsCount).map((el, index) => {
