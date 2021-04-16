@@ -153,7 +153,7 @@ class App extends Component {
           promotion: {
             backgroundColor: '#a8a8a8'
           },
-          focus: "2px solid #8B0000",
+          // focus: "2px solid #8B0000",
           lastMove: '5px solid #3CFF33'
         }}
         movable={legalMoves}

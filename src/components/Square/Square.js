@@ -99,7 +99,7 @@ const Square = ({
   }
 
   const getBorderStyle = () => {
-    if (activePiece === pieceName) return focusStyles
+    if (focusStyles && activePiece === pieceName) return focusStyles
     if (
       showLastMove &&
       (pieceName === lastMove?.from || pieceName === lastMove?.to)
