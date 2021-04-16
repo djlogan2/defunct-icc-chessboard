@@ -21,6 +21,7 @@ const Board = ({
   arrows,
   circles,
   movable,
+  lastMove,
   smallSize,
   boardStyle,
   perspective,
@@ -35,6 +36,7 @@ const Board = ({
   showLegalMoves,
   promotionPieces,
   pieceImages,
+  showLastMove,
   accessibilityPieces
 }) => {
   const squares = []
@@ -267,6 +269,8 @@ const Board = ({
           pieceName={pieceCoordinates}
           currentPiece={currentPiece}
           color={color}
+          lastMove={lastMove}
+          showLastMove={showLastMove}
           dataTransfer={dataTransfer}
           updateDataTransfer={updateDataTransfer}
           legalMoves={legalMoves}
@@ -280,6 +284,7 @@ const Board = ({
           pieceImages={pieceImages}
           onPromotion={handlePromotion}
           promotionStyles={styles?.promotion}
+          lastMoveStyles={styles?.lastMove}
           focusStyles={styles?.focus}
           perspective={perspective}
           activePiece={activePiece}

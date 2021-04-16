@@ -18,7 +18,9 @@ class App extends Component {
       arrows: [],
       smartMoves: true,
       showLegalMoves: true,
-      smallSize: 500
+      smallSize: 500,
+      showLastMove: true,
+      lastMove: null
     }
   }
 
@@ -65,8 +67,9 @@ class App extends Component {
   }
 
   handleMove = (move, promotion) => {
-    this.chess.move(move[0] + move[1] + promotion, { sloppy: true })
-    this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen() })
+    const mave = this.chess.move(move[0] + move[1] + promotion, { sloppy: true })
+    console.log(mave)
+    this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen(), lastMove: mave })
   }
 
   handleUpdateArrows = (arrow) => {
@@ -96,7 +99,17 @@ class App extends Component {
   }
 
   render() {
-    const { fen, legalMoves, circles, arrows, smartMoves, showLegalMoves, smallSize } = this.state
+    const {
+      fen,
+      legalMoves,
+      circles,
+      arrows,
+      smartMoves,
+      showLegalMoves,
+      smallSize,
+      lastMove,
+      showLastMove
+    } = this.state
 
     return (
       <ChessBoard
@@ -112,6 +125,8 @@ class App extends Component {
           light: { default: '#FFFFFF', active: '#9c9c9c' },
           dark: { default: '#1565c0', active: '#1255A1' }
         }}
+        showLastMove={showLastMove}
+        lastMove={lastMove}
         pieceImages={{
           bB: 'static/images/defaultPieces/bB.png',
           bK: 'static/images/defaultPieces/bK.png',
@@ -139,7 +154,8 @@ class App extends Component {
           promotion: {
             backgroundColor: '#a8a8a8'
           },
-          focus: "2px solid #8B0000"
+          focus: "2px solid #8B0000",
+          lastMove: '5px solid #3CFF33'
         }}
         movable={legalMoves}
         circles={circles}
@@ -164,7 +180,8 @@ class App extends Component {
           wB: 'White bishop',
           wQ: 'White queen',
           wK: 'White king',
-          emptySquare: 'Empty square'
+          emptySquare: 'Empty square',
+          legalMoves: 'Legal moves: '
         }}
       />
     )

@@ -7,6 +7,7 @@ import Piece from '../Piece/Piece'
 import Promotion from '../Promotion/Promotion'
 
 import styles from './square.module.css'
+import LegalMovesAlert from '../Accessibility/LegalMovesAlert'
 
 const Square = ({
   color,
@@ -18,6 +19,9 @@ const Square = ({
   pieceName,
   legalMoves,
   smallSize,
+  lastMove,
+  showLastMove,
+  lastMoveStyles,
   showLegalMoves,
   signatureSquares,
   updateSquareMouseDown,
@@ -94,11 +98,23 @@ const Square = ({
     }
   }
 
+  const getBorderStyle = () => {
+    console.log(pieceName, lastMove)
+    if (activePiece === pieceName) return focusStyles
+    if (
+      showLastMove &&
+      (pieceName === lastMove?.from || pieceName === lastMove?.to)
+    )
+      return lastMoveStyles
+
+    return 'none'
+  }
+
   const buttonStyle = {
     width: size,
     height: size,
     padding: 0,
-    border: activePiece === pieceName ? focusStyles : 'none',
+    border: getBorderStyle(),
     backgroundColor: currentPiece === pieceName ? color.active : color.default,
     position: 'relative',
     outline: 'none'
@@ -108,6 +124,7 @@ const Square = ({
     return accessibilityPieces[description] || accessibilityPieces.emptySquare
   }
 
+  // console.log(legalMoves, currentPiece)
   return (
     <button
       ref={activeButton}
@@ -126,6 +143,12 @@ const Square = ({
       }}
       style={buttonStyle}
     >
+      {currentPiece === pieceName && legalMoves?.length && (
+        <LegalMovesAlert
+          legalMoves={legalMoves}
+          legalMovesAlert={accessibilityPieces?.legalMoves}
+        />
+      )}
       {signatureSquares && smallSize > size && (
         <div
           style={{

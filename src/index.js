@@ -27,6 +27,8 @@ const ChessBoard = ({
   circles,
   arrows,
   onMove,
+  lastMove,
+  showLastMove,
   pieceImages,
   perspective,
   windowWidth,
@@ -107,6 +109,8 @@ const ChessBoard = ({
             smartMoves={smartMoves}
             smallSize={smallSize}
             handleAdd={handleAdd}
+            lastMove={lastMove}
+            showLastMove={showLastMove}
             deletePiece={deletePiece}
             onUpdateCircles={onUpdateCircles}
             onUpdateArrows={onUpdateArrows}
@@ -162,7 +166,9 @@ ChessBoard.propTypes = {
   edit: PropTypes.object,
   handleAdd: PropTypes.func,
   handleDelete: PropTypes.func,
-  accessibilityPieces: PropTypes.object.isRequired
+  accessibilityPieces: PropTypes.object.isRequired,
+  showLastMove: PropTypes.bool,
+  lastMove: PropTypes.object
 }
 
 export { Edit as PiecesSidebar }
