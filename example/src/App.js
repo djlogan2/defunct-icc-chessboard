@@ -67,9 +67,8 @@ class App extends Component {
   }
 
   handleMove = (move, promotion) => {
-    const mave = this.chess.move(move[0] + move[1] + promotion, { sloppy: true })
-    console.log(mave)
-    this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen(), lastMove: mave })
+    const lastMove = this.chess.move(move[0] + move[1] + promotion, { sloppy: true })
+    this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen(), lastMove })
   }
 
   handleUpdateArrows = (arrow) => {

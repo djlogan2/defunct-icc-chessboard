@@ -99,7 +99,6 @@ const Square = ({
   }
 
   const getBorderStyle = () => {
-    console.log(pieceName, lastMove)
     if (activePiece === pieceName) return focusStyles
     if (
       showLastMove &&
@@ -124,7 +123,6 @@ const Square = ({
     return accessibilityPieces[description] || accessibilityPieces.emptySquare
   }
 
-  // console.log(legalMoves, currentPiece)
   return (
     <button
       ref={activeButton}

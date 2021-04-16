@@ -12,6 +12,7 @@ import {
   getStep
 } from '../../utils/utils'
 import { FILES_ARRAY, RANKS_ARRAY } from '../../constants/boardConstants'
+import PreviousMoveAlert from '../Accessibility/PreviousMoveAlert'
 
 const Board = ({
   size,
@@ -320,6 +321,12 @@ const Board = ({
           pointerEvents: 'none'
         }}
       />
+      {lastMove && (
+        <PreviousMoveAlert
+          lastMove={lastMove}
+          accessibilityPieces={accessibilityPieces}
+        />
+      )}
       {squares}
     </div>
   )
