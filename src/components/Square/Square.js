@@ -114,7 +114,9 @@ const Square = ({
     height: size,
     padding: 0,
     border: getBorderStyle(),
-    backgroundColor: currentPiece === pieceName ? color.active : color.default,
+    background: currentPiece === pieceName ? color.active : color.default,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: size,
     position: 'relative',
     outline: 'none'
   }
@@ -127,7 +129,6 @@ const Square = ({
     <button
       ref={activeButton}
       aria-label={`${pieceName}-${getPieceFullDescription(piece?.description)}`}
-      aria-dropeffect='none'
       id={pieceName}
       onDrop={handleDrop}
       onTouchEnd={handleTouchEnd}
