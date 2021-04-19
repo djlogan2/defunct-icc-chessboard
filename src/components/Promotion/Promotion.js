@@ -22,13 +22,14 @@ const Promotion = ({
   )
 
   const pieces = promotionPieces.map((piece, index) => {
+    console.log(piece)
     return (
       <button
         key={piece}
         style={{
           width: size * PROMOTION_SIZE_RELATIVE,
           height: size * PROMOTION_SIZE_RELATIVE,
-          zIndex: 999,
+          zIndex: promotionPieces.length - index,
           outline: 'none',
           borderRadius: '50%',
           ...styles,
