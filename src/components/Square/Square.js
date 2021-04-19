@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef } from 'react'
+import isColor from 'is-color'
 import { DATA_TRANSFER } from '../../constants/systemConstants'
 import LegalMove from '../LegalMove/LegalMove'
 
 import Piece from '../Piece/Piece'
 import Promotion from '../Promotion/Promotion'
 
-import styles from './square.module.css'
 import LegalMovesAlert from '../Accessibility/LegalMovesAlert'
 
 const Square = ({
@@ -109,20 +109,26 @@ const Square = ({
     return 'none'
   }
 
+  const getPieceFullDescription = (description) => {
+    return accessibilityPieces[description] || accessibilityPieces.emptySquare
+  }
+
   const buttonStyle = {
     width: size,
     height: size,
     padding: 0,
     border: getBorderStyle(),
-    background: currentPiece === pieceName ? color.active : color.default,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: size,
     position: 'relative',
     outline: 'none'
   }
 
-  const getPieceFullDescription = (description) => {
-    return accessibilityPieces[description] || accessibilityPieces.emptySquare
+  const currentColor = currentPiece === pieceName ? color.active : color.default
+  if (isColor(currentColor)) {
+    buttonStyle.backgroundColor = currentColor
+  } else {
+    buttonStyle.backgroundRepeat = 'no-repeat'
+    buttonStyle.backgroundSize = size
+    buttonStyle.backgroundImage = currentColor
   }
 
   return (
@@ -136,7 +142,6 @@ const Square = ({
       onMouseUp={handleMouseUp}
       onMouseDown={handleMouseDown}
       onContextMenu={(e) => e.preventDefault()}
-      className={styles.square}
       onClick={() => {
         handlePieceClick(pieceName)
       }}
