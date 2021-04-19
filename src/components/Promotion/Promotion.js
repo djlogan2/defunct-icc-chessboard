@@ -22,7 +22,6 @@ const Promotion = ({
   )
 
   const pieces = promotionPieces.map((piece, index) => {
-    console.log(piece)
     return (
       <button
         key={piece}
