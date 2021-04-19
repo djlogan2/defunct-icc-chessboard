@@ -112,12 +112,7 @@ class App extends Component {
 
     return (
       <ChessBoard
-        raf={{ inside: true, vertical: 'bottom', horizontal: 'right' }} // where is either an object or a string
-        // For example:
-        // {inside: true, vertical: "top", horizontal: "left"} (top, middle, bottom, left, middle, right)
-        // {inside: false, vertical: "top", horizontal: "bottom"} (top, bottom, left, right)
-        // or
-        // strings, like "tl", "tr", "bl", "br", "stm", "smm" ('s'=in square, 'm'=middle, 'm'=middle, etc.)
+        raf={{ inside: true, vertical: 'bottom', horizontal: 'right' }}
         perspective='white'
         fen={fen}
         boardSquares={{
@@ -153,7 +148,6 @@ class App extends Component {
           promotion: {
             backgroundColor: '#a8a8a8'
           },
-          // focus: "2px solid #8B0000",
           lastMove: '5px solid #3CFF33'
         }}
         movable={legalMoves}

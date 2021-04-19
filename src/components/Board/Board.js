@@ -49,6 +49,7 @@ const Board = ({
   const [dataTransfer, updateDataTransfer] = useState(null)
   const [promotion, updatePromotion] = useState(null)
 
+  const boardRef = useRef(null)
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -298,6 +299,11 @@ const Board = ({
   const handleOnKeyUp = (event) => {
     const step = getStep(event)
 
+    if (event.key === 'Escape') {
+      boardRef.current.focus()
+      return
+    }
+
     if (step) {
       updateActivePiece(
         coordinates[coordinates.indexOf(event.target.id) + step]
@@ -310,6 +316,7 @@ const Board = ({
       onKeyUp={handleOnKeyUp}
       style={{ width: size, height: size, ...boardStyle }}
       className={classes.board}
+      ref={boardRef}
     >
       <canvas
         ref={canvasRef}
