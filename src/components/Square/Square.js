@@ -100,11 +100,6 @@ const Square = ({
 
   const getBorderStyle = () => {
     if (focusStyles && activePiece === pieceName) return focusStyles
-    if (
-      showLastMove &&
-      (pieceName === lastMove?.from || pieceName === lastMove?.to)
-    )
-      return lastMoveStyles
 
     return 'none'
   }
@@ -147,6 +142,22 @@ const Square = ({
       }}
       style={buttonStyle}
     >
+      {showLastMove &&
+        (pieceName === lastMove?.from || pieceName === lastMove?.to) && (
+          <div
+            style={{
+              width: size,
+              height: size,
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 999,
+              border: lastMoveStyles,
+              pointerEvents: 'none'
+            }}
+          />
+        )}
       {currentPiece === pieceName && legalMoves?.length && (
         <LegalMovesAlert
           legalMoves={legalMoves}
