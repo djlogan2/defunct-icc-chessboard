@@ -45,8 +45,14 @@ const ChessBoard = ({
   accessibilityPieces
 }) => {
   const currentElement = useRef(null)
+
+  const [key, updateKey] = useState(Date.now());
   const [boardSize, updateBoardSize] = useState({ width: null, height: null })
   const [deletePiece, updateDeletePiece] = useState(Date.now())
+
+  useEffect(() => {
+    updateKey(Date.now());
+  }, [movable])
 
   useEffect(() => {
     const height = currentElement?.current?.clientHeight
@@ -95,6 +101,7 @@ const ChessBoard = ({
       {!!boardSize.width && !!boardSize.height && (
         <BoardWrapper size={size} boardWrapperStyle={styles?.boardWrapper}>
           <Board
+            key={key}
             edit={edit}
             boardSquares={boardSquares}
             size={size * BOARD_SIZE_RELATIVE}
