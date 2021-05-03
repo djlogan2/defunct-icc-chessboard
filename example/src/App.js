@@ -16,11 +16,9 @@ class App extends Component {
       fen: this.chess.fen(),
       circles: [],
       arrows: [],
-      smartMoves: true,
+      smartMoves: false,
       showLegalMoves: true,
-      smallSize: 500,
-      showLastMove: true,
-      lastMove: null
+      smallSize: 500
     }
   }
 
@@ -67,8 +65,8 @@ class App extends Component {
   }
 
   handleMove = (move, promotion) => {
-    const lastMove = this.chess.move(move[0] + move[1] + promotion, { sloppy: true })
-    this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen(), lastMove })
+    this.chess.move(move[0] + move[1] + promotion, { sloppy: true })
+    this.setState({ legalMoves: this.getLegalMoves(), fen: this.chess.fen() })
   }
 
   handleUpdateArrows = (arrow) => {
@@ -98,29 +96,22 @@ class App extends Component {
   }
 
   render() {
-    const {
-      fen,
-      legalMoves,
-      circles,
-      arrows,
-      smartMoves,
-      showLegalMoves,
-      smallSize,
-      lastMove,
-      showLastMove
-    } = this.state
+    const { fen, legalMoves, circles, arrows, smartMoves, showLegalMoves, smallSize } = this.state
 
     return (
       <ChessBoard
-        raf={{ inside: true, vertical: 'bottom', horizontal: 'right' }}
+        raf={{ inside: true, vertical: 'bottom', horizontal: 'right' }} // where is either an object or a string
+        // For example:
+        // {inside: true, vertical: "top", horizontal: "left"} (top, middle, bottom, left, middle, right)
+        // {inside: false, vertical: "top", horizontal: "bottom"} (top, bottom, left, right)
+        // or
+        // strings, like "tl", "tr", "bl", "br", "stm", "smm" ('s'=in square, 'm'=middle, 'm'=middle, etc.)
         perspective='white'
         fen={fen}
         boardSquares={{
           light: { default: '#FFFFFF', active: '#9c9c9c' },
           dark: { default: '#1565c0', active: '#1255A1' }
         }}
-        showLastMove={showLastMove}
-        lastMove={lastMove}
         pieceImages={{
           bB: 'static/images/defaultPieces/bB.png',
           bK: 'static/images/defaultPieces/bK.png',
@@ -135,6 +126,22 @@ class App extends Component {
           wQ: 'static/images/defaultPieces/wQ.png',
           wR: 'static/images/defaultPieces/wR.png'
         }}
+        accessibilityPieces={{
+          bP: "Black pawn",
+          bR: "Black rook",
+          bN: "Black knight",
+          bB: "Black bishop",
+          bQ: "Black queen",
+          bK: "Black king",
+          wP: "White pawn",
+          wR: "White rook",
+          wN: "White knight",
+          wB: "White bishop",
+          wQ: "White queen",
+          wK: "White king",
+          emptySquare: "Empty square",
+          legalMoves: "Legal moves: "
+        }}
         styles={{
           wrapper: {
             backgroundColor: '#292929'
@@ -147,8 +154,7 @@ class App extends Component {
           },
           promotion: {
             backgroundColor: '#a8a8a8'
-          },
-          lastMove: '5px solid #3CFF33'
+          }
         }}
         movable={legalMoves}
         circles={circles}
@@ -160,22 +166,6 @@ class App extends Component {
         showLegalMoves={showLegalMoves}
         smallSize={smallSize}
         promotionPieces={['q', 'n', 'b', 'r']}
-        accessibilityPieces={{
-          bP: 'Black pawn',
-          bR: 'Black rook',
-          bN: 'Black knight',
-          bB: 'Black bishop',
-          bQ: 'Black queen',
-          bK: 'Black king',
-          wP: 'White pawn',
-          wR: 'White rook',
-          wN: 'White knight',
-          wB: 'White bishop',
-          wQ: 'White queen',
-          wK: 'White king',
-          emptySquare: 'Empty square',
-          legalMoves: 'Legal moves: '
-        }}
       />
     )
   }
